@@ -2,7 +2,7 @@
 
 This repository aims to provide 
 full declarative configurations
-for my machines.
+for my machine.
 
 :warning: This is a work in progress. 
 Significant architectural changes are likely to happen.
@@ -25,6 +25,9 @@ $ sudo nixos-rebuild switch --flake .#
 ```
 
 ## Inspiration
+
+Special thanks to the following people
+for being awesome:
 
 1. [kamadorueda/machine](https://github.com/kamadorueda/machine)
 1. [wiltaylor/dotfiles](https://github.com/wiltaylor/dotfiles)

@@ -18,7 +18,28 @@
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "timedoctor": "timedoctor"
+      }
+    },
+    "timedoctor": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1662395401,
+        "narHash": "sha256-bNRfvWNkNHxariKhnf/MZKC/ugsz4oNWY3XA08Dta0M=",
+        "owner": "kamadoatfluid",
+        "repo": "timedoctor",
+        "rev": "8ab1c6f41b4719847303f1604c1431fd5f86f72b",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "kamadoatfluid",
+        "repo": "timedoctor",
+        "type": "gitlab"
       }
     }
   },

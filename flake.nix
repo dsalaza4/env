@@ -2,6 +2,10 @@
   description = "My NixOS System configuration";
 
   inputs = {
+
+    homeManager.url = "github:nix-community/home-manager/master";
+    homeManager.inputs.nixpkgs.follows = "nixpkgs";
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
 
     timedoctor.url = "gitlab:kamadoatfluid/timedoctor";
@@ -30,6 +34,7 @@
         modules = [
           {
             imports = [
+              attrs.homeManager.nixosModules.home-manager
               ./modules
             ];
           }

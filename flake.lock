@@ -1,5 +1,27 @@
 {
   "nodes": {
+    "homeManager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1665616261,
+        "narHash": "sha256-7B6wIsgfuKhcRn8/91mDU0WsOmy996K472oVeqK06EU=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "2d8e5a99343fc7df3ba7a512ea59a98b75166974",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "master",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1665447519,
@@ -18,6 +40,7 @@
     },
     "root": {
       "inputs": {
+        "homeManager": "homeManager",
         "nixpkgs": "nixpkgs",
         "timedoctor": "timedoctor"
       }
@@ -40,6 +63,21 @@
         "owner": "kamadoatfluid",
         "repo": "timedoctor",
         "type": "gitlab"
+      }
+    },
+    "utils": {
+      "locked": {
+        "lastModified": 1659877975,
+        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
       }
     }
   },

@@ -10,6 +10,7 @@
     pkgs.binutils
     pkgs.comma
     pkgs.coreutils
+    pkgs.htop
     pkgs.jq
     pkgs.kubectl
     pkgs.gnugrep

@@ -121,13 +121,12 @@
     "editor.formatOnType" = true;
     "editor.fontFamily" = "monospace";
     "editor.fontLigatures" = true;
-    "editor.fontSize" = "12";
+    "editor.fontSize" = 12;
     "editor.minimap.enabled" = true;
     "editor.minimap.maxColumn" = 80;
     "editor.minimap.renderCharacters" = true;
     "editor.minimap.showSlider" = "always";
     "editor.minimap.side" = "right";
-    "editor.minimap.size" = "fill";
     "editor.rulers" = [80];
     "editor.tabSize" = 2;
     "editor.wordWrap" = "off";
@@ -171,6 +170,12 @@
     "workbench.editor.openPositioning" = "last";
     "workbench.settings.editor" = "json";
     "workbench.startupEditor" = "none";
+    "terminal.integrated.defaultLocation" = "editor";
+    "terminal.integrated.fontSize" = 12;
+    "terminal.integrated.shellIntegration.history" = 10000;
+    "terminal.integrated.confirmOnExit" = "hasChildProcesses";
+    "terminal.integrated.fontFamily" = "monospace";
+    "terminal.integrated.scrollback" = 100000;
   };
 in {
   environment.variables.EDITOR = bin;

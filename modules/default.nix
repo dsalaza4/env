@@ -8,5 +8,6 @@
     ./storage
     ./tz
     ./users
+    ./virtualisation
   ];
 }

@@ -1,7 +1,13 @@
-{pkgs, lib, ...}:
+{config, lib, pkgs, ...}:
 {
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" ];
   boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelPackages = let
+      packages = pkgs.linuxPackages_latest;
+    in
+      builtins.trace "Linux: ${packages.kernel.version}" packages;
+  hardware.enableAllFirmware = true;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
@@ -19,6 +25,7 @@
     pulse.enable = true;
   };
 
+  nixpkgs.config.allowUnfree = true;
   nix.extraOptions = ''
     extra-experimental-features = nix-command flakes
   '';

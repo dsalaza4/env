@@ -2,23 +2,29 @@
   description = "My NixOS System configuration";
 
   inputs = {
-    alejandra.url = "github:kamadorueda/alejandra";
-    alejandra.inputs.nixpkgs.follows = "nixpkgs";
-
-    homeManager.url = "github:nix-community/home-manager/master";
-    homeManager.inputs.nixpkgs.follows = "nixpkgs";
-
-    makes.url = "github:fluidattacks/makes/main";
-    makes.inputs.nixpkgs.follows = "nixpkgs";
-
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
 
-    timedoctor.url = "gitlab:kamadoatfluid/timedoctor";
-    timedoctor.inputs.nixpkgs.follows = "nixpkgs";
-
-    pythonOnNix.url = "github:on-nix/python/main";
-    pythonOnNix.inputs.makes.follows = "makes";
-    pythonOnNix.inputs.nixpkgs.follows = "nixpkgs";
+    alejandra = {
+      url = "github:kamadorueda/alejandra";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    homeManager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    makes = {
+      url = "github:fluidattacks/makes/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    timedoctor = {
+      url = "gitlab:kamadoatfluid/timedoctor";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    pythonOnNix = {
+      url = "github:on-nix/python/main";
+      inputs.makes.follows = "makes";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {nixpkgs, ...} @ attrs: let

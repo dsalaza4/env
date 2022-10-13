@@ -5,21 +5,21 @@
     ./timedoctor
   ];
 
-  users.users.dsalazar.packages = with pkgs; [
-    awscli
-    binutils
-    comma
-    coreutils
-    jq
-    kubectl
-    gnugrep
-    google-chrome
-    parted
-    python310
-    shadow
-    sops
-    terraform
-    vim
-    yq
+  users.users.dsalazar.packages = [
+    pkgs.awscli
+    pkgs.binutils
+    pkgs.comma
+    pkgs.coreutils
+    pkgs.jq
+    pkgs.kubectl
+    pkgs.gnugrep
+    pkgs.google-chrome
+    pkgs.parted
+    pkgs.python310
+    pkgs.shadow
+    pkgs.sops
+    pkgs.terraform
+    pkgs.vim
+    pkgs.yq
   ];
 }

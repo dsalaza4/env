@@ -10,7 +10,9 @@
     packages = pkgs.linuxPackages_latest;
   in
     builtins.trace "Linux: ${packages.kernel.version}" packages;
+
   hardware.enableAllFirmware = true;
+  hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   services.printing.enable = true;

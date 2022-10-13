@@ -12,24 +12,24 @@
   bin = "${pkgs.vscode}/bin/code";
   extensions = pkgs.symlinkJoin {
     name = "extensions";
-    paths = with pkgs; [
-      vscode-extensions._4ops.terraform
-      vscode-extensions.bbenoist.nix
-      vscode-extensions.coolbear.systemd-unit-file
-      vscode-extensions.eamodio.gitlens
-      vscode-extensions.grapecity.gc-excelviewer
-      vscode-extensions.hashicorp.terraform
-      vscode-extensions.jkillian.custom-local-formatters
-      vscode-extensions.kamadorueda.alejandra
-      vscode-extensions.mads-hartmann.bash-ide-vscode
-      vscode-extensions.ms-python.python
-      vscode-extensions.ms-python.vscode-pylance # unfree
-      vscode-extensions.ms-toolsai.jupyter
-      vscode-extensions.ms-toolsai.jupyter-renderers
-      vscode-extensions.njpwerner.autodocstring
-      vscode-extensions.shardulm94.trailing-spaces
-      vscode-extensions.streetsidesoftware.code-spell-checker
-      vscode-extensions.tamasfe.even-better-toml
+    paths = [
+      pkgs.vscode-extensions._4ops.terraform
+      pkgs.vscode-extensions.bbenoist.nix
+      pkgs.vscode-extensions.coolbear.systemd-unit-file
+      pkgs.vscode-extensions.eamodio.gitlens
+      pkgs.vscode-extensions.grapecity.gc-excelviewer
+      pkgs.vscode-extensions.hashicorp.terraform
+      pkgs.vscode-extensions.jkillian.custom-local-formatters
+      pkgs.vscode-extensions.kamadorueda.alejandra
+      pkgs.vscode-extensions.mads-hartmann.bash-ide-vscode
+      pkgs.vscode-extensions.ms-python.python
+      pkgs.vscode-extensions.ms-python.vscode-pylance # unfree
+      pkgs.vscode-extensions.ms-toolsai.jupyter
+      pkgs.vscode-extensions.ms-toolsai.jupyter-renderers
+      pkgs.vscode-extensions.njpwerner.autodocstring
+      pkgs.vscode-extensions.shardulm94.trailing-spaces
+      pkgs.vscode-extensions.streetsidesoftware.code-spell-checker
+      pkgs.vscode-extensions.tamasfe.even-better-toml
     ];
   };
   settings = {

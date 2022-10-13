@@ -1,14 +1,20 @@
 {
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-partlabel/root";
-    fsType = "ext4";
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot/efi";
+    };
   };
-  fileSystems."/boot/efi" = {
-    device = "/dev/disk/by-partlabel/ESP";
-    fsType = "vfat";
+
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-partlabel/root";
+      fsType = "ext4";
+    };
+    "/boot/efi" = {
+      device = "/dev/disk/by-partlabel/ESP";
+      fsType = "vfat";
+    };
   };
 }

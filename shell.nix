@@ -1,9 +1,9 @@
 {pkgs ? import <nixpkgs> {}}:
 pkgs.mkShell {
   name = "nixosbuildshell";
-  nativeBuildInputs = with pkgs; [
-    git
-    nixFlakes
+  nativeBuildInputs = [
+    pkgs.git
+    pkgs.nixFlakes
   ];
 
   shellHook = ''

@@ -1,5 +1,8 @@
-{config, pkgs, ...}:
 {
+  config,
+  pkgs,
+  ...
+}: {
   users.users.dsalazar.packages = [
     # Aliases
     (pkgs.writeShellScriptBin "a" ''

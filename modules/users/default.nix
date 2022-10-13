@@ -1,5 +1,8 @@
-{config, pkgs, ...}:
 {
+  config,
+  pkgs,
+  ...
+}: {
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = false;
@@ -14,6 +17,7 @@
     hashedPassword = "$6$Cmzt0OYRh1Ra9nCG$52hnMtWek1aWFbCN44T9AmZrFVws4Lus7vvOObgnJWpCtIJs.v0mUYW/3a4SFm3kOxJbbV/xaYoAu9S9Wc8lb0";
     description = "Daniel Salazar";
     home = "/home/dsalazar";
-    extraGroups = [ "networkmanager" "wheel" ];
+    group = "users";
+    extraGroups = ["networkmanager" "wheel"];
   };
 }

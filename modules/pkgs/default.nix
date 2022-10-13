@@ -1,6 +1,6 @@
-{pkgs, ...}:
-{
+{pkgs, ...}: {
   imports = [
+    ./editor
     ./terminal
     ./timedoctor
   ];
@@ -21,7 +21,6 @@
     sops
     terraform
     vim
-    vscode
     yq
   ];
 }

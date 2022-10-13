@@ -25,6 +25,10 @@
     pulse.enable = true;
   };
 
+  nix.package = let
+    package = pkgs.nixUnstable;
+  in
+    builtins.trace "Nix: ${package.version}" package;
   nixpkgs.config.allowUnfree = true;
   nix.extraOptions = ''
     extra-experimental-features = nix-command flakes

@@ -6,6 +6,8 @@
   ];
 
   users.users.dsalazar.packages = with pkgs; [
+    awscli
+    binutils
     comma
     coreutils
     git
@@ -14,6 +16,7 @@
     gnugrep
     google-chrome
     parted
+    python310
     shadow
     sops
     terraform

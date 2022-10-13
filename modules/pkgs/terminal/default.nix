@@ -9,7 +9,7 @@
       git commit --allow-empty "$@"
     '')
     (pkgs.writeShellScriptBin "ca" ''
-      git commit --amend --no-edit --allow-empty "$@"
+      git commit --amend --allow-empty "$@"
     '')
     (pkgs.writeShellScriptBin "clip" ''
       ${pkgs.xclip}/bin/xclip -sel clip "$@"

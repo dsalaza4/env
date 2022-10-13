@@ -18,6 +18,6 @@
     description = "Daniel Salazar";
     home = "/home/dsalazar";
     group = "users";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["wheel"];
   };
 }

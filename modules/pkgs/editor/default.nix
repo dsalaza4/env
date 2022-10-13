@@ -8,7 +8,7 @@
   ...
 }: let
   extensionsDir = "/home/dsalazar/.vscode/extensions";
-  userDataDir = "/home/dsalazar/.config/Code/User/settings.json";
+  userDataDir = "/home/dsalazar/.config/Code/User";
   bin = "${pkgs.vscode}/bin/code";
   extensions = pkgs.symlinkJoin {
     name = "extensions";
@@ -114,7 +114,6 @@
     "diffEditor.maxComputationTime" = 0;
     "diffEditor.renderSideBySide" = false;
     "diffEditor.wordWrap" = "on";
-    "editor.cursorStyle" = "underline";
     "editor.defaultFormatter" = "jkillian.custom-local-formatters";
     "editor.bracketPairColorization.enabled" = true;
     "editor.formatOnPaste" = false;
@@ -123,12 +122,11 @@
     "editor.fontFamily" = "monospace";
     "editor.fontLigatures" = true;
     "editor.fontSize" = "12";
-    "editor.guides.bracketPairs" = "active";
-    "editor.minimap.enabled" = false;
+    "editor.minimap.enabled" = true;
     "editor.minimap.maxColumn" = 80;
     "editor.minimap.renderCharacters" = true;
     "editor.minimap.showSlider" = "always";
-    "editor.minimap.side" = "left";
+    "editor.minimap.side" = "right";
     "editor.minimap.size" = "fill";
     "editor.rulers" = [80];
     "editor.tabSize" = 2;
@@ -166,9 +164,8 @@
     "telemetry.telemetryLevel" = "off";
     "update.mode" = "none";
     "update.showReleaseNotes" = false;
-    "window.zoomLevel" = 3;
-    "workbench.activityBar.visible" = false;
-    "workbench.colorTheme" = "Default High Contrast";
+    "window.zoomLevel" = 1.5;
+    "workbench.activityBar.visible" = true;
     "workbench.editor.enablePreview" = false;
     "workbench.editor.focusRecentEditorAfterClose" = false;
     "workbench.editor.openPositioning" = "last";

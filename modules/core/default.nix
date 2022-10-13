@@ -13,10 +13,6 @@
   hardware.enableAllFirmware = true;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  networking.hostName = "nixos";
-  networking.networkmanager.enable = true;
-  networking.useDHCP = lib.mkDefault true;
-
   services.printing.enable = true;
 
   sound.enable = true;

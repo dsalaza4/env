@@ -38,39 +38,10 @@
 
     # Other
     pkgs.direnv
-    pkgs.libsForQt5.kglobalaccel
-    pkgs.yakuake
   ];
 
   programs.bash.interactiveShellInit = ''
     export DIRENV_WARN_TIMEOUT=1h
     source <(direnv hook bash)
   '';
-
-  home-manager.users.dsalazar.home.file = {
-    ".config/yakuakerc".text = ''
-      [Desktop Entry]
-      DefaultProfile=main.profile
-
-      [Dialogs]
-      FirstRun=false
-
-      [Window]
-      Height=90
-      Position=100
-      Width=50
-    '';
-    ".local/share/konsole/main.profile".text = ''
-      [Appearance]
-      ColorScheme=Breeze
-      Font=Monospace,12,-1,5,50,0,0,0,0,0
-
-      [General]
-      Name=main
-      Parent=FALLBACK/
-
-      [Scrolling]
-      HistorySize=100000
-    '';
-  };
 }

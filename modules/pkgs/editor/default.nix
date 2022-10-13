@@ -8,7 +8,7 @@
   ...
 }: let
   extensionsDir = "/home/dsalazar/.vscode/extensions";
-  userDataDir = "/home/dsalazar/.vscode/data";
+  userDataDir = "/home/dsalazar/.config/Code/User/settings.json";
   bin = "${pkgs.vscode}/bin/code";
   extensions = pkgs.symlinkJoin {
     name = "extensions";
@@ -178,12 +178,15 @@
 in {
   environment.variables.EDITOR = bin;
   users.users.dsalazar.packages = [pkgs.vscode];
-  programs.git.config = {
-    core.editor = "${bin} --wait";
-    diff.tool = "editor";
-    difftool.editor.cmd = "${bin} --diff $LOCAL $REMOTE --wait";
-    merge.tool = "editor";
-    mergetool.editor.cmd = "${bin} --wait $MERGED";
+  programs.git = {
+    enable = true;
+    config = {
+      core.editor = "${bin} --wait";
+      diff.tool = bin;
+      difftool.editor.cmd = "${bin} --diff $LOCAL $REMOTE --wait";
+      merge.tool = bin;
+      mergetool.editor.cmd = "${bin} --wait $MERGED";
+    };
   };
   systemd.services."editor-setup" = {
     description = "Editor setup";
@@ -215,5 +218,6 @@ in {
       Type = "oneshot";
       User = "dsalazar";
     };
+    restartIfChanged = true;
   };
 }

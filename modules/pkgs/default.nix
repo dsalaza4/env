@@ -10,7 +10,6 @@
     binutils
     comma
     coreutils
-    git
     jq
     kubectl
     gnugrep

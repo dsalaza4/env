@@ -37,7 +37,6 @@
     '')
 
     # Other
-    pkgs.bash
     pkgs.direnv
     pkgs.libsForQt5.kglobalaccel
     pkgs.yakuake

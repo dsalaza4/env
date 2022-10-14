@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  users.users.dsalazar.packages = [
+  environment.systemPackages = [
     # Aliases
     (pkgs.writeShellScriptBin "a" ''
       git add -p "$@"

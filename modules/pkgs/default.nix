@@ -5,7 +5,7 @@
     ./timedoctor
   ];
 
-  users.users.dsalazar.packages = [
+  environment.systemPackages = [
     pkgs.awscli
     pkgs.binutils
     pkgs.comma

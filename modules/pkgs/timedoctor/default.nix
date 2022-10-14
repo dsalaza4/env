@@ -1,5 +1,12 @@
-{timedoctor, ...}: {
-  users.users.dsalazar.packages = [
-    timedoctor
+{
+  pkgs,
+  timedoctor,
+  ...
+}: {
+  environment.systemPackages = [
+    (pkgs.writeShellScriptBin "timedoctor" ''
+      ${timedoctor}/bin/timedoctor "$@" &> /dev/null &!
+      exit 0
+    '')
   ];
 }

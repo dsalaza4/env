@@ -179,7 +179,7 @@
   };
 in {
   environment.variables.EDITOR = bin;
-  users.users.dsalazar.packages = [pkgs.vscode];
+  environment.systemPackages = [pkgs.vscode];
   programs.git = {
     enable = true;
     config = {

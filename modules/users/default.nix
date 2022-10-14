@@ -5,7 +5,7 @@
 }: {
   home-manager = {
     useUserPackages = true;
-    useGlobalPkgs = false;
+    useGlobalPkgs = true;
     users.dsalazar.home.stateVersion = config.system.stateVersion;
   };
 

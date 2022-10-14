@@ -7,7 +7,7 @@
     extraOptions = ''
       extra-experimental-features = nix-command flakes
     '';
-    settings.trusted-users = ["root" "dsalazar"];
+    settings.trusted-users = ["root" "nixos"];
   };
 
   nixpkgs.config.allowUnfree = true;

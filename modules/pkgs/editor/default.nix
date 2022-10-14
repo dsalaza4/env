@@ -7,8 +7,8 @@
   pythonOnNix,
   ...
 }: let
-  extensionsDir = "/home/dsalazar/.vscode/extensions";
-  userDataDir = "/home/dsalazar/.config/Code/User";
+  extensionsDir = "/home/nixos/.vscode/extensions";
+  userDataDir = "/home/nixos/.config/Code/User";
   bin = "${pkgs.vscode}/bin/code";
   extensions = pkgs.symlinkJoin {
     name = "extensions";
@@ -217,9 +217,9 @@ in {
       }}
     '';
     serviceConfig = {
-      Group = config.users.users.dsalazar.group;
+      Group = config.users.users.nixos.group;
       Type = "oneshot";
-      User = "dsalazar";
+      User = "nixos";
     };
     restartIfChanged = true;
   };

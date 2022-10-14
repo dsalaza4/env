@@ -6,5 +6,5 @@
     useDHCP = lib.mkDefault true;
   };
 
-  users.users.dsalazar.extraGroups = ["networkmanager"];
+  users.users.nixos.extraGroups = ["networkmanager"];
 }

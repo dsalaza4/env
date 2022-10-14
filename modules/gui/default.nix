@@ -34,7 +34,7 @@
       };
     };
   };
-  home-manager.users.dsalazar = {
+  home-manager.users.nixos = {
     gtk = {
       enable = true;
       font = {

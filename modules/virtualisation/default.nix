@@ -24,5 +24,5 @@
   ];
 
   users.groups.docker = {};
-  users.users.dsalazar.extraGroups = ["docker" "vboxusers"];
+  users.users.nixos.extraGroups = ["docker" "vboxusers"];
 }

@@ -176,6 +176,7 @@
     "terminal.integrated.confirmOnExit" = "hasChildProcesses";
     "terminal.integrated.fontFamily" = "monospace";
     "terminal.integrated.scrollback" = 100000;
+    "terminal.integrated.sendKeybindingsToShell" = true;
   };
 in {
   environment.variables.EDITOR = bin;

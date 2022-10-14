@@ -1,9 +1,14 @@
 {
   config,
   lib,
+  modulesPath,
   pkgs,
   ...
 }: {
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
+
   boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "usb_storage" "sd_mod"];
   boot.kernelModules = ["kvm-amd"];
   boot.kernelPackages = let

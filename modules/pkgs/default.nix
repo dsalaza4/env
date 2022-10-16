@@ -1,11 +1,12 @@
 {pkgs, ...}: {
   imports = [
     ./editor
+    ./git
     ./terminal
     ./timedoctor
   ];
 
-  environment.systemPackages = [
+  home-manager.users.nixos.home.packages = [
     pkgs.awscli
     pkgs.binutils
     pkgs.comma

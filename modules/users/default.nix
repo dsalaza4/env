@@ -3,12 +3,6 @@
   pkgs,
   ...
 }: {
-  home-manager = {
-    useUserPackages = true;
-    useGlobalPkgs = true;
-    users.nixos.home.stateVersion = config.system.stateVersion;
-  };
-
   users.users = {
     root = {
       hashedPassword = "$6$NKlUfhjaPNhm263V$GGMcRBxRBIPvTZ9JVAL90a0AvrdnBQbzo6XLERrX1.QxGPbhC7TlcA5Bfqh6k3TsLkd/OpcPplO19o8J6AG7t/";
@@ -20,6 +14,24 @@
       home = "/home/nixos";
       group = "users";
       extraGroups = ["wheel"];
+    };
+  };
+
+  home-manager = {
+    useUserPackages = true;
+    useGlobalPkgs = true;
+    users = {
+      nixos = {
+        programs.bash.enable = true;
+        programs.home-manager.enable = true;
+        targets.genericLinux.enable = true;
+        systemd.user.startServices = true;
+        home = {
+          username = "nixos";
+          homeDirectory = "/home/nixos";
+          stateVersion = config.system.stateVersion;
+        };
+      };
     };
   };
 }

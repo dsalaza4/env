@@ -1,6 +1,7 @@
 {
   alejandra,
   config,
+  editor,
   makes,
   makesSrc,
   pkgs,
@@ -9,7 +10,6 @@
 }: let
   extensionsDir = "/home/nixos/.vscode/extensions";
   userDataDir = "/home/nixos/.config/Code/User";
-  bin = "${pkgs.vscode}/bin/code";
   extensions = pkgs.symlinkJoin {
     name = "extensions";
     paths = [
@@ -179,18 +179,8 @@
     "terminal.integrated.sendKeybindingsToShell" = true;
   };
 in {
-  environment.variables.EDITOR = bin;
-  environment.systemPackages = [pkgs.vscode];
-  programs.git = {
-    enable = true;
-    config = {
-      core.editor = "${bin} --wait";
-      diff.tool = bin;
-      difftool.editor.cmd = "${bin} --diff $LOCAL $REMOTE --wait";
-      merge.tool = bin;
-      mergetool.editor.cmd = "${bin} --wait $MERGED";
-    };
-  };
+  environment.variables.EDITOR = "${editor}/bin/code";
+  home-manager.users.nixos.home.packages = [editor];
   systemd.services."editor-setup" = {
     description = "Editor setup";
     script = ''

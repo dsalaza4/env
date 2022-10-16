@@ -42,6 +42,7 @@
 
         specialArgs = {
           alejandra = attrs.alejandra.defaultPackage.${system};
+          editor = pkgs.vscode;
           makes = import "${attrs.makes}/src/args/agnostic.nix" {inherit system;};
           makesSrc = attrs.makes;
           pythonOnNix = attrs.pythonOnNix.packages.${system};

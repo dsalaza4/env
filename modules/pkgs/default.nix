@@ -7,6 +7,7 @@
   ];
 
   home-manager.users.nixos.home.packages = [
+    pkgs._1password-gui-beta
     pkgs.awscli
     pkgs.binutils
     pkgs.comma

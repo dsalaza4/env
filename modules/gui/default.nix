@@ -23,6 +23,7 @@
       desktopManager.gnome.enable = true;
     };
   };
+  environment.systemPackages = [pkgs.gnome.nautilus];
 
   fonts = {
     enableDefaultFonts = false;

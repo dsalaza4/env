@@ -28,6 +28,7 @@
     pkgs.sops
     pkgs.terraform
     pkgs.vim
+    pkgs.vlc
     pkgs.yq
   ];
 }

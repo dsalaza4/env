@@ -1,21 +1,27 @@
 {pkgs, ...}: {
-  services.xserver = {
-    enable = true;
-    libinput = {
+  services = {
+    gnome = {
+      core-utilities.enable = false;
+      games.enable = false;
+    };
+    xserver = {
       enable = true;
-      touchpad = {
-        naturalScrolling = true;
-        middleEmulation = true;
-        tapping = true;
-      };
-    };
-    displayManager = {
-      gdm = {
+      libinput = {
         enable = true;
-        wayland = true;
+        touchpad = {
+          naturalScrolling = true;
+          middleEmulation = true;
+          tapping = true;
+        };
       };
+      displayManager = {
+        gdm = {
+          enable = true;
+          wayland = true;
+        };
+      };
+      desktopManager.gnome.enable = true;
     };
-    desktopManager.gnome.enable = true;
   };
 
   fonts = {

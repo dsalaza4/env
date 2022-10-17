@@ -3,7 +3,6 @@
   config,
   editor,
   makes,
-  makesSrc,
   pkgs,
   pythonOnNix,
   ...
@@ -61,12 +60,12 @@
             #! ${pkgs.bash}/bin/bash
             ${pythonOnNix.black-latest-python39-bin}/bin/black \
               --config \
-              ${makesSrc}/src/evaluator/modules/format-python/settings-black.toml \
+              ${makes}/src/evaluator/modules/format-python/settings-black.toml \
               - \
               | \
             ${pythonOnNix.isort-latest-python39-bin}/bin/isort \
               --settings-path \
-              ${makesSrc}/src/evaluator/modules/format-python/settings-isort.toml \
+              ${makes}/src/evaluator/modules/format-python/settings-isort.toml \
               -
           '')
           .outPath;
@@ -142,13 +141,13 @@
     "python.linting.lintOnSave" = true;
     "python.linting.mypyArgs" = [
       "--config-file"
-      "${makesSrc}/src/evaluator/modules/lint-python/settings-mypy.cfg"
+      "${makes}/src/evaluator/modules/lint-python/settings-mypy.cfg"
     ];
     "python.linting.mypyEnabled" = true;
     "python.linting.mypyPath" = "${pythonOnNix.mypy-latest-python39-bin}/bin/mypy";
     "python.linting.prospectorArgs" = [
       "--profile"
-      "${makesSrc}/src/evaluator/modules/lint-python/settings-prospector.yaml"
+      "${makes}/src/evaluator/modules/lint-python/settings-prospector.yaml"
     ];
     "python.defaultInterpreterPath" = "/run/current-system/sw/bin/python";
     "python.linting.prospectorEnabled" = true;

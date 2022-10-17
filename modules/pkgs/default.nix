@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  makesPkg,
+  pkgs,
+  ...
+}: {
   imports = [
     ./editor
     ./git
@@ -7,6 +11,7 @@
   ];
 
   home-manager.users.nixos.home.packages = [
+    makesPkg
     pkgs._1password-gui-beta
     pkgs.awscli
     pkgs.binutils

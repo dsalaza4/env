@@ -1,9 +1,14 @@
 {pkgs, ...}: {
   services.xserver = {
     enable = true;
-    layout = "us,latam";
-    xkbVariant = "";
-    xkbOptions = "grp:win_space_toggle";
+    libinput = {
+      enable = true;
+      touchpad = {
+        naturalScrolling = true;
+        middleEmulation = true;
+        tapping = true;
+      };
+    };
     displayManager = {
       gdm = {
         enable = true;
@@ -35,6 +40,12 @@
     };
   };
   home-manager.users.nixos = {
+    home = {
+      keyboard = {
+        layout = "us,latam";
+        options = ["grp:win_space_toggle"];
+      };
+    };
     gtk = {
       enable = true;
       font = {

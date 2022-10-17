@@ -8,31 +8,26 @@
   pythonOnNix,
   ...
 }: let
-  extensionsDir = "/home/nixos/.vscode/extensions";
-  userDataDir = "/home/nixos/.config/Code/User";
-  extensions = pkgs.symlinkJoin {
-    name = "extensions";
-    paths = [
-      pkgs.vscode-extensions._4ops.terraform
-      pkgs.vscode-extensions.bbenoist.nix
-      pkgs.vscode-extensions.coolbear.systemd-unit-file
-      pkgs.vscode-extensions.eamodio.gitlens
-      pkgs.vscode-extensions.grapecity.gc-excelviewer
-      pkgs.vscode-extensions.hashicorp.terraform
-      pkgs.vscode-extensions.jkillian.custom-local-formatters
-      pkgs.vscode-extensions.kamadorueda.alejandra
-      pkgs.vscode-extensions.mads-hartmann.bash-ide-vscode
-      pkgs.vscode-extensions.ms-python.python
-      pkgs.vscode-extensions.ms-python.vscode-pylance # unfree
-      pkgs.vscode-extensions.ms-toolsai.jupyter
-      pkgs.vscode-extensions.ms-toolsai.jupyter-renderers
-      pkgs.vscode-extensions.njpwerner.autodocstring
-      pkgs.vscode-extensions.shardulm94.trailing-spaces
-      pkgs.vscode-extensions.streetsidesoftware.code-spell-checker
-      pkgs.vscode-extensions.tamasfe.even-better-toml
-    ];
-  };
-  settings = {
+  extensions = [
+    pkgs.vscode-extensions._4ops.terraform
+    pkgs.vscode-extensions.bbenoist.nix
+    pkgs.vscode-extensions.coolbear.systemd-unit-file
+    pkgs.vscode-extensions.eamodio.gitlens
+    pkgs.vscode-extensions.grapecity.gc-excelviewer
+    pkgs.vscode-extensions.hashicorp.terraform
+    pkgs.vscode-extensions.jkillian.custom-local-formatters
+    pkgs.vscode-extensions.kamadorueda.alejandra
+    pkgs.vscode-extensions.mads-hartmann.bash-ide-vscode
+    pkgs.vscode-extensions.ms-python.python
+    pkgs.vscode-extensions.ms-python.vscode-pylance # unfree
+    pkgs.vscode-extensions.ms-toolsai.jupyter
+    pkgs.vscode-extensions.ms-toolsai.jupyter-renderers
+    pkgs.vscode-extensions.njpwerner.autodocstring
+    pkgs.vscode-extensions.shardulm94.trailing-spaces
+    pkgs.vscode-extensions.streetsidesoftware.code-spell-checker
+    pkgs.vscode-extensions.tamasfe.even-better-toml
+  ];
+  userSettings = {
     "[python]"."editor.tabSize" = 4;
     "alejandra.program" = "${alejandra}/bin/alejandra";
     "customLocalFormatters.formatters" = [
@@ -180,37 +175,13 @@
   };
 in {
   environment.variables.EDITOR = "${editor}/bin/code";
-  home-manager.users.nixos.home.packages = [editor];
-  systemd.services."editor-setup" = {
-    description = "Editor setup";
-    script = ''
-      ${pkgs.substitute {
-        src = pkgs.writeScript "editor-setup.sh" ''
-          set -eux
-          export PATH=${pkgs.lib.makeSearchPath "bin" [pkgs.coreutils]}
-          rm -rf "@userDataDir@"
-          rm -rf "@extensionsDir@"
-          mkdir -p "@userDataDir@"
-          mkdir -p "@extensionsDir@"
-          cp --dereference --no-preserve=mode,ownership \
-            "@settings@" "@userDataDir@/settings.json"
-          cp --dereference --no-preserve=mode,ownership -rT \
-            "@extensions@/share/vscode/extensions/" "@extensionsDir@"
-        '';
-        replacements = [
-          ["--replace" "@extensions@" extensions]
-          ["--replace" "@extensionsDir@" extensionsDir]
-          ["--replace" "@settings@" (makes.toFileJson "settings.json" settings)]
-          ["--replace" "@userDataDir@" userDataDir]
-        ];
-        isExecutable = true;
-      }}
-    '';
-    serviceConfig = {
-      Group = config.users.users.nixos.group;
-      Type = "oneshot";
-      User = "nixos";
+  home-manager.users.nixos = {
+    programs.vscode = {
+      enable = true;
+      package = editor;
+      mutableExtensionsDir = false;
+      inherit extensions;
+      inherit userSettings;
     };
-    restartIfChanged = true;
   };
 }

@@ -16,6 +16,8 @@
   };
   programs.dconf.enable = true;
   security.pam.services.swaylock.text = "auth include login";
+  programs.light.enable = true;
+  users.users.nixos.extraGroups = ["video"];
 
   fonts = {
     enableDefaultFonts = false;
@@ -43,14 +45,14 @@
     home = {
       packages = [
         pkgs.gnome.nautilus
-        pkgs.sway-contrib.grimshot
-        pkgs.swaylock
-        pkgs.swayidle
-        pkgs.wl-clipboard
+        pkgs.grim
         pkgs.mako
-        pkgs.alacritty
-        pkgs.wofi
+        pkgs.sway-contrib.grimshot
+        pkgs.swayidle
+        pkgs.swaylock
         pkgs.waybar
+        pkgs.wl-clipboard
+        pkgs.wofi
       ];
       pointerCursor = {
         package = pkgs.capitaine-cursors;

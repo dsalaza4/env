@@ -29,6 +29,8 @@ $ sudo nixos-rebuild switch --flake .#
 Special thanks to the following people
 for being awesome:
 
+1. [alternateved/nixos-config](https://github.com/alternateved/nixos-config)
+1. [jralvarezc/conf](https://github.com/jralvarezc/conf/tree/master/hosts/profiles)
 1. [kamadorueda/machine](https://github.com/kamadorueda/machine)
 1. [wiltaylor/dotfiles](https://github.com/wiltaylor/dotfiles)
 1. [Wil T NixOS tutorials](https://www.youtube.com/playlist?list=PL-saUBvIJzOkjAw_vOac75v-x6EzNzZq-)

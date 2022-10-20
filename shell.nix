@@ -8,7 +8,7 @@ pkgs.mkShell {
   ];
 
   shellHook = ''
-    echo "You can apply this flake to your system with 'sudo nixos-rebuild switch --flake .#'"
+    echo "You can apply this flake to your system with 'just b'"
     PATH=${pkgs.writeShellScriptBin "nix" ''
       ${pkgs.nixFlakes}/bin/nix --experimental-features "nix-command flakes" "$@"
     ''}/bin:$PATH

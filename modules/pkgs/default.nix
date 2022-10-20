@@ -20,6 +20,7 @@
       pkgs.coreutils
       pkgs.htop
       pkgs.jq
+      pkgs.just
       pkgs.kubectl
       pkgs.gnugrep
       pkgs.google-chrome

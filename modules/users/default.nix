@@ -3,6 +3,21 @@
   pkgs,
   ...
 }: {
+  security.sudo = {
+    enable = true;
+    extraRules = [
+      {
+        groups = ["wheel"];
+        commands = [
+          {
+            command = "ALL";
+            options = ["SETENV" "NOPASSWD"];
+          }
+        ];
+      }
+    ];
+  };
+
   users.users = {
     root = {
       hashedPassword = "$6$NKlUfhjaPNhm263V$GGMcRBxRBIPvTZ9JVAL90a0AvrdnBQbzo6XLERrX1.QxGPbhC7TlcA5Bfqh6k3TsLkd/OpcPplO19o8J6AG7t/";

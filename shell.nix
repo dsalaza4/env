@@ -3,6 +3,7 @@ pkgs.mkShell {
   name = "nixosbuildshell";
   nativeBuildInputs = [
     pkgs.git
+    pkgs.just
     pkgs.nixFlakes
   ];
 

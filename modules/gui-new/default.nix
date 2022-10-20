@@ -58,7 +58,7 @@
         menu = "wofi --show run";
         bars = [
           {
-            fonts.size = 14.0;
+            fonts.size = 12.0;
             command = "waybar";
             position = "bottom";
           }

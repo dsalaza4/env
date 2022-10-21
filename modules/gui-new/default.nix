@@ -47,10 +47,10 @@
         pkgs.gnome.nautilus
         pkgs.grim
         pkgs.mako
+        pkgs.pavucontrol
         pkgs.sway-contrib.grimshot
         pkgs.swayidle
         pkgs.swaylock
-        pkgs.waybar
         pkgs.wl-clipboard
         pkgs.wofi
       ];
@@ -60,6 +60,83 @@
         size = 20;
         gtk.enable = true;
         x11.enable = true;
+      };
+    };
+    programs.waybar = {
+      enable = true;
+      settings = {
+        mainBar = {
+          layer = "top";
+          position = "bottom";
+          height = 34;
+          output = [
+            "eDP-1"
+          ];
+          modules-left = ["sway/workspaces" "wlr/taskbar"];
+          modules-center = ["sway/window"];
+          modules-right = ["tray" "clock" "pulseaudio" "network" "battery" "sway/language" "backlight"];
+
+          backlight = {
+            format = "{percent}% {icon}";
+            format-icons = ["🔅" "🔆"];
+          };
+
+          battery = {
+            interval = 60;
+            states = {
+              critical = 15;
+            };
+            format = "{capacity}% {icon}";
+            format-icons = ["🪫" "🔋"];
+          };
+
+          clock = {
+            format = "📅 {:%b %d %Y (%R)}";
+            tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+            today-format = "<span color='#ff6699'><b><u>{}</u></b></span>";
+            week-pos = "left";
+            week-format = "<span color='#99ffdd'><b>{}</b></span>";
+            interval = 60;
+          };
+
+          network = {
+            format = "{ifname}";
+            format-linked = "{ifname} (No IP) ";
+            format-alt = "{ifname}: {ipaddr}/{cidr}";
+            format-wifi = "{essid} ({signalStrength}%) 🛜";
+            format-disconnected = "Disconnected ⚠️";
+            tooltip-format = "{ifname} via {gwaddr} 🛜";
+            tooltip-format-wifi = "{essid} ({signalStrength}%) 🛜";
+            tooltip-format-disconnected = "Disconnected";
+          };
+
+          pulseaudio = {
+            format = "{volume}% {icon}";
+            format-bluetooth = "{volume}% {icon}🛜";
+            format-muted = "🔇";
+            format-icons.default = ["🔈" "🔉" "🔊"];
+            scroll-step = 1;
+            on-click = "pavucontrol";
+          };
+
+          "sway/workspaces" = {
+            disable-scroll = true;
+            all-outputs = true;
+          };
+
+          "sway/language" = {
+            format = "{short} 🌐";
+          };
+
+          "wlr/taskbar" = {
+            format = "{icon}";
+            icon-size = 14;
+            icon-theme = "Numix-Circle";
+            tooltip-format = "{title}";
+            on-click = "activate";
+            on-click-middle = "close";
+          };
+        };
       };
     };
     wayland.windowManager.sway = {
@@ -77,7 +154,6 @@
         bars = [
           {
             command = "waybar";
-            position = "bottom";
           }
         ];
         input = {
@@ -141,18 +217,6 @@
           "${modifier}+b" = "split v";
           "${modifier}+v" = "split h";
 
-          "${modifier}+Shift+f" = "fullscreen toggle";
-
-          "${modifier}+q" = "layout stacking";
-          "${modifier}+w" = "layout tabbed";
-          "${modifier}+f" = "layout toggle split";
-
-          "${modifier}+t" = "floating toggle";
-          "${modifier}+Shift+t" = "sticky toggle";
-          "${modifier}+space" = "focus mode_toggle";
-
-          "${modifier}+Shift+b" = "bar mode toggle";
-
           "${modifier}+1" = "workspace number 1";
           "${modifier}+2" = "workspace number 2";
           "${modifier}+3" = "workspace number 3";
@@ -174,7 +238,7 @@
           "${modifier}+Shift+9" = "move container to workspace number 9";
 
           "${modifier}+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify save screen ${screenshot_dir}";
-          "${modifier}+Shift+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot copy area";
+          "${modifier}+Shift+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy area";
 
           "${modifier}+F2" = "exec ${pkgs.pamixer}/bin/pamixer -d 10";
           "${modifier}+F2+Shift" = "exec ${pkgs.pamixer}/bin/pamixer -d 10 --allow-boost";
@@ -182,8 +246,10 @@
           "${modifier}+F3+Shift" = "exec ${pkgs.pamixer}/bin/pamixer -i 10 --allow-boost";
           "${modifier}+F1" = "exec ${pkgs.pamixer}/bin/pamixer -t";
 
-          "${modifier}+F5" = "exec ${pkgs.light}/bin/light -U 10";
-          "${modifier}+F6" = "exec ${pkgs.light}/bin/light -A 10";
+          "${modifier}+F5" = "exec light -U 10";
+          "${modifier}+F6" = "exec light -A 10";
+          "${modifier}+Space" = "exec light -s sysfs/leds/tpacpi::kbd_backlight -S 100";
+          "${modifier}+Space+Shift" = "exec light -s sysfs/leds/tpacpi::kbd_backlight -S 0";
         };
       };
     };

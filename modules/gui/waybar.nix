@@ -6,7 +6,15 @@
         layer = "top";
         modules-left = ["wlr/taskbar"];
         modules-center = ["sway/workspaces"];
-        modules-right = ["tray" "clock" "pulseaudio" "network" "battery" "sway/language" "backlight"];
+        modules-right = [
+          "tray"
+          "clock"
+          "pulseaudio"
+          "network"
+          "backlight"
+          "battery"
+          "sway/language"
+        ];
 
         backlight = {
           format = "{percent}% {icon}";
@@ -23,7 +31,7 @@
         };
 
         clock = {
-          format = "📅 {:%b %d %Y (%R)}";
+          format = "{:%R} 📅";
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
           today-format = "<span color='#ff6699'><b><u>{}</u></b></span>";
           week-pos = "left";
@@ -32,23 +40,20 @@
         };
 
         network = {
-          format = "{ifname}";
-          format-linked = "{ifname} (No IP) ";
-          format-alt = "{ifname}: {ipaddr}/{cidr}";
-          format-wifi = "{essid} ({signalStrength}%) 🛜";
+          format-wifi = "{essid} 🛜";
           format-disconnected = "Disconnected ⚠️";
-          tooltip-format = "{ifname} via {gwaddr} 🛜";
-          tooltip-format-wifi = "{essid} ({signalStrength}%) 🛜";
-          tooltip-format-disconnected = "Disconnected";
+          on-click = "alacritty -e nmtui";
+          on-click-right = "pkill nmtui";
         };
 
         pulseaudio = {
           format = "{volume}% {icon}";
-          format-bluetooth = "{volume}% {icon}🛜";
+          format-bluetooth = "{volume}% {icon} 🛜";
           format-muted = "🔇";
           format-icons.default = ["🔈" "🔉" "🔊"];
           scroll-step = 1;
           on-click = "pavucontrol";
+          on-click-right = "pkill pavucontrol";
         };
 
         "sway/workspaces" = {

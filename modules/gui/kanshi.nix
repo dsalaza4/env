@@ -2,12 +2,11 @@
   home-manager.users.nixos = {
     services.kanshi = {
       enable = true;
-      systemdTarget = "sway-session.target";
       profiles = let
-        moveWorkspace = output: "${pkgs.sway}/bin/swaymsg workspace 1, move workspace to ${output}";
+        moveSession = output: "${pkgs.sway}/bin/swaymsg workspace 1, move workspace to ${output}";
       in {
         home = {
-          exec = [(moveWorkspace "DP-2")];
+          exec = [(moveSession "DP-2")];
           outputs = [
             {
               criteria = "DP-2";
@@ -22,7 +21,7 @@
           ];
         };
         undocked = {
-          exec = [(moveWorkspace "eDP-1")];
+          exec = [(moveSession "eDP-1")];
           outputs = [
             {
               criteria = "eDP-1";

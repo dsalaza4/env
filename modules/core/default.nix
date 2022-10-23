@@ -18,6 +18,9 @@
 
   documentation.nixos.enable = false;
 
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

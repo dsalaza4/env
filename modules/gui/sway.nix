@@ -47,16 +47,20 @@
         size = 12.0;
       };
       focus.followMouse = "always";
-      gaps = {
-        inner = 1;
-        outer = 1;
-        smartGaps = true;
-        smartBorders = "on";
-      };
+
+      startup = [
+        {
+          always = true;
+          command = ''
+            swayidle -w timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+          '';
+        }
+      ];
+
       keybindings = let
         screenshot_dir = "Pictures/Screenshots/$(date +'%Y-%m-%d+%H:%M:%S').png";
       in {
-        "${modifier}+Return" = "exec alacritty";
+        "${modifier}+Return" = "exec ${terminal}";
         "${modifier}+Shift+c" = "kill";
         "${modifier}+Shift+r" = "reload; exec_always pkill kanshi; exec kanshi";
 
@@ -106,12 +110,16 @@
         "Print" = "exec grimshot --notify save screen ${screenshot_dir}";
         "Shift+Print" = "exec grimshot --notify copy area";
 
-        "XF86AudioLowerVolume" = "exec pamixer -d 10 --allow-boost";
-        "XF86AudioRaiseVolume" = "exec pamixer -i 10 --allow-boost";
-        "XF86AudioMute" = "exec pamixer -t";
+        "XF86AudioLowerVolume" = "exec ${pkgs.pamixer} -d 10 --allow-boost";
+        "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer} -i 10 --allow-boost";
+        "XF86AudioMute" = "exec ${pkgs.pamixer} -t";
 
-        "XF86MonBrightnessDown" = "exec light -U 10";
-        "XF86MonBrightnessUp" = "exec light -A 10";
+        "XF86MonBrightnessDown" = "exec ${pkgs.light} -U 10";
+        "XF86MonBrightnessUp" = "exec ${pkgs.light} -A 10";
+
+        "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
+        "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
+        "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
       };
     };
   };

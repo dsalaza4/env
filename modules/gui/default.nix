@@ -23,7 +23,6 @@
   };
   programs.dconf.enable = true;
   security.pam.services.swaylock.text = "auth include login";
-  programs.light.enable = true;
   users.users.nixos.extraGroups = ["video"];
 
   fonts = {
@@ -54,7 +53,6 @@
         pkgs.gnome.nautilus
         pkgs.grim
         pkgs.mako
-        pkgs.pamixer
         pkgs.pavucontrol
         pkgs.sway-contrib.grimshot
         pkgs.swayidle

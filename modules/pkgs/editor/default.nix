@@ -11,6 +11,7 @@
     pkgs.vscode-extensions._4ops.terraform
     pkgs.vscode-extensions.bbenoist.nix
     pkgs.vscode-extensions.coolbear.systemd-unit-file
+    pkgs.vscode-extensions.github.github-vscode-theme
     pkgs.vscode-extensions.eamodio.gitlens
     pkgs.vscode-extensions.grapecity.gc-excelviewer
     pkgs.vscode-extensions.hashicorp.terraform
@@ -164,13 +165,7 @@
     "workbench.editor.openPositioning" = "last";
     "workbench.settings.editor" = "json";
     "workbench.startupEditor" = "none";
-    "terminal.integrated.defaultLocation" = "editor";
-    "terminal.integrated.fontSize" = 12;
-    "terminal.integrated.shellIntegration.history" = 10000;
-    "terminal.integrated.confirmOnExit" = "hasChildProcesses";
-    "terminal.integrated.fontFamily" = "monospace";
-    "terminal.integrated.scrollback" = 100000;
-    "terminal.integrated.sendKeybindingsToShell" = true;
+    "workbench.colorTheme" = "GitHub Dark";
   };
 in {
   environment.variables.EDITOR = "${editor}/bin/code";

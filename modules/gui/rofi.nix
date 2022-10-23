@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   home-manager.users.nixos = {
     home.file.".config/rofi/theme.rasi".text = ''
       * {

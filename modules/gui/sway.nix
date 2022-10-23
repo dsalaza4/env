@@ -49,7 +49,7 @@
       focus.followMouse = "always";
       gaps = {
         inner = 1;
-        outer = 5;
+        outer = 1;
         smartGaps = true;
         smartBorders = "on";
       };
@@ -58,7 +58,7 @@
       in {
         "${modifier}+Return" = "exec alacritty";
         "${modifier}+Shift+c" = "kill";
-        "${modifier}+Shift+r" = "reload";
+        "${modifier}+Shift+r" = "reload; exec_always pkill kanshi; exec kanshi";
 
         "${modifier}+p" = "${menu}";
 

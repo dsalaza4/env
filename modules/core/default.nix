@@ -16,6 +16,8 @@
   in
     builtins.trace "Linux: ${packages.kernel.version}" packages;
 
+  documentation.nixos.enable = false;
+
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

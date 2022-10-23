@@ -4,9 +4,6 @@
     settings = {
       mainBar = {
         layer = "top";
-        output = [
-          "eDP-1"
-        ];
         modules-left = ["wlr/taskbar"];
         modules-center = ["sway/workspaces"];
         modules-right = ["tray" "clock" "pulseaudio" "network" "battery" "sway/language" "backlight"];

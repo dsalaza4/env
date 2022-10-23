@@ -5,6 +5,7 @@
     ./network
     ./nix
     ./pkgs
+    ./startup
     ./storage
     ./tz
     ./users

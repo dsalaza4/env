@@ -1,29 +1,30 @@
 {pkgs, ...}: {
-  services = {
-    gnome = {
-      core-utilities.enable = false;
-      games.enable = false;
-    };
-    xserver = {
+  imports = [
+    ./kanshi.nix
+    ./rofi.nix
+    ./sway.nix
+    ./waybar.nix
+  ];
+
+  hardware = {
+    opengl = {
       enable = true;
-      libinput = {
-        enable = true;
-        touchpad = {
-          naturalScrolling = true;
-          middleEmulation = true;
-          tapping = true;
-        };
-      };
-      displayManager = {
-        gdm = {
-          enable = true;
-          wayland = true;
-        };
-      };
-      desktopManager.gnome.enable = true;
+      driSupport = true;
     };
   };
-  environment.systemPackages = [pkgs.gnome.nautilus];
+  xdg = {
+    portal = {
+      enable = true;
+      extraPortals = [
+        pkgs.xdg-desktop-portal-wlr
+        pkgs.xdg-desktop-portal-gtk
+      ];
+    };
+  };
+  programs.dconf.enable = true;
+  security.pam.services.swaylock.text = "auth include login";
+  programs.light.enable = true;
+  users.users.nixos.extraGroups = ["video"];
 
   fonts = {
     enableDefaultFonts = false;
@@ -46,11 +47,26 @@
       };
     };
   };
+
   home-manager.users.nixos = {
     home = {
-      keyboard = {
-        layout = "us,latam";
-        options = ["grp:win_space_toggle"];
+      packages = [
+        pkgs.gnome.nautilus
+        pkgs.grim
+        pkgs.mako
+        pkgs.pamixer
+        pkgs.pavucontrol
+        pkgs.sway-contrib.grimshot
+        pkgs.swayidle
+        pkgs.swaylock
+        pkgs.wl-clipboard
+      ];
+      pointerCursor = {
+        package = pkgs.capitaine-cursors;
+        name = "capitaine-cursors-white";
+        size = 20;
+        gtk.enable = true;
+        x11.enable = true;
       };
     };
     gtk = {
@@ -59,6 +75,10 @@
         name = "monospace";
         size = 12;
       };
+    };
+    qt = {
+      enable = true;
+      platformTheme = "gtk";
     };
   };
 }

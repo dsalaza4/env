@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   home-manager.users.nixos.wayland.windowManager.sway = {
     enable = true;
     xwayland = true;
@@ -10,7 +10,7 @@
     config = rec {
       modifier = "Mod4";
       terminal = "alacritty";
-      menu = "exec wofi --gtk-dark --show run";
+      menu = "exec rofi -show drun";
       bars = [
         {
           command = "waybar";
@@ -103,19 +103,15 @@
         "${modifier}+Shift+8" = "move container to workspace number 8";
         "${modifier}+Shift+9" = "move container to workspace number 9";
 
-        "${modifier}+Print" = "exec grimshot --notify save screen ${screenshot_dir}";
-        "${modifier}+Shift+Print" = "exec grimshot --notify copy area";
+        "Print" = "exec grimshot --notify save screen ${screenshot_dir}";
+        "Shift+Print" = "exec grimshot --notify copy area";
 
-        "${modifier}+F2" = "exec pamixer -d 10";
-        "${modifier}+F2+Shift" = "exec pamixer -d 10 --allow-boost";
-        "${modifier}+F3" = "exec pamixer -i 10";
-        "${modifier}+F3+Shift" = "exec pamixer -i 10 --allow-boost";
-        "${modifier}+F1" = "exec pamixer -t";
+        "XF86AudioLowerVolume" = "exec pamixer -d 10 --allow-boost";
+        "XF86AudioRaiseVolume" = "exec pamixer -i 10 --allow-boost";
+        "XF86AudioMute" = "exec pamixer -t";
 
-        "${modifier}+F5" = "exec light -U 10";
-        "${modifier}+F6" = "exec light -A 10";
-        "${modifier}+Space" = "exec light -s sysfs/leds/tpacpi::kbd_backlight -S 100";
-        "${modifier}+Space+Shift" = "exec light -s sysfs/leds/tpacpi::kbd_backlight -S 0";
+        "XF86MonBrightnessDown" = "exec light -U 10";
+        "XF86MonBrightnessUp" = "exec light -A 10";
       };
     };
   };

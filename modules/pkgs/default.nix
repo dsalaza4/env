@@ -24,6 +24,8 @@
       pkgs.kubectl
       pkgs.gnugrep
       pkgs.google-chrome
+      pkgs.nodejs
+      pkgs.pamixer
       pkgs.parted
       pkgs.python310
       pkgs.shadow

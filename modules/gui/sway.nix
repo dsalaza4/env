@@ -51,6 +51,10 @@
       startup = [
         {
           always = true;
+          command = "kanshi";
+        }
+        {
+          always = true;
           command = ''
             swayidle -w timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
           '';
@@ -62,7 +66,7 @@
       in {
         "${modifier}+Return" = "exec ${terminal}";
         "${modifier}+Shift+c" = "kill";
-        "${modifier}+Shift+r" = "reload; exec_always pkill kanshi; exec kanshi";
+        "${modifier}+Shift+r" = "reload";
 
         "${modifier}+p" = "${menu}";
 
@@ -110,9 +114,9 @@
         "Print" = "exec grimshot --notify save screen ${screenshot_dir}";
         "Shift+Print" = "exec grimshot --notify copy area";
 
-        "XF86AudioLowerVolume" = "exec ${pkgs.pamixer} -d 10 --allow-boost";
-        "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer} -i 10 --allow-boost";
-        "XF86AudioMute" = "exec ${pkgs.pamixer} -t";
+        "XF86AudioLowerVolume" = "exec pamixer -d 10 --allow-boost";
+        "XF86AudioRaiseVolume" = "exec pamixer -i 10 --allow-boost";
+        "XF86AudioMute" = "exec pamixer -t";
 
         "XF86MonBrightnessDown" = "exec ${pkgs.light} -U 10";
         "XF86MonBrightnessUp" = "exec ${pkgs.light} -A 10";

@@ -10,7 +10,7 @@
     config = rec {
       modifier = "Mod4";
       terminal = "alacritty";
-      menu = "exec rofi -show drun";
+      menu = "exec rofi -show drun,run,filebrowser";
       bars = [
         {
           command = "waybar";
@@ -43,7 +43,7 @@
       };
       fonts = {
         names = ["monospace"];
-        style = "Fira Code";
+        style = "FiraCode Nerd Font";
         size = 12.0;
       };
       focus.followMouse = "always";

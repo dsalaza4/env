@@ -31,18 +31,19 @@
     fonts = [
       pkgs.noto-fonts-emoji
       pkgs.twitter-color-emoji
-      pkgs.fira-code
+      (pkgs.nerdfonts.override
+        {
+          fonts = [
+            "FiraCode"
+          ];
+        })
     ];
     fontconfig = {
       enable = true;
       defaultFonts = {
-        monospace = ["Fira Code"];
-        sansSerif = ["Fira Code"];
-        serif = ["Fira Code"];
-        emoji = [
-          "Twitter Color Emoji"
-          "Noto Color Emoji"
-        ];
+        monospace = ["FiraCode Nerd Font"];
+        sansSerif = ["FiraCode Nerd Font"];
+        serif = ["FiraCode Nerd Font"];
       };
     };
   };
@@ -69,9 +70,17 @@
     };
     gtk = {
       enable = true;
+      theme = {
+        name = "WhiteSur-Dark";
+        package = pkgs.whitesur-gtk-theme;
+      };
       font = {
         name = "monospace";
         size = 12;
+      };
+      iconTheme = {
+        name = "Papirus";
+        package = pkgs.papirus-icon-theme;
       };
     };
     qt = {

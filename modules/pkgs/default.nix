@@ -16,6 +16,7 @@
       pkgs._1password-gui-beta
       pkgs.awscli
       pkgs.binutils
+      pkgs.brave
       pkgs.comma
       pkgs.coreutils
       pkgs.htop
@@ -23,7 +24,6 @@
       pkgs.just
       pkgs.kubectl
       pkgs.gnugrep
-      pkgs.google-chrome
       pkgs.nodejs
       pkgs.pamixer
       pkgs.parted

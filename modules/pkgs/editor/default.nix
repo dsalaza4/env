@@ -159,6 +159,7 @@
     "update.mode" = "none";
     "update.showReleaseNotes" = false;
     "window.zoomLevel" = 1.5;
+    "window.menuBarVisibility" = "toggle";
     "workbench.activityBar.visible" = true;
     "workbench.editor.enablePreview" = false;
     "workbench.editor.focusRecentEditorAfterClose" = false;

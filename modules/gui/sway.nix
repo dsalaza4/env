@@ -128,6 +128,10 @@ in {
             always = true;
             command = "kanshi";
           }
+          {
+            always = true;
+            command = "blueman-applet";
+          }
         ];
 
         keybindings = let
@@ -184,8 +188,8 @@ in {
           "Print" = "exec grimshot --notify save screen ${screenshot_dir}";
           "Shift+Print" = "exec grimshot --notify copy area";
 
-          "XF86AudioLowerVolume" = "exec pamixer -d 5 --allow-boost";
-          "XF86AudioRaiseVolume" = "exec pamixer -i 5 --allow-boost";
+          "XF86AudioLowerVolume" = "exec pamixer -d 5";
+          "XF86AudioRaiseVolume" = "exec pamixer -i 5";
           "XF86AudioMute" = "exec pamixer -t";
 
           "XF86MonBrightnessDown" = "exec ${pkgs.light} -U 5";

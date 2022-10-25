@@ -24,6 +24,7 @@
     pkgs.vscode-extensions.ms-toolsai.jupyter-renderers
     pkgs.vscode-extensions.njpwerner.autodocstring
     pkgs.vscode-extensions.shardulm94.trailing-spaces
+    pkgs.vscode-extensions.skellock.just
     pkgs.vscode-extensions.streetsidesoftware.code-spell-checker
     pkgs.vscode-extensions.tamasfe.even-better-toml
   ];

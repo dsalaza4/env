@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./kanshi.nix
+    ./lock.nix
     ./mako.nix
     ./rofi.nix
     ./sway.nix
@@ -53,6 +54,7 @@
     home = {
       packages = [
         pkgs.gnome.nautilus
+        pkgs.xdg-utils
       ];
       pointerCursor = {
         package = pkgs.capitaine-cursors;

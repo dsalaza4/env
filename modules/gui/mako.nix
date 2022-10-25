@@ -19,7 +19,7 @@
     defaultTimeout = 10000;
     groupBy = "summary";
     format = ''
-      <span font="FiraCode Nerd Font weight=325 Italic" size="12288">%s</span>\n<span font="FiraCode Nerd Font weight=325" size="12288">%b</span>
+      <span size="12288">%s</span>\n<span size="12288">%b</span>
     '';
   };
 }

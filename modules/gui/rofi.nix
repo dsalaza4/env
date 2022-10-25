@@ -6,7 +6,6 @@
       package = pkgs.rofi-wayland;
       extraConfig = {
         modi = "drun,run,filebrowser";
-        font = "FiraCode Nerd Font 12";
         show-icons = true;
         display-drun = "";
         display-run = "";

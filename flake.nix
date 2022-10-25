@@ -46,6 +46,7 @@
           makes = attrs.makes;
           makesPkg = attrs.makes.defaultPackage.${system};
           pythonOnNix = attrs.pythonOnNix.packages.${system};
+          swayModifier = "Mod4";
           timedoctor = attrs.timedoctor.packages.${system}.default;
         };
 

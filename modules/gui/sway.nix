@@ -43,7 +43,6 @@ in {
     enable = true;
     extraPackages = [
       pkgs.grim
-      pkgs.mako
       pkgs.pavucontrol
       pkgs.sway-contrib.grimshot
       pkgs.wl-clipboard

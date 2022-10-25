@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./kanshi.nix
+    ./mako.nix
     ./rofi.nix
     ./sway.nix
     ./waybar.nix

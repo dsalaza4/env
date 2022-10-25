@@ -17,7 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     timedoctor = {
-      url = "gitlab:kamadoatfluid/timedoctor";
+      url = "gitlab:fluidattacks/timedoctor";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     pythonOnNix = {

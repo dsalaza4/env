@@ -5,7 +5,7 @@
     "--screenshots"
     "--clock"
     "--grace 5"
-    "--fade-in 5"
+    "--fade-in 2"
     "--indicator-idle-visible"
     "--indicator-radius 100"
     "--indicator-thickness 7"

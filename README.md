@@ -21,7 +21,7 @@ You can install the environment with
 
 ```
 $ nix-shell
-$ sudo nixos-rebuild switch --flake .#
+$ just b
 ```
 
 ## Inspiration

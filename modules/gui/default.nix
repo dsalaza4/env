@@ -52,13 +52,6 @@
     home = {
       packages = [
         pkgs.gnome.nautilus
-        pkgs.grim
-        pkgs.mako
-        pkgs.pavucontrol
-        pkgs.sway-contrib.grimshot
-        pkgs.swayidle
-        pkgs.swaylock
-        pkgs.wl-clipboard
       ];
       pointerCursor = {
         package = pkgs.capitaine-cursors;

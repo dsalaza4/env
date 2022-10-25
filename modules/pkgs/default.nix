@@ -6,6 +6,7 @@
   imports = [
     ./editor
     ./git
+    ./sway-toolwait
     ./terminal
     ./timedoctor
   ];

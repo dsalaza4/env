@@ -29,6 +29,7 @@ $ sudo nixos-rebuild switch --flake .#
 Special thanks to the following people
 for being awesome:
 
+1. [adi1090x/rofi](https://github.com/adi1090x/rofi)
 1. [alternateved/nixos-config](https://github.com/alternateved/nixos-config)
 1. [jralvarezc/conf](https://github.com/jralvarezc/conf/tree/master/hosts/profiles)
 1. [kamadorueda/machine](https://github.com/kamadorueda/machine)

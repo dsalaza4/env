@@ -125,17 +125,6 @@ in {
 
         startup = [
           {
-            command = builtins.concatStringsSep ";" [
-              "swaymsg 'workspace 1'"
-              "sway-toolwait --waitfor Alacritty -- alacritty"
-              "sway-toolwait --waitfor code -- code"
-              "swaymsg '[instance=code] resize set width 1600px'"
-              "swaymsg 'workspace 2'"
-              "sway-toolwait --waitfor brave-browser -- brave"
-              "swaymsg 'workspace 1'"
-            ];
-          }
-          {
             always = true;
             command = "kanshi";
           }

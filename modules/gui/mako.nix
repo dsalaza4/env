@@ -5,7 +5,7 @@
     layer = "top";
     markup = true;
     anchor = "top-right";
-    backgroundColor = "#1E1E28";
+    backgroundColor = "#24292e";
     textColor = "#DADAE8";
     width = 450;
     height = 200;

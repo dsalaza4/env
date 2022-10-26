@@ -114,12 +114,12 @@
       }
 
       window#waybar {
-        background: #1E1E28;
+        background: #1d2024;
         color: #DADAE8;
       }
 
       tooltip {
-        background: #1E1E28;
+        background: #1d2024;
         border-radius: 15px;
         border-width: 2px;
         border-style: solid;
@@ -127,7 +127,7 @@
       }
 
       #workspaces {
-        background: #332E41;
+        background: #181b1f;
         margin-left: 5px;
         margin-top: 5px;
         margin-bottom: 5px;
@@ -142,7 +142,7 @@
       }
 
       #workspaces button.focused {
-        color: #A4B9EF;
+        color: #a4b9ef;
       }
 
       #workspaces button.urgent {
@@ -150,14 +150,14 @@
       }
 
       #workspaces button:hover {
-        background: #332e41;
-        border-color: #332e41;
-        color: #A4B9EF;
+        background: #181b1f;
+        border-color: #a4b9ef;
+        color: #a4b9ef;
       }
 
       #backlight, #battery, #clock, #language, #network, #pulseaudio, #taskbar, #tray, #workspaces {
         padding: 2px 10px;
-        background: #332E41;
+        background: #181b1f;
         margin-top: 5px;
         margin-bottom: 5px;
       }
@@ -168,6 +168,12 @@
         margin-left: 5px;
         margin-right: 5px;
         border-radius: 15px;
+      }
+
+      #taskbar button:hover {
+        background: #181b1f;
+        border-color: #a4b9ef;
+        color: #a4b9ef;
       }
 
       #tray {

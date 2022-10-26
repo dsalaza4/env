@@ -24,31 +24,31 @@
       line-ver-color = "00000000";
       line-wrong-color = "00000000";
 
-      ring-color = "79b8ff";
-      ring-clear-color = "79b8ff";
-      ring-caps-lock-color = "79b8ff";
-      ring-ver-color = "79b8ff";
-      ring-wrong-color = "79b8ff";
+      ring-color = "00000000";
+      ring-clear-color = "00000000";
+      ring-caps-lock-color = "00000000";
+      ring-ver-color = "00000000";
+      ring-wrong-color = "00000000";
 
-      text-color = "ffab70";
-      text-clear-color = "ffab70";
-      text-caps-lock-color = "ffab70";
-      text-ver-color = "ffab70";
-      text-wrong-color = "ffab70";
+      text-color = "a4b9ef";
+      text-clear-color = "a4b9ef";
+      text-caps-lock-color = "a4b9ef";
+      text-ver-color = "a4b9ef";
+      text-wrong-color = "a4b9ef";
 
-      inside-color = "1b1f23";
-      inside-clear-color = "1b1f23";
-      inside-caps-lock-color = "1b1f23";
-      inside-ver-color = "1b1f23";
-      inside-wrong-color = "1b1f23";
+      inside-color = "00000000";
+      inside-clear-color = "00000000";
+      inside-caps-lock-color = "00000000";
+      inside-ver-color = "00000000";
+      inside-wrong-color = "00000000";
 
       layout-bg-color = "00000000";
       layout-border-color = "00000000";
       layout-text-color = "00000000";
 
       separator-color = "00000000";
-      key-hl-color = "ffab70";
-      bs-hl-color = "ffab70";
+      key-hl-color = "a4b9ef";
+      bs-hl-color = "a4b9ef";
     };
     services.swayidle = {
       enable = true;

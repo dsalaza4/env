@@ -23,7 +23,7 @@
     config = rec {
       modifier = swayModifier;
       terminal = "alacritty";
-      menu = "exec rofi -show drun,run,filebrowser";
+      menu = "exec rofi -show drun,run";
       bars = [
         {
           command = "waybar";
@@ -51,7 +51,7 @@
         in "${img} fill";
       };
       seat."*" = {
-        xcursor_theme = "capitaine-cursors-white 20";
+        xcursor_theme = "Dracula-cursors";
         hide_cursor = "when-typing enable";
       };
       fonts = {

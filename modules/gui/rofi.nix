@@ -5,11 +5,10 @@
       pass.enable = true;
       package = pkgs.rofi-wayland;
       extraConfig = {
-        modi = "drun,run,filebrowser";
+        modi = "drun,run";
         show-icons = true;
         display-drun = "";
         display-run = "";
-        display-filebrowser = "";
         drun-display-format = "{name}";
         disable-history = false;
       };
@@ -17,10 +16,10 @@
     };
     home.file.".config/rofi/theme/main.rasi".text = ''
       * {
-          background:                  #1E2127FF;
-          background-alt:              #282B31FF;
+          background:                  #24292e;
+          background-alt:              #21262b;
           foreground:                  #FFFFFFFF;
-          selected:                    #61AFEFFF;
+          selected:                    #a4b9ef;
           active:                      #98C379FF;
           urgent:                      #E06C75FF;
           border-colour:               var(selected);
@@ -55,7 +54,7 @@
           location:                    center;
           anchor:                      center;
           fullscreen:                  false;
-          width:                       600px;
+          width:                       400px;
           x-offset:                    0px;
           y-offset:                    0px;
 
@@ -63,7 +62,7 @@
           enabled:                     true;
           margin:                      0px;
           padding:                     0px;
-          border:                      0px solid;
+          border:                      1px solid;
           border-radius:               10px;
           border-color:                @border-colour;
           cursor:                      "default";

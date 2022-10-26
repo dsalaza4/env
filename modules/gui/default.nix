@@ -57,9 +57,8 @@
         pkgs.xdg-utils
       ];
       pointerCursor = {
-        package = pkgs.capitaine-cursors;
-        name = "capitaine-cursors-white";
-        size = 20;
+        package = pkgs.dracula-theme;
+        name = "Dracula-cursors";
         gtk.enable = true;
         x11.enable = true;
       };
@@ -67,15 +66,15 @@
     gtk = {
       enable = true;
       theme = {
-        name = "WhiteSur-Dark";
-        package = pkgs.whitesur-gtk-theme;
+        name = "Dracula";
+        package = pkgs.dracula-theme;
       };
       font = {
         name = "monospace";
         size = 12;
       };
       iconTheme = {
-        name = "Papirus";
+        name = "Papirus-Dark";
         package = pkgs.papirus-icon-theme;
       };
     };

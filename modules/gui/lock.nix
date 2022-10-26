@@ -3,6 +3,7 @@
   swayModifier,
   ...
 }: {
+  security.pam.services.swaylock.text = "auth include login";
   home-manager.users.nixos = {
     programs.swaylock.settings = {
       daemonize = true;

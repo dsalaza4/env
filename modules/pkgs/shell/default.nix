@@ -25,7 +25,6 @@
     enableSyntaxHighlighting = true;
     oh-my-zsh = {
       enable = true;
-      #theme = "powerlevel10k";
       plugins = [
         "1password"
         "branch"
@@ -33,6 +32,7 @@
         "dirhistory"
         "docker"
         "emoji"
+        "git"
         "history"
         "kubectl"
         "sudo"

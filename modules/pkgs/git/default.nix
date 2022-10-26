@@ -17,18 +17,6 @@
           merge.tool = "${editor}/bin/code";
           mergetool.editor.cmd = "${editor}/bin/code --wait $MERGED";
         };
-        aliases = {
-          a = "add -p";
-          c = "commit --allow-empty";
-          ca = "commit --amend --allow-empty";
-          d = "diff";
-          f = "fetch --all";
-          l = "log";
-          p = "push -f";
-          ro = "pull --autostash --progress --rebase --stat origin";
-          rf = "pull --autostash --progress --rebase --stat fork";
-          s = "status";
-        };
         signing = {
           signByDefault = true;
           key = "0x1DB5E8128304E704";

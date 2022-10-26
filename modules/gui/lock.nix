@@ -73,6 +73,10 @@
           command = "${pkgs.sway}/bin/swaymsg 'output * dpms off'";
           resumeCommand = "${pkgs.sway}/bin/swaymsg 'output * dpms on'";
         }
+        {
+          timeout = 30 * 60;
+          command = "${pkgs.systemd}/bin/systemctl suspend";
+        }
       ];
     };
     wayland.windowManager.sway.config.keybindings."${swayModifier}+l" = "exec ${pkgs.swaylock-effects}/bin/swaylock";

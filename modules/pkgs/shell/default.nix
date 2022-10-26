@@ -50,6 +50,11 @@
         name = "powerlevel10k-config";
         src = ./.;
       }
+      {
+        file = "nix-shell.plugin.zsh";
+        name = "zsh-nix-shell";
+        src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
+      }
     ];
   };
 }

@@ -59,23 +59,25 @@
       pointerCursor = {
         package = pkgs.dracula-theme;
         name = "Dracula-cursors";
+        size = 12;
         gtk.enable = true;
         x11.enable = true;
       };
     };
     gtk = {
+      # Themes stored in /etc/profiles/per-user/nixos/share/themes
       enable = true;
       theme = {
-        name = "Dracula";
-        package = pkgs.dracula-theme;
+        package = pkgs.whitesur-gtk-theme;
+        name = "WhiteSur-Dark";
       };
       font = {
         name = "monospace";
         size = 12;
       };
       iconTheme = {
-        name = "Papirus-Dark";
         package = pkgs.papirus-icon-theme;
+        name = "Papirus-Dark";
       };
     };
     qt = {

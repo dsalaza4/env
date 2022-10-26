@@ -51,7 +51,7 @@
           format-disconnected = "<span size='13000' foreground='#F2CECF'></span> Disconnected";
           tooltip-format-wifi = "Signal Strenght: {signalStrength}%";
           on-click = "alacritty -e nmtui";
-          on-click-right = "pkill nmtui";
+          on-click-middle = "pkill nmtui";
         };
 
         pulseaudio = {

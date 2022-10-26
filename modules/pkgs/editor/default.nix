@@ -59,7 +59,7 @@
       {
         command =
           (pkgs.writeScript "python-fmt" ''
-            #! ${pkgs.bash}/bin/bash
+            #! ${pkgs.zsh}/bin/zsh
             ${pythonOnNix.black-latest-python39-bin}/bin/black \
               --config \
               ${makes}/src/evaluator/modules/format-python/settings-black.toml \
@@ -88,7 +88,7 @@
       {
         command =
           (pkgs.writeScript "toml-fmt" ''
-            #! ${pkgs.bash}/bin/bash
+            #! ${pkgs.zsh}/bin/zsh
             NODE_PATH=${pkgs.nodePackages.prettier-plugin-toml}/lib/node_modules:$NODE_PATH \
             ${pkgs.nodePackages.prettier}/bin/prettier \
               --parser toml \

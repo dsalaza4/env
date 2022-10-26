@@ -37,7 +37,6 @@
     useGlobalPkgs = true;
     users = {
       nixos = {
-        programs.bash.enable = true;
         programs.home-manager.enable = true;
         targets.genericLinux.enable = true;
         systemd.user.startServices = true;

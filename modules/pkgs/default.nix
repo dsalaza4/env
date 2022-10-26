@@ -6,6 +6,7 @@
   imports = [
     ./editor
     ./git
+    ./shell
     ./terminal
     ./timedoctor
   ];
@@ -17,8 +18,8 @@
       pkgs.awscli
       pkgs.binutils
       pkgs.brave
-      pkgs.comma
       pkgs.coreutils
+      pkgs.direnv
       pkgs.htop
       pkgs.jq
       pkgs.just

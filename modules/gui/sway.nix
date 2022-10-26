@@ -24,11 +24,44 @@
       modifier = swayModifier;
       terminal = "alacritty";
       menu = "exec rofi -show drun,run";
-      bars = [
-        {
-          command = "waybar";
-        }
-      ];
+      bars = [{command = "waybar";}];
+      colors = {
+        focused = {
+          background = "#332E41";
+          border = "#A4B9EF";
+          childBorder = "#A4B9EF";
+          indicator = "#DADAE8";
+          text = "#E5B4E2";
+        };
+        focusedInactive = {
+          background = "#332E41";
+          border = "#A4B9EF";
+          childBorder = "#A4B9EF";
+          indicator = "#DADAE8";
+          text = "#E5B4E2";
+        };
+        unfocused = {
+          background = "#1E1E28";
+          border = "#A4B9EF";
+          childBorder = "#575268";
+          indicator = "#DADAE8";
+          text = "#DADAE8";
+        };
+        urgent = {
+          background = "#575268";
+          border = "#A4B9EF";
+          childBorder = "#EBDDAA";
+          indicator = "#DADAE8";
+          text = "#EBDDAA";
+        };
+      };
+      gaps = {
+        top = 2;
+        bottom = 2;
+        left = 2;
+        right = 2;
+        inner = 5;
+      };
       input = {
         "type:keyboard" = {
           xkb_layout = "us,latam";
@@ -75,8 +108,9 @@
         screenshot_dir = "Pictures/Screenshots/$(date +'%Y-%m-%d+%H:%M:%S').png";
       in {
         "${modifier}+Return" = "exec ${terminal}";
-        "${modifier}+Shift+c" = "kill";
-        "${modifier}+Shift+r" = "reload";
+        "${modifier}+q" = "kill";
+        "${modifier}+r" = "reload";
+        "${modifier}+Shift+r" = "exec swaymsg exit";
 
         "${modifier}+p" = "${menu}";
 

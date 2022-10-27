@@ -21,7 +21,9 @@ Significant architectural changes are likely to happen.
 
 ![workspace](/static/workspace.png)
 
-## Requirements
+## How to run
+
+### Requirements
 
 1. An `ext4` root partition with label `root` and mountpoint on `/`.
 1. A `vfat` boot partition with label `ESP` and mountpoint on `/boot/efi`.
@@ -29,7 +31,7 @@ Significant architectural changes are likely to happen.
 Additional information can be found in the
 [storage module](/modules/storage/default.nix)
 
-## How to run
+### Installation
 
 You can install the environment with
 

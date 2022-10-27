@@ -7,6 +7,20 @@ for my machine.
 :warning: This is a work in progress.
 Significant architectural changes are likely to happen.
 
+## How it looks
+
+### Background
+
+![background](/static/background.png)
+
+### Browser
+
+![browser](/static/browser.png)
+
+### Workspace
+
+![workspace](/static/workspace.png)
+
 ## Requirements
 
 1. An `ext4` root partition with label `root` and mountpoint on `/`.

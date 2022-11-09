@@ -7,7 +7,7 @@
         enableExtensionPack = true;
       };
       guest = {
-        enable = false;
+        enable = true;
         x11 = true;
       };
     };

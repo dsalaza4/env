@@ -44,7 +44,7 @@
           alejandra = attrs.alejandra.defaultPackage.${system};
           editor = pkgs.vscode;
           makes = attrs.makes;
-          makesPkg = attrs.makes.defaultPackage.${system};
+          makesPkg = attrs.makes.packages.${system}.default;
           pythonOnNix = attrs.pythonOnNix.packages.${system};
           swayModifier = "Mod4";
           timedoctor = attrs.timedoctor.packages.${system}.default;

@@ -3,14 +3,17 @@
   swayModifier,
   ...
 }: {
-  programs.sway = {
-    enable = true;
-    extraPackages = [
-      pkgs.grim
-      pkgs.pavucontrol
-      pkgs.sway-contrib.grimshot
-      pkgs.wl-clipboard
-    ];
+  programs = {
+    light.enable = true;
+    sway = {
+      enable = true;
+      extraPackages = [
+        pkgs.grim
+        pkgs.pavucontrol
+        pkgs.sway-contrib.grimshot
+        pkgs.wl-clipboard
+      ];
+    };
   };
   home-manager.users.nixos.wayland.windowManager.sway = {
     enable = true;
@@ -166,8 +169,8 @@
         "XF86AudioRaiseVolume" = "exec pamixer -i 5";
         "XF86AudioMute" = "exec pamixer -t";
 
-        "XF86MonBrightnessDown" = "exec ${pkgs.light} -U 5";
-        "XF86MonBrightnessUp" = "exec ${pkgs.light} -A 5";
+        "XF86MonBrightnessDown" = "exec light -U 5";
+        "XF86MonBrightnessUp" = "exec light -A 5";
 
         "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
         "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";

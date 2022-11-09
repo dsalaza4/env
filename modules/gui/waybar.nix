@@ -40,7 +40,7 @@
         clock = {
           format = "<span foreground='#C6AAE8'></span> {:%H:%M}";
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-          today-format = "<span color='#ff6699'><b><u>{}</u></b></span>";
+          today-format = "<span color='#F5AD64'><b><u>{}</u></b></span>";
           week-pos = "left";
           week-format = "<span color='#99ffdd'><b>{}</b></span>";
           interval = 60;

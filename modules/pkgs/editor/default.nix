@@ -69,7 +69,8 @@
       name = "terraform";
       publisher = "hashicorp";
       version = "2.24.3";
-      sha256 = "0ldmf3k435yxmc5pgc57v1mqam8xnmf059gxqv177d6m1b4z9z0z";
+      sha256 = "121wwdg579yyfcjwl7xvd1l0vv3d4rlr1vj4yd25ah6r5kkq56p7";
+      arch = "linux-x64";
     }
     {
       name = "custom-local-formatters";
@@ -88,6 +89,12 @@
       publisher = "mads-hartmann";
       version = "1.14.0";
       sha256 = "058z0fil0xpbnay6b5hgd31bgd3k4x3rnfyb8n0a0m198sxrpd5z";
+    }
+    {
+      name = "vscode-graphql-syntax";
+      publisher = "GraphQL";
+      version = "1.0.4";
+      sha256 = "0l2bniz4iq2bpcdxzpfm810i0zqfpx7xjhrvhyky0avi5i285q7v";
     }
     {
       name = "markdown-all-in-one";
@@ -118,6 +125,12 @@
       publisher = "ms-toolsai";
       version = "1.0.12";
       sha256 = "12l5z60kpz3nx77l8ck6a6w4qdzyz3xkn6k9670r30w365q9lf0z";
+    }
+    {
+      name = "material-icon-theme";
+      publisher = "PKief";
+      version = "4.22.0";
+      sha256 = "0irrivfidgjqfd205gh27r2ccj2anvqgvq7lfaaf92wrrc2zvlsk";
     }
     {
       name = "autodocstring";
@@ -294,13 +307,11 @@
   };
 in {
   environment.variables.EDITOR = "${editor}/bin/code";
-  home-manager.users.nixos = {
-    programs.vscode = {
-      enable = true;
-      package = editor;
-      mutableExtensionsDir = false;
-      inherit extensions;
-      inherit userSettings;
-    };
+  home-manager.users.nixos.programs.vscode = {
+    enable = true;
+    package = editor;
+    mutableExtensionsDir = false;
+    inherit extensions;
+    inherit userSettings;
   };
 }

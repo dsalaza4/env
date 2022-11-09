@@ -114,6 +114,10 @@
 
         "${modifier}+p" = "${menu}";
 
+        "${modifier}+a" = "layout stacking";
+        "${modifier}+s" = "layout tabbed";
+        "${modifier}+d" = "layout toggle split";
+
         "${modifier}+Left" = "focus left";
         "${modifier}+Down" = "focus down";
         "${modifier}+Up" = "focus up";

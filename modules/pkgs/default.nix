@@ -32,6 +32,7 @@
       pkgs.shadow
       pkgs.sops
       pkgs.terraform
+      pkgs.unzip
       pkgs.vlc
       pkgs.yq
       pkgs.wget

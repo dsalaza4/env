@@ -35,9 +35,9 @@ Additional information can be found in the
 
 You can install the environment with
 
-```
+```bash
 $ nix-shell
-$ just b
+$ just
 ```
 
 ## Inspiration

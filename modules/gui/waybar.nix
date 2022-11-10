@@ -10,8 +10,8 @@
           "tray"
           "network"
           "pulseaudio"
-          "backlight"
           "battery"
+          "backlight"
           "clock"
           "sway/language"
         ];
@@ -19,6 +19,8 @@
         backlight = {
           format = "<span size='13000' foreground='#F5AD64'>{icon}</span> {percent}%";
           format-icons = [" " " "];
+          on-scroll-up = "light -A 1";
+          on-scroll-down = "light -U 1";
         };
 
         battery = {
@@ -56,7 +58,7 @@
 
         pulseaudio = {
           format = "<span size='13000' foreground='#EBDDAA'>{icon}</span> {volume}%";
-          format-muted = "<span size='14000' foreground='#EBDDAA'></span> Muted";
+          format-muted = "<span size='13000' foreground='#EBDDAA'></span> Muted";
           format-icons = {
             headphone = " ";
             hands-free = "";
@@ -68,6 +70,7 @@
           };
           scroll-step = 1;
           on-click = "pavucontrol";
+          on-click-right = "pamixer -t";
           on-click-middle = "pkill pavucontrol";
         };
 
@@ -103,6 +106,10 @@
           tooltip-format = "{title}";
           on-click = "activate";
           on-click-middle = "close";
+        };
+
+        tray = {
+          spacing = 10;
         };
       };
     };

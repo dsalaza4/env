@@ -17,4 +17,12 @@
       fsType = "vfat";
     };
   };
+
+  services.udisks2.enable = true;
+  home-manager.users.nixos.services.udiskie = {
+    enable = true;
+    automount = true;
+    notify = true;
+    tray = "auto";
+  };
 }

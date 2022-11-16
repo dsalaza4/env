@@ -294,7 +294,7 @@
     "telemetry.telemetryLevel" = "off";
     "update.mode" = "none";
     "update.showReleaseNotes" = false;
-    "window.zoomLevel" = 1.5;
+    "window.zoomLevel" = 1;
     "window.menuBarVisibility" = "toggle";
     "workbench.activityBar.visible" = true;
     "workbench.editor.enablePreview" = true;
@@ -306,7 +306,7 @@
     "workbench.colorTheme" = "GitHub Dark";
   };
 in {
-  environment.variables.EDITOR = "${editor}/bin/code";
+  environment.variables.EDITOR = "${editor}/bin/code --wait";
   home-manager.users.nixos.programs.vscode = {
     enable = true;
     package = editor;

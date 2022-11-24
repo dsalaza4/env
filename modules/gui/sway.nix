@@ -162,6 +162,11 @@
         "${modifier}+Shift+8" = "move container to workspace number 8";
         "${modifier}+Shift+9" = "move container to workspace number 9";
 
+        "${modifier}+Control+Shift+Left" = "move workspace to output left";
+        "${modifier}+Control+Shift+Down" = "move workspace to output down";
+        "${modifier}+Control+Shift+Up" = "move workspace to output up";
+        "${modifier}+Control+Shift+Right" = "move workspace to output right";
+
         "Print" = "exec grimshot --notify save screen ${screenshot_dir}";
         "Shift+Print" = "exec grimshot --notify copy area";
 

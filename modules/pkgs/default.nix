@@ -28,7 +28,7 @@
       pkgs.nodejs
       pkgs.pamixer
       pkgs.parted
-      pkgs.python310
+      pkgs.python311
       pkgs.qbittorrent
       pkgs.shadow
       pkgs.sops

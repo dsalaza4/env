@@ -14,6 +14,12 @@
             mode = "2560x1080@75Hz";
             position = "0,0";
           }
+          {
+            criteria = "HDMI-A-1";
+            status = "enable";
+            mode = "3840x2160@60Hz";
+            position = "0,0";
+          }
         ];
         undocked.outputs = [
           {

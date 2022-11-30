@@ -18,6 +18,12 @@
       sha256 = "0ciagyhxcxikfcvwi55bhj0gkg9p7p41na6imxid2mxw2a7yb4nb";
     }
     {
+      name = "cucumberautocomplete";
+      publisher = "alexkrechik";
+      version = "2.15.2";
+      sha256 = "1kaxvszpj5cami7k52ddzd9fc108pzz1ga5hhi78b468azplkl1i";
+    }
+    {
       name = "nix";
       publisher = "bbenoist";
       version = "1.0.1";

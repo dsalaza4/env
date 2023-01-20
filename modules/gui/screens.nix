@@ -1,3 +1,5 @@
+# To see display options, use xrandr
+# To create mirror displays, use wl-mirror <output>
 {pkgs, ...}: {
   home-manager.users.nixos = {
     services.kanshi = {
@@ -6,13 +8,15 @@
         home-studio.outputs = [
           {
             criteria = "eDP-1";
-            status = "disable";
+            status = "enable";
+            mode = "1920x1080@60Hz";
+            position = "0,0";
           }
           {
             criteria = "HDMI-A-1";
             status = "enable";
-            mode = "3840x2160@60Hz";
-            position = "0,0";
+            mode = "1920x1080@60Hz";
+            position = "1920,0";
           }
         ];
         home-workstation.outputs = [
@@ -39,6 +43,8 @@
     };
     home.packages = [
       pkgs.kanshi
+      pkgs.xorg.xrandr
+      pkgs.wl-mirror
     ];
   };
 }

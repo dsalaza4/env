@@ -1,10 +1,10 @@
 {pkgs, ...}: {
   imports = [
     ./fonts.nix
-    ./kanshi.nix
     ./lock.nix
     ./mako.nix
     ./rofi.nix
+    ./screens.nix
     ./sway.nix
     ./waybar.nix
   ];

@@ -37,7 +37,6 @@
       pkgs.vlc
       pkgs.yq
       pkgs.wget
-      pkgs.zoom-us
     ];
 
     programs = {

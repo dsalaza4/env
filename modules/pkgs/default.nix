@@ -25,6 +25,7 @@
       pkgs.just
       pkgs.kubectl
       pkgs.gnugrep
+      pkgs.mprocs
       pkgs.nodejs
       pkgs.pamixer
       pkgs.parted

@@ -24,6 +24,7 @@
       pkgs.jq
       pkgs.just
       pkgs.kubectl
+      pkgs.kubernetes-helm-wrapped
       pkgs.gnugrep
       pkgs.mprocs
       pkgs.nodejs

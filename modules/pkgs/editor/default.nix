@@ -7,9 +7,6 @@
   pythonOnNix,
   ...
 }: let
-  # For sha256 use:
-  # $ nix-prefetch-url \
-  # "https://${publisher}.gallery.vsassets.io/_apis/public/gallery/publisher/${publisher}/extension/${name}/${version}/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
   extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
     {
       name = "terraform";
@@ -44,20 +41,20 @@
     {
       name = "vscode-jest-runner";
       publisher = "firsttris";
-      version = "0.4.59";
-      sha256 = "1y2dx4jwzifzg11ypgcnihdvgyz4i9vqlhy2gbvhhyaaj7gizmp3";
+      version = "0.4.60";
+      sha256 = "sha256-7FJlK9Bb+60ErlcfHm8LoCT1aqWFiL4Z9pwxIi1EwY4=";
     }
     {
       name = "github-vscode-theme";
       publisher = "github";
-      version = "6.3.2";
-      sha256 = "1mzqss2sj8sl0av0px649s26xg3ybiq7djdw5yb092v2hjr5kc89";
+      version = "6.3.3";
+      sha256 = "sha256-fN9ljeZlbbSNW9qggLEz5HOLZlPhHmTHNi1VsZo7Uxk=";
     }
     {
       name = "gitlens";
       publisher = "eamodio";
-      version = "2022.11.804";
-      sha256 = "06fivcfszynlynv5khpi5dzwk230jlgh4xmdq7ffhblnwp78j3i1";
+      version = "2023.2.1204";
+      sha256 = "sha256-FurYfkw+mOjyymR1VCGf0jJ2JCZJ8eGb1J7zD2peBjw=";
     }
     {
       name = "gc-excelviewer";
@@ -68,14 +65,14 @@
     {
       name = "vscode-graphql";
       publisher = "graphql";
-      version = "0.8.1";
-      sha256 = "0lpki26pkam5xyrbaiwp913li679xxxbzc5bpi8vyx9zzmdprvhy";
+      version = "0.8.5";
+      sha256 = "sha256-hmMD3+Om1SPBST1wnyHRwvJESLbpYl2aaiNZPYmYRNQ=";
     }
     {
       name = "terraform";
       publisher = "hashicorp";
-      version = "2.24.3";
-      sha256 = "121wwdg579yyfcjwl7xvd1l0vv3d4rlr1vj4yd25ah6r5kkq56p7";
+      version = "2.25.2";
+      sha256 = "sha256-mF/GHt2VOoJyEbIC9wj//FJXeGVg12MY6YJzjv470bM=";
       arch = "linux-x64";
     }
     {
@@ -93,50 +90,50 @@
     {
       name = "bash-ide-vscode";
       publisher = "mads-hartmann";
-      version = "1.14.0";
-      sha256 = "058z0fil0xpbnay6b5hgd31bgd3k4x3rnfyb8n0a0m198sxrpd5z";
+      version = "1.33.0";
+      sha256 = "sha256-MlNUoTgDBbDcsKjCXrb17jirHiR8iNpq8ldJ6OKrYas=";
     }
     {
       name = "vscode-graphql-syntax";
       publisher = "GraphQL";
-      version = "1.0.4";
-      sha256 = "0l2bniz4iq2bpcdxzpfm810i0zqfpx7xjhrvhyky0avi5i285q7v";
+      version = "1.0.6";
+      sha256 = "sha256-OScAXEchvHsCn3sjWcm9641yzgT+7iwO40rOAeHlmVw=";
     }
     {
       name = "markdown-all-in-one";
       publisher = "yzhang";
-      version = "3.4.4";
-      sha256 = "0jw38vf3pzplw5dnhs8b9fxqc4z5b198wjw3y3ll14xjzxc5ymns";
+      version = "3.5.0";
+      sha256 = "sha256-q2DdFc7Q4MYr03+mDyMtYr3+5Fy4oPq7c69LIkTZz8I=";
     }
     {
       name = "python";
       publisher = "ms-python";
-      version = "2022.19.13121543";
-      sha256 = "07k30zs8xkdsq4rp6r06pb749brxn9rlb1g415x1hwqg5sx8dddh";
+      version = "2023.3.10411009";
+      sha256 = "sha256-/a1AWEZzVRmq5JS2L6CS6ULpvRAA4wR3Rw5Dap9MNO0=";
     }
     {
       name = "vscode-pylance";
       publisher = "ms-python";
-      version = "2022.11.11";
-      sha256 = "11wzs9gwxdl507k0abhghcdj36dvw1nbpnfyvrhnrjca77sqgwm8";
+      version = "2023.2.21";
+      sha256 = "sha256-JJxTfSm5nJwB0jWK+jJ7SqNMt/4fu1ILHJYyobNO2WY=";
     }
     {
       name = "jupyter";
       publisher = "ms-toolsai";
-      version = "2022.11.1003141027";
-      sha256 = "086jds1kx51k33jin9b90j26kk79v1h10vrgp66wgwd2d19q4vdy";
+      version = "2023.2.1000451018";
+      sha256 = "sha256-gQntEA2O9jiSk1Im2oEIoEgxukQ5kn7TPDDGz+3hMiE=";
     }
     {
       name = "jupyter-renderers";
       publisher = "ms-toolsai";
-      version = "1.0.12";
-      sha256 = "12l5z60kpz3nx77l8ck6a6w4qdzyz3xkn6k9670r30w365q9lf0z";
+      version = "1.0.15";
+      sha256 = "sha256-JR6PunvRRTsSqjSGGAn/1t1B+Ia6X0MgqahehcuSNYA=";
     }
     {
       name = "material-icon-theme";
       publisher = "PKief";
-      version = "4.22.0";
-      sha256 = "0irrivfidgjqfd205gh27r2ccj2anvqgvq7lfaaf92wrrc2zvlsk";
+      version = "4.24.0";
+      sha256 = "sha256-hJy+ymnlF9a2vvN/HhJ5N75lIc2afzkq+S0Cv/KnD3M=";
     }
     {
       name = "autodocstring";
@@ -159,8 +156,8 @@
     {
       name = "code-spell-checker";
       publisher = "streetsidesoftware";
-      version = "2.11.0";
-      sha256 = "096y1yiwh5bvlcg3abby9nvwapq0nhx4szcmi9k2qxf5xw4y91k5";
+      version = "2.16.0";
+      sha256 = "sha256-Qr4cYAEvAkvvE6KytVeInJzcMQJZqr/e/KPfelVzjUA=";
     }
     {
       name = "even-better-toml";

@@ -53,8 +53,8 @@
     {
       name = "gitlens";
       publisher = "eamodio";
-      version = "2023.2.1204";
-      sha256 = "sha256-FurYfkw+mOjyymR1VCGf0jJ2JCZJ8eGb1J7zD2peBjw=";
+      version = "2023.2.2411";
+      sha256 = "sha256-bksWVhMFoU6sgPn3JVOtS9vzffYfdIdqJqxGXTZ7Yuk=";
     }
     {
       name = "gc-excelviewer";

@@ -15,6 +15,7 @@
     home.packages = [
       makesPkg
       pkgs._1password-gui-beta
+      pkgs.asciinema
       pkgs.awscli
       pkgs.binutils
       pkgs.brave

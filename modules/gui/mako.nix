@@ -1,5 +1,5 @@
 {
-  home-manager.users.nixos.programs.mako = {
+  home-manager.users.nixos.services.mako = {
     enable = true;
 
     layer = "top";

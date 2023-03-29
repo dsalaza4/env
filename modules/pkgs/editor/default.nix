@@ -53,8 +53,8 @@
     {
       name = "gitlens";
       publisher = "eamodio";
-      version = "2023.3.1104";
-      sha256 = "sha256-HO0CX5twhSTYmvafwp75+0wdEAAdmftYcbbG6wyEgsg=";
+      version = "2023.3.2905";
+      sha256 = "sha256-R3WK9wPiPsru2OEapeQFLGA5a4TsKm+IRRCrKMSjJhM=";
     }
     {
       name = "gc-excelviewer";
@@ -189,10 +189,6 @@
       {
         command = "${pkgs.texlive.combined.scheme-medium}/bin/latexindent";
         languages = ["latex"];
-      }
-      {
-        command = "${pkgs.nodePackages.prettier}/bin/prettier --parser markdown";
-        languages = ["markdown"];
       }
       {
         command =

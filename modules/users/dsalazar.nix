@@ -51,7 +51,9 @@
         starship = {
           enable = true;
           settings = {
-            add_newline = false;
+            add_newline = true;
+            direnv.disabled = false;
+            git_metrics.disabled = false;
           };
         };
         zsh = {

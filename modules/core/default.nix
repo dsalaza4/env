@@ -3,7 +3,10 @@
   system = {
     stateVersion = 6;
     primaryUser = "dsalazar";
-    defaults.dock.show-recents = false;
+    defaults.dock = {
+      autohide = true;
+      show-recents = false;
+    };
   };
 
   nix.enable = false; # Determinate Nix required

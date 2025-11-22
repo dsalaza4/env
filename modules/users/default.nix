@@ -1,5 +1,5 @@
 {
   imports = [
-    ./dsalazar.nix
+    ./primary.nix
   ];
 }

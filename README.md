@@ -17,7 +17,7 @@ Significant architectural changes are likely to happen.
 
 ## Requirements
 
-Install Determinate Nix:
+1. Install Determinate Nix:
 
    ```sh
    curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate

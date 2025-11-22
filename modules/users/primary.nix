@@ -1,10 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, primaryUser, ... }:
 {
   users.users = {
-    dsalazar.home = "/Users/dsalazar";
+    ${primaryUser.username}.home = "/Users/${primaryUser.username}";
   };
 
-  home-manager.users.dsalazar =
+  home-manager.users.${primaryUser.username} =
     let
       # as .zshrc is pure, antigravity can't impurely install its binary
       code = pkgs.writeScriptBin "code" ''
@@ -43,8 +43,8 @@
           settings = {
             core.editor = "code --wait";
             user = {
-              name = "Daniel Salazar";
-              email = "podany270895@gmail.com";
+              name = primaryUser.name;
+              email = primaryUser.email;
             };
           };
         };

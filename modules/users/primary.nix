@@ -26,7 +26,6 @@
           pkgs.just
           pkgs.gnugrep
           pkgs.google-chrome
-          pkgs.nerd-fonts.fira-code
           pkgs.nixfmt
           pkgs.nodejs
           pkgs.python313

@@ -20,7 +20,7 @@
         ShowStatusBar = true;
       };
       NSGlobalDomain = {
-        InitialKeyRepeat = 4;
+        InitialKeyRepeat = 30;
         KeyRepeat = 5;
         NSAutomaticSpellingCorrectionEnabled = false;
         NSAutomaticCapitalizationEnabled = false;
@@ -36,29 +36,16 @@
   time.timeZone = "America/Bogota";
   security.pam.services.sudo_local.touchIdAuth = true;
 
-  home-manager = {
-    useUserPackages = true;
-    useGlobalPkgs = false;
-  };
-  nix-homebrew = {
-    user = primaryUser.username;
-    enable = true;
-    autoMigrate = true;
-  };
-
-  # Global programs
-  homebrew = {
-    enable = true;
-    onActivation = {
-      autoUpdate = false;
-      upgrade = true;
-      cleanup = "zap";
-    };
-    caskArgs.no_quarantine = true;
-    global.brewfile = true;
-
-    casks = [
-      "1password"
+  networking = {
+    knownNetworkServices = [
+      "Thunderbolt Bridge"
+      "Wi-Fi"
+    ];
+    dns = [
+      "2606:4700:4700::1111"
+      "2606:4700:4700::1001"
+      "1.1.1.1"
+      "1.0.0.1"
     ];
   };
 }

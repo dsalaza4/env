@@ -1,6 +1,6 @@
 build:
-	@echo "[INFO] Rebuilding NixOS..."
-	sudo nixos-rebuild switch --flake .#
+	@echo "[INFO] Rebuilding system..."
+	sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#default
 
 update:
   @echo "[INFO] Updating flake..."

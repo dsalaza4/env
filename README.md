@@ -1,55 +1,32 @@
-# My NixOS machine as code
+# My MacOS machine as code
 
 This repository aims to provide
 full declarative configurations
-for my machine.
+for my MacOS machine.
 
 :warning: This is a work in progress.
 Significant architectural changes are likely to happen.
 
-## How it looks
+## Base Features
 
-### Background
+- **System**: [Nix-darwin](https://github.com/LnL7/nix-darwin) for declarative MacOS configuration.
+- **User Management**: [Home Manager](https://github.com/nix-community/home-manager) integration for user-specific packages and dotfiles.
+- **Security**: Touch ID enabled for `sudo` commands.
+- **DNS**: Cloudflare is set as the system DNS.
+- **Timezone**: Bogota, Colombia.
 
-![background](/static/background.png)
+## Requirements
 
-### Browser
+Install Determinate Nix:
 
-![browser](/static/browser.png)
+   ```sh
+   curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
+   ```
 
-### Workspace
+## Installation
 
-![workspace](/static/workspace.png)
+Run the following command while standing in repo:
 
-## How to run
-
-### Requirements
-
-1. An `ext4` root partition with label `root` and mountpoint on `/`.
-1. A `vfat` boot partition with label `ESP` and mountpoint on `/boot/efi`.
-
-Additional information can be found in the
-[storage module](/modules/storage/default.nix)
-
-### Installation
-
-You can install the environment with
-
-```bash
-$ nix-shell
-$ just
-```
-
-## Inspiration
-
-Special thanks to the following people
-for being awesome:
-
-1. [adi1090x/rofi](https://github.com/adi1090x/rofi)
-1. [alternateved/nixos-config](https://github.com/alternateved/nixos-config)
-1. [jralvarezc/conf](https://github.com/jralvarezc/conf/tree/master/hosts/profiles)
-1. [kamadorueda/machine](https://github.com/kamadorueda/machine)
-1. [lokesh-krishna/dotfiles](https://github.com/lokesh-krishna/dotfiles)
-1. [theCode-Breaker/riverwm](https://github.com/theCode-Breaker/riverwm)
-1. [wiltaylor/dotfiles](https://github.com/wiltaylor/dotfiles)
-1. [Wil T NixOS tutorials](https://www.youtube.com/playlist?list=PL-saUBvIJzOkjAw_vOac75v-x6EzNzZq-)
+   ```sh
+   sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#default
+   ```

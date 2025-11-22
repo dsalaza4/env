@@ -38,9 +38,6 @@
 
     casks = [
       "1password"
-      "raycast"
-      "betterdisplay"
     ];
-    brews = [ "docker" ];
   };
 }

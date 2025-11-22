@@ -4,9 +4,6 @@ This repository aims to provide
 full declarative configurations
 for my MacOS machine.
 
-:warning: This is a work in progress.
-Significant architectural changes are likely to happen.
-
 ## Base Features
 
 - **System**: [Nix-darwin](https://github.com/LnL7/nix-darwin) for declarative MacOS configuration.

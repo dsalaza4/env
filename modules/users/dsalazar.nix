@@ -4,41 +4,44 @@
     dsalazar.home = "/Users/dsalazar";
   };
 
-  home-manager.users.dsalazar = {
-    home = {
-      stateVersion = "25.11";
-      packages = with pkgs; [
-        antigravity
-        awscli
-        binutils
-        coreutils
-        direnv
-        htop
-        jq
-        just
-        gnugrep
-        google-chrome
-        nerd-fonts.fira-code
-        nixfmt
-        nodejs
-        python313
-        sops
-        terraform
-        unzip
-        yq
-        wget
-      ];
-    };
-    programs =
-      let
-        # as .zshrc is pure, antrigravity can't impurely install its binary
-        agy = ''"$HOME/Applications/Home Manager Apps/Google Antigravity.app/Contents/MacOS/Electron"'';
-      in
-      {
+  home-manager.users.dsalazar =
+    let
+      # as .zshrc is pure, antigravity can't impurely install its binary
+      code = pkgs.writeScriptBin "code" ''
+        "$HOME/Applications/Home Manager Apps/Google Antigravity.app/Contents/MacOS/Electron" $@
+      '';
+    in
+    {
+      home = {
+        stateVersion = "25.11";
+        packages = [
+          code
+          pkgs.antigravity
+          pkgs.awscli
+          pkgs.binutils
+          pkgs.coreutils
+          pkgs.direnv
+          pkgs.htop
+          pkgs.jq
+          pkgs.just
+          pkgs.gnugrep
+          pkgs.google-chrome
+          pkgs.nerd-fonts.fira-code
+          pkgs.nixfmt
+          pkgs.nodejs
+          pkgs.python313
+          pkgs.sops
+          pkgs.terraform
+          pkgs.unzip
+          pkgs.yq
+          pkgs.wget
+        ];
+      };
+      programs = {
         git = {
           enable = true;
           settings = {
-            core.editor = "${agy} --wait";
+            core.editor = "code --wait";
             user = {
               name = "Daniel Salazar";
               email = "podany270895@gmail.com";
@@ -56,8 +59,7 @@
           enableCompletion = true;
           autosuggestion.enable = true;
           syntaxHighlighting.enable = true;
-          shellAliases.agy = agy;
         };
       };
-  };
+    };
 }

@@ -21,8 +21,6 @@ for my MacOS machine.
 
 ## Installation
 
-### Automated Installation (Recommended)
-
 Run this one-liner to automatically install everything:
 
 ```sh
@@ -33,26 +31,6 @@ This script will:
 1. Install Determinate Nix (if not already installed)
 2. Clone this repository to a temporary directory
 3. Run the nix-darwin configuration to set up your system
-
-### Manual Installation
-
-If you prefer to install manually:
-
-1. Install Determinate Nix:
-   ```sh
-   curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
-   ```
-
-2. Clone this repository:
-   ```sh
-   git clone https://github.com/dsalaza4/env.git
-   cd env
-   ```
-
-3. Run the installation:
-   ```sh
-   sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#default
-   ```
 
 ## Usage
 

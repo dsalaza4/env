@@ -28,6 +28,7 @@
           pkgs.nixfmt
           pkgs.nodejs
           pkgs.python313
+          pkgs.shfmt
           pkgs.sops
           pkgs.terraform
           pkgs.unzip

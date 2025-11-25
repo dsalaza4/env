@@ -15,16 +15,23 @@
   };
 
   outputs = inputs: {
-    darwinConfigurations.default = inputs.nix-darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      modules = [ ./modules ];
-      specialArgs = {
-        inherit inputs;
-        primaryUser = {
-          email = "podany270895@gmail.com";
-          name = "Daniel Salazar";
-          username = "dsalazar";
+    darwinConfigurations = {
+      default = inputs.nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [ ./modules ];
+        specialArgs = {
+          inherit inputs;
+          primaryUser = {
+            email = "podany270895@gmail.com";
+            name = "Daniel Salazar";
+            username = "dsalazar";
+          };
         };
+      };
+      test = inputs.nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [ ./test ];
+        specialArgs = { inherit inputs; };
       };
     };
   };

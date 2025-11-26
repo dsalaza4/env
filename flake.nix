@@ -28,6 +28,18 @@
           };
         };
       };
+      work = inputs.nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [ ./machines/work ];
+        specialArgs = {
+          inherit inputs;
+          primaryUser = {
+            email = "podany270895@gmail.com";
+            name = "Daniel Salazar";
+            username = "dsalazar";
+          };
+        };
+      };
 
       test = inputs.nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";

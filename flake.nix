@@ -34,7 +34,7 @@
         specialArgs = {
           inherit inputs;
           primaryUser = {
-            email = "podany270895@gmail.com";
+            email = "dsalazar@fluidattacks.com";
             name = "Daniel Salazar";
             username = "dsalazar";
           };

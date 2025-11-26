@@ -24,6 +24,7 @@
 
     casks = [
       "1password"
+      "zoom"
     ];
   };
 }

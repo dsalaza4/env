@@ -60,7 +60,7 @@ cd "$TEMP_DIR/env-main"
 
 echo "Running nix-darwin installation..."
 echo "Note: This will require sudo access and may take several minutes"
-SYSTEM=${1:-default}
+SYSTEM=${1:-personal}
 if ! sudo --preserve-env=NIX_CONFIG nix run nix-darwin/master#darwin-rebuild -- switch --flake ".#${SYSTEM}"; then
   echo "Error: Installation failed"
   exit 1

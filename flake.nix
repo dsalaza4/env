@@ -16,9 +16,9 @@
 
   outputs = inputs: {
     darwinConfigurations = {
-      default = inputs.nix-darwin.lib.darwinSystem {
+      personal = inputs.nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
-        modules = [ ./modules ];
+        modules = [ ./machines/personal ];
         specialArgs = {
           inherit inputs;
           primaryUser = {
@@ -28,9 +28,10 @@
           };
         };
       };
+
       test = inputs.nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
-        modules = [ ./test ];
+        modules = [ ./machines/test ];
         specialArgs = { inherit inputs; };
       };
     };

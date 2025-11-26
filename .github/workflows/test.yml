@@ -10,8 +10,35 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run test script
+      - name: Run installation
         env:
           NIX_CONFIG: "access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}"
         run: |
-          zsh test/main.sh
+          echo "Running installation via curl (installing test config)..."
+          curl -fsSL https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/install.sh | zsh -s -- test
+
+      - name: Verify Nix installation
+        run: |
+          if ! command -v nix &> /dev/null; then
+            echo "❌ Nix not found"
+            exit 1
+          fi
+          echo "✓ Nix is installed"
+          nix --version
+
+      - name: Verify just is available
+        run: |
+          if ! command -v just &> /dev/null; then
+            echo "❌ just not found"
+            exit 1
+          fi
+          echo "✓ just is installed"
+          just --version
+
+      - name: Check nix-darwin configuration
+        run: |
+          if [ ! -d "/run/current-system" ]; then
+            echo "❌ nix-darwin system not found"
+            exit 1
+          fi
+          echo "✓ nix-darwin system is configured"

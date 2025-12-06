@@ -8,7 +8,7 @@
     let
       # as .zshrc is pure, antigravity can't impurely install its binary
       code = pkgs.writeScriptBin "code" ''
-        "$HOME/Applications/Home Manager Apps/Google Antigravity.app/Contents/MacOS/Electron" $@
+        "$HOME/Applications/Home Manager Apps/Antigravity.app/Contents/MacOS/Electron" $@
       '';
     in
     {

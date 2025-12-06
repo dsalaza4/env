@@ -27,11 +27,11 @@
           pkgs.google-chrome
           pkgs.nixfmt
           pkgs.nodejs
+          pkgs.opentofu
           pkgs.python313
           pkgs.rustup
           pkgs.shfmt
           pkgs.sops
-          pkgs.terraform
           pkgs.unzip
           pkgs.yq
           pkgs.wget

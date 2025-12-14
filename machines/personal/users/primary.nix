@@ -19,6 +19,8 @@
           pkgs.antigravity
           pkgs.awscli
           pkgs.binutils
+          pkgs.claude-code
+          pkgs.claude-monitor
           pkgs.coreutils
           pkgs.htop
           pkgs.jq
@@ -32,7 +34,9 @@
           pkgs.rustup
           pkgs.shfmt
           pkgs.sops
+          pkgs.tree
           pkgs.unzip
+          pkgs.vscodium
           pkgs.yq
           pkgs.wget
         ];

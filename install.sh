@@ -12,7 +12,7 @@ fi
 echo "✓ Running on macOS"
 
 # 1. Install Determinate Nix
-if ! command -v nix &> /dev/null; then
+if ! command -v nix &>/dev/null; then
   echo "Installing Determinate Nix..."
   if ! curl -fsSL https://install.determinate.systems/nix | sh -s -- install --no-confirm --determinate; then
     echo "Error: Failed to install Nix"
@@ -25,7 +25,7 @@ if ! command -v nix &> /dev/null; then
   fi
 
   # Verify Nix installation
-  if ! command -v nix &> /dev/null; then
+  if ! command -v nix &>/dev/null; then
     echo "Error: Nix installation completed but nix command not found"
     echo "You may need to restart your shell and run this script again"
     exit 1

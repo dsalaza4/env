@@ -10,6 +10,7 @@
       packages = with pkgs; [
         awscli
         binutils
+        cargo-dist
         claude-code
         claude-monitor
         coreutils

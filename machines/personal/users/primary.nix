@@ -55,6 +55,7 @@
           add_newline = true;
           direnv.disabled = false;
           git_metrics.disabled = false;
+          nix_shell.disabled = true;
         };
       };
       zsh = {
@@ -66,6 +67,11 @@
           enable = true;
           plugins = [ "git" ];
         };
+        initContent = pkgs.lib.mkOrder 1500 ''
+          if test -f "$HOME/.zshrc.profile"; then
+            source "$HOME/.zshrc.profile"
+          fi
+        '';
       };
     };
   };

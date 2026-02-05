@@ -19,6 +19,7 @@
         just
         gnugrep
         google-chrome
+        nixd
         nixfmt
         nodejs
         opentofu

@@ -22,6 +22,7 @@
     global.brewfile = true;
 
     casks = [
+      "1password"
       "zoom"
     ];
   };

@@ -8,7 +8,6 @@ for my MacOS machines.
 
 - **System**: [Nix-darwin](https://github.com/LnL7/nix-darwin) for declarative MacOS configuration.
 - **User Management**: [Home Manager](https://github.com/nix-community/home-manager) integration for user-specific packages and dotfiles.
-- **Homebrew**: [nix-homebrew](https://github.com/zhaofengli/nix-homebrew) for declarative management of Casks and formulae.
 
 ## Prerequisites
 
@@ -70,4 +69,4 @@ To add a new machine:
 
 ## Missing features
 
-1. **Docker Desktop**: Not available via nixpkgs or homebrew.
+1. **Docker Desktop**: Not available as code

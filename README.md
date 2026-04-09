@@ -21,7 +21,7 @@ for my MacOS machines.
 Run this one-liner to automatically install everything:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/dsalaza4/env/main/install.sh | zsh -- <machine>
+curl -fsSL https://raw.githubusercontent.com/dsalaza4/env/main/install.sh | zsh -s --  <machine>
 ```
 
 Where `<machine>` is the name of the machine you want to install. `personal` will be used by default.

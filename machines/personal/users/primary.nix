@@ -4,8 +4,6 @@
     ${primaryUser.username}.home = "/Users/${primaryUser.username}";
   };
 
-  programs._1password-gui.enable = true;
-
   home-manager.users.${primaryUser.username} = {
     home = {
       stateVersion = "25.11";
@@ -60,6 +58,7 @@
           direnv.disabled = false;
           git_metrics.disabled = false;
           nix_shell.disabled = true;
+          nodejs.disabled = true;
         };
       };
       zsh = {

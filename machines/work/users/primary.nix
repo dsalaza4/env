@@ -4,72 +4,75 @@
     ${primaryUser.username}.home = "/Users/${primaryUser.username}";
   };
 
-  home-manager.users.${primaryUser.username} =
-    let
-      # as .zshrc is pure, antigravity can't impurely install its binary
-      code = pkgs.writeScriptBin "code" ''
-        "$HOME/Applications/Home Manager Apps/Google Antigravity.app/Contents/MacOS/Electron" $@
-      '';
-    in
-    {
-      home = {
-        stateVersion = "25.11";
-        packages = [
-          code
-          pkgs.antigravity
-          pkgs.awscli
-          pkgs.binutils
-          pkgs.coreutils
-          pkgs.htop
-          pkgs.jq
-          pkgs.just
-          pkgs.gnugrep
-          pkgs.google-chrome
-          pkgs.nixfmt
-          pkgs.nodejs
-          pkgs.python313
-          pkgs.shfmt
-          pkgs.sops
-          pkgs.terraform
-          pkgs.unzip
-          pkgs.yq
-          pkgs.wget
-        ];
+  home-manager.users.${primaryUser.username} = {
+    home = {
+      stateVersion = "25.11";
+      packages = with pkgs; [
+        awscli
+        binutils
+        cargo-dist
+        claude-code
+        claude-monitor
+        coreutils
+        htop
+        jq
+        just
+        gnugrep
+        nixd
+        nixfmt
+        nodejs
+        terraform
+        python313
+        rustup
+        shfmt
+        sops
+        tree
+        unzip
+        vscode
+        yq
+        wget
+      ];
+    };
+    programs = {
+      direnv = {
+        enable = true;
+        enableZshIntegration = true;
+        nix-direnv.enable = true;
       };
-      programs = {
-        direnv = {
-          enable = true;
-          enableZshIntegration = true;
-          nix-direnv.enable = true;
-        };
-        git = {
-          enable = true;
-          settings = {
-            core.editor = "code --wait";
-            user = {
-              name = primaryUser.name;
-              email = primaryUser.email;
-            };
+      git = {
+        enable = true;
+        settings = {
+          core.editor = "code --wait";
+          user = {
+            name = primaryUser.name;
+            email = primaryUser.email;
           };
         };
-        starship = {
-          enable = true;
-          settings = {
-            add_newline = true;
-            direnv.disabled = false;
-            git_metrics.disabled = false;
-          };
+      };
+      starship = {
+        enable = true;
+        settings = {
+          add_newline = true;
+          direnv.disabled = false;
+          git_metrics.disabled = false;
+          nix_shell.disabled = true;
         };
-        zsh = {
+      };
+      zsh = {
+        enable = true;
+        enableCompletion = true;
+        autosuggestion.enable = true;
+        syntaxHighlighting.enable = true;
+        oh-my-zsh = {
           enable = true;
-          enableCompletion = true;
-          autosuggestion.enable = true;
-          syntaxHighlighting.enable = true;
-          oh-my-zsh = {
-            enable = true;
-            plugins = [ "git" ];
-          };
+          plugins = [ "git" ];
         };
+        initContent = pkgs.lib.mkOrder 1500 ''
+          if test -f "$HOME/.zshrc.profile"; then
+            source "$HOME/.zshrc.profile"
+          fi
+        '';
       };
     };
+  };
 }

@@ -19,7 +19,6 @@
       upgrade = true;
       cleanup = "zap";
     };
-    caskArgs.no_quarantine = true;
     global.brewfile = true;
 
     casks = [

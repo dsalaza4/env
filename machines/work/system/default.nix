@@ -35,8 +35,7 @@
   fonts.packages = [ pkgs.nerd-fonts.fira-code ];
   time.timeZone = "America/Bogota";
 
-  # MDM already handles this
-  # security.pam.services.sudo_local.touchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   networking = {
     knownNetworkServices = [

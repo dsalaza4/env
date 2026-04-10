@@ -21,6 +21,7 @@
         nixd
         nixfmt
         nodejs
+        saml2aws
         terraform
         python313
         rustup

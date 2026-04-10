@@ -20,6 +20,7 @@
         ShowStatusBar = true;
       };
       NSGlobalDomain = {
+        ApplePressAndHoldEnabled = true;
         InitialKeyRepeat = 30;
         KeyRepeat = 5;
         NSAutomaticSpellingCorrectionEnabled = false;

@@ -47,12 +47,12 @@
         settings = {
           # Typography
           font-family = "FiraCode Nerd Font";
-          font-size = 14;
+          font-size = 12;
           font-thicken = true;
           adjust-cell-height = 2;
 
           # Theme
-          theme = "Catppuccin Mocha";
+          theme = "0x96f";
 
           # Window and appearance
           background-opacity = 0.9;

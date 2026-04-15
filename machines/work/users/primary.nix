@@ -7,6 +7,7 @@
   home-manager.users.${primaryUser.username} = {
     home = {
       stateVersion = "25.11";
+
       packages = with pkgs; [
         awscli
         binutils
@@ -31,7 +32,6 @@
         vscode
         yq
         wget
-        zed-editor
         zoom-us
       ];
     };
@@ -46,7 +46,7 @@
         package = pkgs.ghostty-bin;
         settings = {
           # Typography
-          font-family = "FiraCode Nerd Font";
+          font-family = "FiraCode Nerd Font Mono";
           font-size = 12;
           font-thicken = true;
           adjust-cell-height = 2;
@@ -115,6 +115,64 @@
             # Config
             "cmd+shift+comma=reload_config"
           ];
+        };
+      };
+      zed-editor = {
+        enable = true;
+        extensions = [
+          "git-firefly"
+          "github-theme"
+          "html"
+          "log"
+          "material-icon-theme"
+          "nix"
+          "terraform"
+          "toml"
+        ];
+        userSettings = {
+          # Font
+          ui_font_family = "FiraCode Nerd Font Mono";
+          ui_font_size = 14;
+          buffer_font_family = "FiraCode Nerd Font Mono";
+          buffer_font_size = 12;
+
+          # Theme
+          icon_theme = "Material Icon Theme";
+          theme = "GitHub Dark";
+
+          # Editor
+          colorize_brackets = true;
+          ensure_final_newline_on_save = true;
+          wrap_guides = [ 100 ];
+          soft_wrap = "none";
+          tab_size = 2;
+          cursor_blink = true;
+
+          # Tabs
+          preview_tabs = {
+            enable_preview_from_file_finder = true;
+          };
+          tabs = {
+            close_position = "left";
+            activate_on_close = "left_neighbour";
+          };
+
+          # Minimap
+          minimap = {
+            show = "auto";
+            thumb = "always";
+            max_width_columns = 80;
+          };
+
+          # Keybindings
+          base_keymap = "VSCode";
+
+          # Languages
+          languages = {
+            Nix = {
+              language_servers = [ "nixd" "!nil" ];
+            };
+          };
         };
       };
       git = {

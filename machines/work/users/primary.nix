@@ -12,11 +12,11 @@
         binutils
         cargo-dist
         claude-code
-        claude-monitor
         coreutils
         htop
         jq
         just
+        ghostty-bin
         gnugrep
         nixd
         nixfmt
@@ -32,6 +32,7 @@
         vscode
         yq
         wget
+        zed-editor
         zoom-us
       ];
     };
@@ -44,7 +45,7 @@
       git = {
         enable = true;
         settings = {
-          core.editor = "code --wait";
+          core.editor = "zeditor --wait";
           user = {
             name = primaryUser.name;
             email = primaryUser.email;

@@ -52,7 +52,7 @@
           adjust-cell-height = 2;
 
           # Theme
-          theme = "0x96f";
+          theme = "GitHub Dark Default";
 
           # Window and appearance
           background-opacity = 0.9;

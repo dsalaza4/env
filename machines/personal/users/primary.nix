@@ -132,7 +132,7 @@
         userSettings = {
           # Font
           ui_font_family = "FiraCode Nerd Font Mono";
-          ui_font_size = 16;
+          ui_font_size = 14;
           buffer_font_family = "FiraCode Nerd Font Mono";
           buffer_font_size = 12;
 

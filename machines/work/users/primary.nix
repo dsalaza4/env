@@ -29,7 +29,6 @@
         sops
         tree
         unzip
-        vscode
         yq
         wget
         zoom-us

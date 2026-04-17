@@ -1,3 +1,4 @@
 /.npm
 /result
 .DS_Store
+.claude/worktrees

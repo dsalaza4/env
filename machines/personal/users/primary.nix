@@ -218,5 +218,13 @@
         '';
       };
     };
+    home.activation.setDefaultApps = {
+      after = [ "writeBoundary" ];
+      before = [ ];
+      data = ''
+        ${pkgs.duti}/bin/duti -s dev.zed.Zed public.plain-text all
+        ${pkgs.duti}/bin/duti -s dev.zed.Zed public.source-code all
+      '';
+    };
   };
 }

@@ -18,6 +18,7 @@
         jq
         just
         gnugrep
+        gh
         google-chrome
         nixd
         nixfmt

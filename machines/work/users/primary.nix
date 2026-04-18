@@ -17,6 +17,7 @@
         htop
         jq
         just
+        gh
         gnugrep
         nixd
         nixfmt

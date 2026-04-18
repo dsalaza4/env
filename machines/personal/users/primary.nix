@@ -19,6 +19,7 @@
         just
         gnugrep
         gh
+        glab
         google-chrome
         nixd
         nixfmt

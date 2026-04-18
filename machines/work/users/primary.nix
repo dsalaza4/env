@@ -18,6 +18,7 @@
         jq
         just
         gh
+        glab
         gnugrep
         nixd
         nixfmt

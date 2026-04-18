@@ -1,72 +1,55 @@
-# My MacOS machines as code
+# env
 
-This repository aims to provide
-full declarative configurations
-for my MacOS machines.
+Declarative macOS configuration using [nix-darwin](https://github.com/nix-darwin/nix-darwin) and [Home Manager](https://github.com/nix-community/home-manager).
 
-## Base Features
+## Machines
 
-- **System**: [Nix-darwin](https://github.com/LnL7/nix-darwin) for declarative MacOS configuration.
-- **User Management**: [Home Manager](https://github.com/nix-community/home-manager) integration for user-specific packages and dotfiles.
+| Name | Description |
+|------|-------------|
+| `personal` | Personal machine (default) |
+| `work` | Work machine |
+| `test` | CI test configuration |
 
-## Prerequisites
-
-- **macOS only**: This configuration is designed specifically for macOS (Darwin)
-- **sudo access**: The installation requires administrator privileges
-- **Fresh install recommended**: While this can be run on an existing system, it will modify system-level configurations
-
-## Installation
-
-Run this one-liner to automatically install everything:
+## Install
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/dsalaza4/env/main/install.sh | zsh -s --  <machine>
+curl -fsSL https://raw.githubusercontent.com/dsalaza4/env/main/install.sh | zsh -s -- <machine>
 ```
 
-Where `<machine>` is the name of the machine you want to install. `personal` will be used by default.
-
-This script will:
-1. Install Determinate Nix (if not already installed)
-2. Clone this repository to a temporary directory
-3. Run the nix-darwin configuration to set up your system
+Omit `<machine>` to default to `personal`. The script installs [Determinate Nix](https://determinate.systems/nix/) if needed, clones this repo, and applies the configuration.
 
 ## Usage
 
-After installation, you can manage your system configuration using the included `justfile` commands:
+```sh
+just build          # Rebuild personal (default)
+just build work     # Rebuild work machine
+just update         # Update all flake inputs
+```
 
-### Available Commands
+## What's configured
 
-- **`just build [MACHINE]`** (or `just b [MACHINE]`): Rebuild the system configuration
-  ```sh
-  just build           # Rebuilds the personal machine (default)
-  just build work      # Rebuilds the work machine
-  ```
-  Use this after making changes to your configuration files.
+- **Shell**: zsh with Oh My Zsh, autosuggestions, syntax highlighting, and Starship prompt
+- **Terminal**: Ghostty with FiraCode Nerd Font, GitHub Dark theme, and custom keybindings
+- **Editor**: Zed set as default for plain text and source code
+- **System**: macOS defaults (Dock, Finder, key repeat), Cloudflare DNS, Touch ID for sudo
+- **Security**: 1Password GUI
+- **Dev tools**: direnv + nix-direnv, git with per-machine identity
 
-- **`just update`** (or `just u`): Update flake dependencies
-  ```sh
-  just update
-  ```
-  This updates all Nix flake inputs to their latest versions.
+## Structure
 
-### Managing Multiple Machines
+```
+machines/
+  personal/
+    system/        # macOS system defaults
+    users/         # Home Manager user config
+    package-managers/
+  work/            # Same layout, work identity
+  test/            # Minimal CI config
+flake.nix          # Flake inputs and darwinConfigurations
+justfile           # Build commands
+install.sh         # Bootstrap script
+```
 
-This repository supports multiple machine configurations under `machines/`:
-- `machines/personal/` - Your personal machine (default)
-- `machines/test/` - CI test configuration
+## Known gaps
 
-To add a new machine:
-1. Copy `machines/personal/` to `machines/<name>/`
-2. Customize the configuration in `machines/<name>/`
-3. Add a new `darwinConfigurations.<name>` entry in `flake.nix`
-4. Build with `just build <name>`
-
-### Making Changes
-
-1. Edit configuration files in this repository
-2. Run `just build` to apply changes (or `just build <machine>` for a specific machine)
-3. Commit and push your changes to keep them synchronized
-
-## Missing features
-
-1. **Docker Desktop**: Not available as code
+- **Docker Desktop**: not managed as code

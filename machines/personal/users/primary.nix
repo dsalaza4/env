@@ -32,6 +32,9 @@
         yq
         wget
         zoom-us
+        (pkgs.writeShellScriptBin "zed" ''
+          exec "/Users/${primaryUser.username}/Applications/Home Manager Apps/Zed.app/Contents/MacOS/cli" "$@"
+        '')
       ];
     };
     programs = {
@@ -169,7 +172,10 @@
           # Languages
           languages = {
             Nix = {
-              language_servers = [ "nixd" "!nil" ];
+              language_servers = [
+                "nixd"
+                "!nil"
+              ];
             };
           };
         };
@@ -177,7 +183,6 @@
       git = {
         enable = true;
         settings = {
-          core.editor = "zeditor --wait";
           user = {
             name = primaryUser.name;
             email = primaryUser.email;
@@ -199,6 +204,9 @@
         enableCompletion = true;
         autosuggestion.enable = true;
         syntaxHighlighting.enable = true;
+        sessionVariables = {
+          EDITOR = "zed --wait";
+        };
         oh-my-zsh = {
           enable = true;
           plugins = [ "git" ];

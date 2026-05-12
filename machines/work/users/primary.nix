@@ -33,6 +33,7 @@
         unzip
         yq
         wget
+        wrangler
         zoom-us
         (pkgs.writeShellScriptBin "zed" ''
           exec "/Users/${primaryUser.username}/Applications/Home Manager Apps/Zed.app/Contents/MacOS/cli" "$@"

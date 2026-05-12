@@ -20,6 +20,7 @@
         ShowStatusBar = true;
       };
       NSGlobalDomain = {
+        AppleInterfaceStyleSwitchesAutomatically = true;
         ApplePressAndHoldEnabled = true;
         InitialKeyRepeat = 30;
         KeyRepeat = 5;

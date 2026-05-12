@@ -57,16 +57,13 @@
           adjust-cell-height = 2;
 
           # Theme
-          theme = "GitHub Dark Default";
+          theme = "dark:GitHub Dark Default,light:GitHub";
 
           # Window and appearance
-          background-opacity = 0.9;
-          background-blur-radius = 20;
           macos-titlebar-style = "transparent";
           window-padding-x = 10;
           window-padding-y = 8;
           window-save-state = "always";
-          window-theme = "dark";
 
           # Cursor
           cursor-style = "bar";
@@ -143,7 +140,11 @@
 
           # Theme
           icon_theme = "Material Icon Theme";
-          theme = "GitHub Dark";
+          theme = {
+            mode = "system";
+            light = "GitHub Light Default";
+            dark = "GitHub Dark Dimmed";
+          };
 
           # Editor
           colorize_brackets = true;

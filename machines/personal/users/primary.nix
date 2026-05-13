@@ -51,7 +51,7 @@
         settings = {
           # Typography
           font-family = "FiraCode Nerd Font Mono";
-          font-size = 12;
+          font-size = 13;
           font-thicken = true;
           adjust-cell-height = 2;
 
@@ -133,9 +133,9 @@
         userSettings = {
           # Font
           ui_font_family = "FiraCode Nerd Font Mono";
-          ui_font_size = 14;
+          ui_font_size = 15;
           buffer_font_family = "FiraCode Nerd Font Mono";
-          buffer_font_size = 12;
+          buffer_font_size = 13;
 
           # Theme
           icon_theme = "Material Icon Theme";

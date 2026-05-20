@@ -17,6 +17,7 @@
         htop
         jq
         just
+        kubectl
         gh
         glab
         gnugrep

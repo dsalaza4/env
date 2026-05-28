@@ -11,6 +11,8 @@
       packages = with pkgs; [
         awscli
         binutils
+        docker-client
+        docker-compose
         cargo-dist
         claude-code
         coreutils
@@ -219,6 +221,14 @@
             source "$HOME/.zshrc.profile"
           fi
         '';
+      };
+    };
+    services.colima = {
+      enable = true;
+      profiles.default = {
+        isActive = true;
+        isService = true;
+        setDockerHost = true;
       };
     };
     home.activation.setDefaultApps = {

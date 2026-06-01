@@ -2,7 +2,7 @@
   description = "My MacOS environment";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/master";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";

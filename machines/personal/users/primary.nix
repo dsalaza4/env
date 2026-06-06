@@ -11,18 +11,19 @@
       packages = with pkgs; [
         awscli
         binutils
-        docker-client
-        docker-compose
         cargo-dist
         claude-code
         coreutils
-        htop
-        jq
-        just
-        gnugrep
+        docker-client
+        docker-compose
         gh
         glab
+        gnugrep
         google-chrome
+        htop
+        iina
+        jq
+        just
         nixd
         nixfmt
         nodejs
@@ -33,8 +34,8 @@
         sops
         tree
         unzip
-        yq
         wget
+        yq
         zoom-us
         (pkgs.writeShellScriptBin "zed" ''
           exec "/Users/${primaryUser.username}/Applications/Home Manager Apps/Zed.app/Contents/MacOS/cli" "$@"

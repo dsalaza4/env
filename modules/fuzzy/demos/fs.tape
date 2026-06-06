@@ -1,0 +1,28 @@
+Output modules/fuzzy/demos/fs.gif
+
+Set TypingSpeed 75ms
+Set Shell zsh
+Set FontSize 22
+Set Width 1300
+Set Height 750
+
+Env HOME "/Users/dsalazar"
+Env FZF_DEFAULT_OPTS "--height 80% --border --layout=reverse --info=inline --ansi --ignore-case --preview-window right:50%"
+
+Hide
+Type "cd /Users/dsalazar/env"
+Enter
+Ctrl+L
+Show
+
+Sleep 500ms
+Type "fs zoom"
+Sleep 1s
+Enter
+Sleep 1500ms
+Down
+Sleep 500ms
+Down
+Sleep 500ms
+Enter
+Sleep 2s

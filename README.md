@@ -49,7 +49,3 @@ flake.nix          # Flake inputs and darwinConfigurations
 justfile           # Build commands
 install.sh         # Bootstrap script
 ```
-
-## Known gaps
-
-- **Docker Desktop**: not managed as code

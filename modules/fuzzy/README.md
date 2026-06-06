@@ -1,6 +1,50 @@
 # modules/fuzzy
 
-A Nix home-manager module for in-terminal code review. Wraps [bat](https://github.com/sharkdp/bat), [delta](https://github.com/dandavison/delta), [fzf](https://github.com/junegunn/fzf), [fd](https://github.com/sharkdp/fd), and [ripgrep](https://github.com/BurntSushi/ripgrep) into a cohesive setup that lets you read diffs, navigate files, and search code without leaving the terminal — reducing context switching and keeping you focused on one terminal per workspace.
+A Nix home-manager module for in-terminal code review.
+
+Wraps [bat](https://github.com/sharkdp/bat), [delta](https://github.com/dandavison/delta),
+[fzf](https://github.com/junegunn/fzf), [fd](https://github.com/sharkdp/fd), and
+[ripgrep](https://github.com/BurntSushi/ripgrep) into a cohesive setup that lets you read diffs,
+navigate files, and search code without leaving the terminal — reducing context switching and keeping
+you focused on one terminal per workspace.
+
+## Commands
+
+### `ff [query]`
+
+Fuzzy file finder. Searches files in the current directory, opens the selected file in `bat`.
+
+```sh
+ff                    # browse all files
+ff primary.nix        # pre-filter by name
+```
+
+<img width="700" alt="ff demo" src="./demos/ff.gif">
+
+### `fs <pattern>`
+
+Fuzzy string search. Runs `ripgrep`, lets you pick a match, opens the file at the matched line.
+
+```sh
+fs fn main
+fs TODO
+```
+
+<img width="700" alt="fs demo" src="./demos/fs.gif">
+
+### `git diff` (and friends)
+
+`delta` is wired as `git`'s pager automatically. All diff output gets syntax highlighting,
+line numbers, and word-level diff markers — no extra commands needed.
+
+```sh
+git diff
+git diff HEAD~1
+git show
+git log -p
+```
+
+<img width="700" alt="git show demo" src="./demos/git-show.gif">
 
 ## Tools
 
@@ -62,7 +106,8 @@ programs.fuzzy.enable = true;
 
 ## Themes
 
-`bat` and `delta` can each use any theme available in their respective theme sets. macOS system appearance is detected automatically — set a dark and light variant for each.
+`bat` and `delta` can each use any theme available in their respective theme sets.
+macOS system appearance is detected automatically — set a dark and light variant for each.
 
 ```sh
 bat --list-themes
@@ -71,12 +116,15 @@ delta --list-syntax-themes
 
 ## What gets installed
 
-- `bat` and `delta` — enabled and wrapped with macOS dark/light theme detection via `BAT_THEME`; `delta` is wired as `git`'s pager
+- `bat` and `delta` — enabled and wrapped with macOS dark/light theme detection via `BAT_THEME`;
+  `delta` is wired as `git`'s pager
 - `fd` — available in the shell; used as fzf's default command
 - `fzf` — enabled with zsh integration
-- `ff` and `fs` — standalone binaries; each bundles its own runtime dependencies (`fd`, `ripgrep`, `bat`)
+- `ff` and `fs` — standalone binaries; each bundles its own runtime dependencies
+  (`fd`, `ripgrep`, `bat`)
 
-Tune these tools via native [HM options](https://nix-community.github.io/home-manager/options.xhtml) alongside `programs.fuzzy`:
+Tune these tools via native [HM options](https://nix-community.github.io/home-manager/options.xhtml)
+alongside `programs.fuzzy`:
 
 ```nix
 programs.fuzzy.enable = true;
@@ -87,35 +135,4 @@ programs.bat.config = {
 };
 programs.delta.options = { line-numbers = true; };
 programs.fzf.defaultOptions = [ "--height 50%" "--layout=reverse" ];
-```
-
-## Commands
-
-### `git diff` (and friends)
-
-`delta` is wired as `git`'s pager automatically. All diff output gets syntax highlighting, line numbers, and word-level diff markers — no extra commands needed.
-
-```sh
-git diff
-git diff HEAD~1
-git show
-git log -p
-```
-
-### `ff [query]`
-
-Fuzzy file finder. Searches files in the current directory, opens the selected file in `bat`.
-
-```sh
-ff                    # browse all files
-ff primary.nix        # pre-filter by name
-```
-
-### `fs <pattern>`
-
-Fuzzy string search. Runs `ripgrep`, lets you pick a match, opens the file at the matched line.
-
-```sh
-fs fn main
-fs TODO
 ```

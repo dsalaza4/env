@@ -7,6 +7,7 @@ Set Width 1300
 Set Height 750
 
 Env HOME "/Users/dsalazar"
+Env BAT_THEME "Catppuccin Mocha"
 
 Hide
 Type "cd /Users/dsalazar/env"

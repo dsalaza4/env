@@ -7,6 +7,7 @@ Set Width 1300
 Set Height 750
 
 Env HOME "/Users/dsalazar"
+Env BAT_THEME "Catppuccin Mocha"
 Env FZF_DEFAULT_OPTS "--height 80% --border --layout=reverse --info=inline --ansi --ignore-case --preview-window right:50%"
 
 Hide

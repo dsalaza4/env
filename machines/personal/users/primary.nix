@@ -1,18 +1,4 @@
 { pkgs, primaryUser, ... }:
-let
-  withAutoTheme =
-    pkg: name:
-    pkgs.symlinkJoin {
-      inherit name;
-      paths = [ pkg ];
-      nativeBuildInputs = [ pkgs.makeWrapper ];
-      postBuild = ''
-        wrapProgram $out/bin/${name} \
-          --run 'if [ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" = "Dark" ]; then export BAT_THEME="Monokai Extended"; else export BAT_THEME="Monokai Extended Light"; fi'
-      '';
-      meta = pkg.meta;
-    };
-in
 {
   users.users = {
     ${primaryUser.username}.home = "/Users/${primaryUser.username}";
@@ -30,7 +16,6 @@ in
         cargo-dist
         claude-code
         coreutils
-        fd
         htop
         jq
         just
@@ -43,7 +28,6 @@ in
         nodejs
         opentofu
         python313
-        ripgrep
         rustup
         shfmt
         sops
@@ -58,37 +42,41 @@ in
       ];
     };
     programs = {
-      bat = {
-        enable = true;
-        package = withAutoTheme pkgs.bat "bat";
-      };
+      fuzzy.enable = true;
       delta = {
-        enable = true;
         enableGitIntegration = true;
-        package = withAutoTheme pkgs.delta "delta";
         options = {
           line-numbers = true;
           word-diff-regex = "\\w+";
         };
+      };
+      bat = {
+        enable = true;
+        config = {
+          color = "always";
+          style = "numbers,changes";
+        };
+      };
+      fzf.defaultOptions = [
+        "--height 50%"
+        "--border"
+        "--layout=reverse"
+        "--info=inline"
+        "--bind=ctrl-/:toggle-preview"
+        "--ansi"
+        "--select-1"
+        "--ignore-case"
+        "--preview-window right:60%"
+      ];
+      ripgrep = {
+        enable = true;
+        arguments = [ "--ignore-case" ];
       };
       direnv = {
         enable = true;
         enableZshIntegration = true;
         nix-direnv.enable = true;
       };
-      fzf = {
-        enable = true;
-        enableZshIntegration = true;
-        defaultCommand = "fd --type f --hidden --follow --exclude .git";
-        defaultOptions = [
-          "--height 50%"
-          "--border"
-          "--layout=reverse"
-          "--info=inline"
-          "--bind=ctrl-/:toggle-preview"
-        ];
-      };
-
       ghostty = {
         enable = true;
         package = pkgs.ghostty-bin;
@@ -258,33 +246,10 @@ in
           enable = true;
           plugins = [ "git" ];
         };
-        initContent = pkgs.lib.mkOrder 1500 ''
+        initContent = ''
           if test -f "$HOME/.zshrc.profile"; then
             source "$HOME/.zshrc.profile"
           fi
-
-          fr() {
-            [ $# -eq 0 ] && echo "usage: fr <pattern>" && return 1
-            local result file line
-            result=$(rg --line-number --no-heading --color=always --ignore-case "$*" \
-              | fzf --ansi --select-1 \
-                    --delimiter=: \
-                    --preview 'bat --color=always --style=numbers,changes --highlight-line {2} {1}' \
-                    --preview-window 'right:60%,+{2}+3/3')
-            [ -n "$result" ] || return
-            file=$(echo "$result" | cut -d: -f1)
-            line=$(echo "$result" | cut -d: -f2)
-            bat --paging=always --highlight-line "$line" --pager "less +''${line}" "$file"
-          }
-
-          ff() {
-            local file
-            file=$(fd --type f --hidden --follow --exclude .git \
-              | fzf --query "$*" --select-1 -i \
-                    --preview 'bat --color=always --style=numbers,changes {}' \
-                    --preview-window 'right:60%')
-            [ -n "$file" ] && bat "$file"
-          }
         '';
       };
     };

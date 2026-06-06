@@ -14,10 +14,15 @@
   };
 
   outputs = inputs: {
+    homeManagerModules.fuzzy = ./modules/fuzzy;
+
     darwinConfigurations = {
       personal = inputs.nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
-        modules = [ ./machines/personal ];
+        modules = [
+          ./machines/personal
+          { home-manager.sharedModules = [ ./modules/fuzzy ]; }
+        ];
         specialArgs = {
           inherit inputs;
           primaryUser = {
@@ -29,7 +34,10 @@
       };
       work = inputs.nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
-        modules = [ ./machines/work ];
+        modules = [
+          ./machines/work
+          { home-manager.sharedModules = [ ./modules/fuzzy ]; }
+        ];
         specialArgs = {
           inherit inputs;
           primaryUser = {

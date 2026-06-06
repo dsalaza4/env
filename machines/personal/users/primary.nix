@@ -21,7 +21,6 @@
         gnugrep
         google-chrome
         htop
-        iina
         jq
         just
         nixd

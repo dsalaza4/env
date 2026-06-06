@@ -20,7 +20,6 @@
         glab
         gnugrep
         htop
-        iina
         jq
         just
         kubectl

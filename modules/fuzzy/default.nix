@@ -88,24 +88,24 @@ in
       bat = {
         dark = lib.mkOption {
           type = lib.types.str;
-          default = "Monokai Extended";
+          default = "Catppuccin Mocha";
           description = "bat theme name for dark mode";
         };
         light = lib.mkOption {
           type = lib.types.str;
-          default = "Monokai Extended Light";
+          default = "Catppuccin Latte";
           description = "bat theme name for light mode";
         };
       };
       delta = {
         dark = lib.mkOption {
           type = lib.types.str;
-          default = "Monokai Extended";
+          default = "Catppuccin Mocha";
           description = "delta theme name for dark mode";
         };
         light = lib.mkOption {
           type = lib.types.str;
-          default = "Monokai Extended Light";
+          default = "Catppuccin Latte";
           description = "delta theme name for light mode";
         };
       };

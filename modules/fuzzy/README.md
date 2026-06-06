@@ -57,8 +57,8 @@ programs.fuzzy.enable = true;
 | `theme.bat.light` | str | `"Monokai Extended Light"` | bat theme in light mode |
 | `theme.delta.dark` | str | `"Monokai Extended"` | delta theme in dark mode |
 | `theme.delta.light` | str | `"Monokai Extended Light"` | delta theme in light mode |
-| `ff.enable` | bool | true | enable `ff` shell function |
-| `fs.enable` | bool | true | enable `fs` shell function |
+| `ff.enable` | bool | true | enable `ff` binary |
+| `fs.enable` | bool | true | enable `fs` binary |
 
 ## Themes
 
@@ -71,11 +71,12 @@ delta --list-syntax-themes
 
 ## What gets installed
 
-- `bat` and `delta` — wrapped with macOS dark/light theme detection via `BAT_THEME`
-- `fd` and `ripgrep` — used by `ff` and `fs`
-- `fzf` — wired with zsh integration, `fd` as default command
+- `bat` and `delta` — enabled and wrapped with macOS dark/light theme detection via `BAT_THEME`; `delta` is wired as `git`'s pager
+- `fd` — available in the shell; used as fzf's default command
+- `fzf` — enabled with zsh integration
+- `ff` and `fs` — standalone binaries; each bundles its own runtime dependencies (`fd`, `ripgrep`, `bat`)
 
-Configure these tools directly via native [HM options](https://nix-community.github.io/home-manager/options.xhtml) alongside `programs.fuzzy`:
+Tune these tools via native [HM options](https://nix-community.github.io/home-manager/options.xhtml) alongside `programs.fuzzy`:
 
 ```nix
 programs.fuzzy.enable = true;
@@ -84,17 +85,15 @@ programs.bat.config = {
   color = "always";
   style = "numbers,changes";
 };
-programs.delta.enableGitIntegration = true;
 programs.delta.options = { line-numbers = true; };
 programs.fzf.defaultOptions = [ "--height 50%" "--layout=reverse" ];
-programs.ripgrep.arguments = [ "--ignore-case" ];
 ```
 
 ## Commands
 
 ### `git diff` (and friends)
 
-When `programs.delta.enableGitIntegration = true`, `delta` is wired as `git`'s pager automatically. All diff output gets syntax highlighting, line numbers, and word-level diff markers — no extra commands needed.
+`delta` is wired as `git`'s pager automatically. All diff output gets syntax highlighting, line numbers, and word-level diff markers — no extra commands needed.
 
 ```sh
 git diff

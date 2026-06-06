@@ -45,7 +45,6 @@
     programs = {
       fuzzy.enable = true;
       delta = {
-        enableGitIntegration = true;
         options = {
           line-numbers = true;
           word-diff-regex = "\\w+";

@@ -18,6 +18,67 @@ let
       '';
       meta = pkg.meta;
     };
+  batPkg = withAutoTheme pkgs.bat "bat" cfg.theme.bat.dark cfg.theme.bat.light;
+  deltaPkg = withAutoTheme pkgs.delta "delta" cfg.theme.delta.dark cfg.theme.delta.light;
+  ffPkg = pkgs.writeShellApplication {
+    name = "ff";
+    bashOptions = [
+      "nounset"
+      "pipefail"
+    ];
+    runtimeInputs = [
+      pkgs.fd
+      pkgs.fzf
+      batPkg
+    ];
+    text = ''
+      files=$(fd --type f --hidden --follow --exclude .git)
+      if [ -z "$files" ]; then
+        echo "no files found"
+        exit 0
+      fi
+      if [ -n "$*" ]; then
+        filtered=$(echo "$files" | fzf --filter "$*" -i)
+        if [ -z "$filtered" ]; then
+          echo "no files found for \"$*\""
+          exit 0
+        fi
+      fi
+      fzf_exit=0
+      file=$(echo "$files" | fzf --query "$*" --preview 'bat {}') || fzf_exit=$?
+      [ "$fzf_exit" -eq 130 ] && exit 0
+      [ -n "$file" ] && bat "$file"
+    '';
+  };
+  fsPkg = pkgs.writeShellApplication {
+    name = "fs";
+    bashOptions = [
+      "nounset"
+      "pipefail"
+    ];
+    runtimeInputs = [
+      pkgs.ripgrep
+      pkgs.fzf
+      batPkg
+    ];
+    text = ''
+      [ $# -eq 0 ] && echo "usage: fs <pattern>" && exit 1
+      rg_out=$(rg --line-number --no-heading --color=always --field-match-separator $'\t' "$*")
+      if [ -z "$rg_out" ]; then
+        echo "no results for \"$*\""
+        exit 0
+      fi
+      fzf_exit=0
+      result=$(echo "$rg_out" | fzf --delimiter=$'\t' \
+            --preview 'bat --highlight-line {2} {1}' \
+            --preview-window 'right:60%,+{2}+3/3') || fzf_exit=$?
+      [ "$fzf_exit" -eq 130 ] && exit 0
+      [ -z "$result" ] && exit 0
+      file=$(echo "$result" | cut -f1)
+      line=$(echo "$result" | cut -f2)
+      bat --paging=always --highlight-line "$line" --pager "less +$line" "$file"
+    '';
+  };
 in
 {
   options.programs.fuzzy = {
@@ -59,19 +120,17 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      fd
-      ripgrep
-    ];
+    home.packages = [ pkgs.fd ] ++ lib.optional cfg.ff.enable ffPkg ++ lib.optional cfg.fs.enable fsPkg;
 
     programs.bat = {
       enable = true;
-      package = withAutoTheme pkgs.bat "bat" cfg.theme.bat.dark cfg.theme.bat.light;
+      package = batPkg;
     };
 
     programs.delta = {
       enable = true;
-      package = withAutoTheme pkgs.delta "delta" cfg.theme.delta.dark cfg.theme.delta.light;
+      enableGitIntegration = true;
+      package = deltaPkg;
     };
 
     programs.fzf = {
@@ -79,31 +138,5 @@ in
       enableZshIntegration = true;
       defaultCommand = "fd --type f --hidden --follow --exclude .git";
     };
-
-    programs.zsh.initContent = lib.mkOrder 1500 (
-      lib.optionalString cfg.fs.enable ''
-        fs() {
-          [ $# -eq 0 ] && echo "usage: fs <pattern>" && return 1
-          local result file line
-          result=$(rg --line-number --no-heading --color=always "$*" \
-            | fzf --delimiter=: \
-                  --preview 'bat --highlight-line {2} {1}' \
-                  --preview-window 'right:60%,+{2}+3/3')
-          [ -n "$result" ] || return
-          file=$(echo "$result" | cut -d: -f1)
-          line=$(echo "$result" | cut -d: -f2)
-          bat --paging=always --highlight-line "$line" --pager "less +''${line}" "$file"
-        }
-      ''
-      + lib.optionalString cfg.ff.enable ''
-        ff() {
-          local file
-          file=$(fd --type f --hidden --follow --exclude .git \
-            | fzf --query "$*" \
-                  --preview 'bat {}')
-          [ -n "$file" ] && bat "$file"
-        }
-      ''
-    );
   };
 }

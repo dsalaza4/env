@@ -1,6 +1,7 @@
 # env
 
-Declarative macOS configuration using [nix-darwin](https://github.com/nix-darwin/nix-darwin) and [Home Manager](https://github.com/nix-community/home-manager).
+Declarative macOS configuration using [nix-darwin](https://github.com/nix-darwin/nix-darwin)
+and [Home Manager](https://github.com/nix-community/home-manager).
 
 ## Machines
 
@@ -16,7 +17,9 @@ Declarative macOS configuration using [nix-darwin](https://github.com/nix-darwin
 curl -fsSL https://raw.githubusercontent.com/dsalaza4/env/main/install.sh | zsh -s -- <machine>
 ```
 
-Omit `<machine>` to default to `personal`. The script installs [Determinate Nix](https://determinate.systems/nix/) if needed, clones this repo, and applies the configuration.
+Omit `<machine>` to default to `personal`.
+The script installs [Determinate Nix](https://determinate.systems/nix/) if needed,
+clones this repo, and applies the configuration.
 
 ## Usage
 
@@ -34,7 +37,8 @@ just update         # Update all flake inputs
 - **System**: macOS defaults (Dock, Finder, key repeat), Cloudflare DNS, Touch ID for sudo
 - **Security**: 1Password GUI
 - **Dev tools**: direnv + nix-direnv, git with per-machine identity, Colima for containers
-- **Terminal code nav**: fuzzy file browsing, live code search, and syntax-highlighted git diffs via the [fuzzy module](./modules/fuzzy)
+- **Terminal code nav**: fuzzy file browsing, live code search, and syntax-highlighted git diffs
+  via the [fuzzy module](./modules/fuzzy)
 
 ## Structure
 

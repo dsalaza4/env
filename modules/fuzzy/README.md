@@ -1,13 +1,18 @@
 # modules/fuzzy
 
-A home-manager module for in-terminal code navigation — fuzzy file browsing, live code search, and syntax-highlighted git diffs, all auto-themed to your macOS appearance.
+A home-manager module for in-terminal code navigation built around short-lived pickers —
+run a command, select, return to the shell.
+Covers fuzzy file browsing, live code search, and syntax-highlighted git diffs,
+all auto-themed to your macOS appearance.
 
 ## Commands
 
 ### `ff [query]`
 
-Fuzzy file finder. Opens empty — type to load and filter files, select to open in `bat`.
-With a query, pre-checks for matches before opening; exits with a message if none found.
+Fuzzy file finder.
+Opens empty — type to load and filter files, select to open in `bat`.
+With a query, pre-checks for matches before opening;
+exits with a message if none found.
 
 ```sh
 ff          # open empty, type to browse
@@ -18,8 +23,10 @@ ff file.txt # pre-filter — exits if no match, else opens with query pre-filled
 
 ### `fs [query]`
 
-Live string search. Opens empty — type to search via `ripgrep` interactively, select to open
-the file at the matched line. With a query, pre-checks for matches before opening.
+Live string search.
+Opens empty — type to search via `ripgrep` interactively,
+select to open the file at the matched line.
+With a query, pre-checks for matches before opening.
 
 ```sh
 fs       # open empty, type to search
@@ -30,8 +37,9 @@ fs text  # pre-check — exits if no match, else opens with query pre-filled
 
 ### `git diff` (and friends)
 
-`delta` is wired as `git`'s pager automatically. All diff output gets syntax highlighting,
-line numbers, and word-level diff markers — no extra commands needed.
+`delta` is wired as `git`'s pager automatically.
+All diff output gets syntax highlighting, line numbers, and word-level diff markers —
+no extra commands needed.
 
 ```sh
 git diff
@@ -78,7 +86,8 @@ programs.fuzzy.enable = true;
 | `ff.enable` | bool | true | enable `ff` binary |
 | `fs.enable` | bool | true | enable `fs` live search binary |
 
-Any of the underlying tools can be tuned via native [HM options](https://nix-community.github.io/home-manager/options.xhtml) alongside `programs.fuzzy`:
+Any of the underlying tools can be tuned via native [HM options](https://nix-community.github.io/home-manager/options.xhtml)
+alongside `programs.fuzzy`:
 
 ```nix
 programs.bat.config.style = "numbers,changes";
@@ -88,12 +97,53 @@ programs.fzf.defaultOptions = [ "--height 50%" "--layout=reverse" ];
 
 ## Themes
 
-macOS system appearance is detected automatically — set a dark and light variant for each tool:
+macOS system appearance is detected automatically —
+set a dark and light variant for each tool:
 
 ```sh
 bat --list-themes
 delta --list-syntax-themes
 ```
+
+## Alternatives
+
+The design philosophy is **short-lived pickers over long-lived TUIs** —
+each command exits after selection and returns you to the shell.
+No app to quit, no mode to escape.
+
+### Long-lived TUIs — yazi, broot, lazygit, tig
+
+These tools need to stay open to be useful,
+which means a dedicated terminal pane or window sacrificed permanently to the tool —
+multiplied across every workspace you have open.
+The workflow becomes: switch to the pane, navigate inside the UI, switch back.
+Close the pane to reclaim the space and you lose navigation state and have to relaunch.
+
+### Short-lived TUIs — television, forgit
+
+Same lifecycle as fuzzy: launch, pick, exit, back at the prompt.
+No screen space claimed between invocations.
+
+**[television](https://github.com/alexpasmantier/television)** covers `ff` and `fs`
+with built-in file and text-search channels (`tv files`, `tv text`).
+The difference is in the details:
+`ff` opens empty and lazy-loads on first keypress — `tv files` starts scanning immediately.
+With a query argument, `ff`/`fs` pre-check for matches and exit with a message if none found;
+`tv` has no equivalent.
+After selection, `ff`/`fs` open the result in `bat` with full syntax highlighting and,
+for `fs`, scroll to the exact matched line;
+`tv` hands the path to `$EDITOR`.
+Theming in `tv` is static;
+fuzzy wraps `bat` and `delta` to track macOS system appearance.
+
+**[forgit](https://github.com/wfxr/forgit)** is the git complement —
+fzf pickers for interactive staging (`ga`), branch checkout (`gco`),
+log browsing (`glo`), and diff review (`gd`).
+It covers git interactive actions that fuzzy doesn't:
+fuzzy's `delta` integration enhances the output of standard git commands
+without changing how you invoke them;
+forgit adds a picker layer on top for cases where you want to browse before acting.
+The two are complementary rather than competing.
 
 ## Tools
 

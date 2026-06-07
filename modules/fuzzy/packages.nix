@@ -40,6 +40,7 @@ let
       bat
     ];
     text = ''
+      bind_cmd='change:reload:[ -n {q} ] && fd --type f --hidden --follow --exclude .git 2>/dev/null || true'
       input=""
       if [ -n "$*" ]; then
         input=$(fd --type f --hidden --follow --exclude .git | fzf --filter "$*" -i)
@@ -54,8 +55,9 @@ let
         printf '%s' "$input" | fzf \
             --ansi \
             --query "$*" \
-            --bind 'change:reload:[ -n {q} ] && fd --type f --hidden --follow --exclude .git 2>/dev/null || true' \
-            --preview 'bat {}'
+            --bind "$bind_cmd" \
+            --preview 'bat {}' \
+            --preview-window 'right:50%'
       ) || fzf_exit=$?
       [ "$fzf_exit" -ne 0 ] && exit 0
       bat "$file"
@@ -73,11 +75,10 @@ let
       bat
     ];
     text = ''
-      sep=$'\t'
-      bind_cmd='change:reload:[ -n {q} ] && rg --line-number --no-heading --color=always --field-match-separator "'"$sep"'" -- {q} 2>/dev/null || true'
+      bind_cmd='change:reload:[ -n {q} ] && rg --line-number --no-heading --color=always -- {q} 2>/dev/null | cut -d: -f1,2 || true'
       input=""
       if [ -n "$*" ]; then
-        input=$(rg --line-number --no-heading --color=always --field-match-separator "$sep" -- "$*" 2>/dev/null)
+        input=$(rg --line-number --no-heading --color=always -- "$*" 2>/dev/null | cut -d: -f1,2)
         if [ -z "$input" ]; then
           echo "no results for \"$*\""
           exit 0
@@ -90,13 +91,13 @@ let
             --disabled \
             --ansi \
             --query "$*" \
-            --delimiter="$sep" \
+            --delimiter=":" \
             --bind "$bind_cmd" \
             --preview 'bat --highlight-line {2} {1}' \
             --preview-window 'right:50%,+{2}+3/3'
       ) || fzf_exit=$?
       [ "$fzf_exit" -ne 0 ] && exit 0
-      IFS=$'\t' read -r file line _ <<< "$result"
+      IFS=: read -r file line <<< "$result"
       bat --paging=always --highlight-line "$line" --pager "less +$line" "$file"
     '';
   };

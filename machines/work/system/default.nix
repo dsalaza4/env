@@ -32,6 +32,20 @@
   };
 
   nix.enable = false; # Determinate Nix required
+
+  launchd.daemons.nix-gc = {
+    script = ''
+      /nix/var/nix/profiles/default/bin/nix-env --delete-generations --profile /nix/var/nix/profiles/system +5
+      /nix/var/nix/profiles/default/bin/nix-collect-garbage
+      /nix/var/nix/profiles/default/bin/nix-store --optimise
+    '';
+    serviceConfig = {
+      RunAtLoad = false;
+      StartCalendarInterval = [ { Hour = 13; Minute = 0; } ];
+      StandardOutPath = "/var/log/nix-gc.log";
+      StandardErrorPath = "/var/log/nix-gc.log";
+    };
+  };
   nixpkgs.config.allowUnfree = true;
 
   fonts.packages = [ pkgs.nerd-fonts.fira-code ];

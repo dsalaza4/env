@@ -16,29 +16,15 @@ in
     enable = lib.mkEnableOption "fuzzy — auto-themed bat, delta, fzf with ff and fs";
 
     theme = {
-      bat = {
-        dark = lib.mkOption {
-          type = lib.types.str;
-          default = "Catppuccin Mocha";
-          description = "bat theme name for dark mode";
-        };
-        light = lib.mkOption {
-          type = lib.types.str;
-          default = "Catppuccin Latte";
-          description = "bat theme name for light mode";
-        };
+      dark = lib.mkOption {
+        type = lib.types.str;
+        default = "Catppuccin Mocha";
+        description = "syntax theme for dark mode (bat and delta)";
       };
-      delta = {
-        dark = lib.mkOption {
-          type = lib.types.str;
-          default = "Catppuccin Mocha";
-          description = "delta theme name for dark mode";
-        };
-        light = lib.mkOption {
-          type = lib.types.str;
-          default = "Catppuccin Latte";
-          description = "delta theme name for light mode";
-        };
+      light = lib.mkOption {
+        type = lib.types.str;
+        default = "Catppuccin Latte";
+        description = "syntax theme for light mode (bat and delta)";
       };
     };
 

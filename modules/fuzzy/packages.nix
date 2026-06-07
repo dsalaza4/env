@@ -1,14 +1,8 @@
 {
   pkgs,
   theme ? {
-    bat = {
-      dark = "Catppuccin Mocha";
-      light = "Catppuccin Latte";
-    };
-    delta = {
-      dark = "Catppuccin Mocha";
-      light = "Catppuccin Latte";
-    };
+    dark = "Catppuccin Mocha";
+    light = "Catppuccin Latte";
   },
 }:
 let
@@ -19,30 +13,25 @@ let
       dark,
       light,
     }:
-    let
-      nameUpper = pkgs.lib.toUpper name;
-      darkVar = "FUZZY_${nameUpper}_DARK_THEME";
-      lightVar = "FUZZY_${nameUpper}_LIGHT_THEME";
-    in
     pkgs.symlinkJoin {
       inherit name;
       paths = [ pkg ];
       nativeBuildInputs = [ pkgs.makeWrapper ];
       postBuild = ''
         wrapProgram $out/bin/${name} \
-          --run 'if [ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" = "Dark" ]; then export BAT_THEME="${"$"}{${darkVar}:-${dark}}"; else export BAT_THEME="${"$"}{${lightVar}:-${light}}"; fi'
+          --run 'if [ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" = "Dark" ]; then export BAT_THEME="${"$"}{FUZZY_THEME_DARK:-${dark}}"; else export BAT_THEME="${"$"}{FUZZY_THEME_LIGHT:-${light}}"; fi'
       '';
       meta = pkg.meta;
     };
   bat = withAutoTheme {
     pkg = pkgs.bat;
     name = "bat";
-    inherit (theme.bat) dark light;
+    inherit (theme) dark light;
   };
   delta = withAutoTheme {
     pkg = pkgs.delta;
     name = "delta";
-    inherit (theme.delta) dark light;
+    inherit (theme) dark light;
   };
   ff = pkgs.writeShellApplication {
     name = "ff";

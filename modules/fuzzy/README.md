@@ -69,13 +69,11 @@ echo 'source "$(fzf-share)/key-bindings.zsh"' >> ~/.zshrc
 ```
 
 Themes default to `Catppuccin Mocha` (dark) and `Catppuccin Latte` (light).
-Override per-tool via env vars in your shell profile:
+Override via env vars in your shell profile — applies to both `bat` and `delta`:
 
 ```sh
-export FUZZY_BAT_DARK_THEME="Dracula"
-export FUZZY_BAT_LIGHT_THEME="GitHub"
-export FUZZY_DELTA_DARK_THEME="Dracula"
-export FUZZY_DELTA_LIGHT_THEME="GitHub"
+export FUZZY_THEME_DARK="Dracula"
+export FUZZY_THEME_LIGHT="GitHub"
 ```
 
 ### With Home Manager
@@ -107,10 +105,8 @@ programs.fuzzy.enable = true;
 | option | type | default | description |
 |---|---|---|---|
 | `enable` | bool | false | enable the module |
-| `theme.bat.dark` | str | `"Catppuccin Mocha"` | bat theme in dark mode |
-| `theme.bat.light` | str | `"Catppuccin Latte"` | bat theme in light mode |
-| `theme.delta.dark` | str | `"Catppuccin Mocha"` | delta theme in dark mode |
-| `theme.delta.light` | str | `"Catppuccin Latte"` | delta theme in light mode |
+| `theme.dark` | str | `"Catppuccin Mocha"` | syntax theme in dark mode (bat and delta) |
+| `theme.light` | str | `"Catppuccin Latte"` | syntax theme in light mode (bat and delta) |
 | `ff.enable` | bool | true | enable `ff` binary |
 | `fs.enable` | bool | true | enable `fs` live search binary |
 
@@ -126,11 +122,11 @@ programs.fzf.defaultOptions = [ "--height 50%" "--layout=reverse" ];
 ## Themes
 
 macOS system appearance is detected automatically —
-set a dark and light variant for each tool:
+`bat` and `delta` share a single dark/light theme pair since they ship identical syntax theme sets.
+To browse available themes:
 
 ```sh
 bat --list-themes
-delta --list-syntax-themes
 ```
 
 ## Alternatives

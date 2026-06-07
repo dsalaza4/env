@@ -32,22 +32,25 @@ let
       batPkg
     ];
     text = ''
-      files=$(fd --type f --hidden --follow --exclude .git)
-      if [ -z "$files" ]; then
-        echo "no files found"
-        exit 0
-      fi
+      input=""
       if [ -n "$*" ]; then
-        filtered=$(echo "$files" | fzf --filter "$*" -i)
-        if [ -z "$filtered" ]; then
+        input=$(fd --type f --hidden --follow --exclude .git | fzf --filter "$*" -i)
+        if [ -z "$input" ]; then
           echo "no files found for \"$*\""
           exit 0
         fi
       fi
+      unset FZF_DEFAULT_COMMAND
       fzf_exit=0
-      file=$(echo "$files" | fzf --query "$*" --preview 'bat {}') || fzf_exit=$?
-      [ "$fzf_exit" -eq 130 ] && exit 0
-      [ -n "$file" ] && bat "$file"
+      file=$(
+        printf '%s' "$input" | fzf \
+            --ansi \
+            --query "$*" \
+            --bind 'change:reload:[ -n {q} ] && fd --type f --hidden --follow --exclude .git 2>/dev/null || true' \
+            --preview 'bat {}'
+      ) || fzf_exit=$?
+      [ "$fzf_exit" -ne 0 ] && exit 0
+      bat "$file"
     '';
   };
   fsPkg = pkgs.writeShellApplication {
@@ -62,20 +65,30 @@ let
       batPkg
     ];
     text = ''
-      [ $# -eq 0 ] && echo "usage: fs <pattern>" && exit 1
-      rg_out=$(rg --line-number --no-heading --color=always --field-match-separator $'\t' "$*")
-      if [ -z "$rg_out" ]; then
-        echo "no results for \"$*\""
-        exit 0
+      sep=$'\t'
+      bind_cmd='change:reload:[ -n {q} ] && rg --line-number --no-heading --color=always --field-match-separator "'"$sep"'" -- {q} 2>/dev/null || true'
+      input=""
+      if [ -n "$*" ]; then
+        input=$(rg --line-number --no-heading --color=always --field-match-separator "$sep" -- "$*" 2>/dev/null)
+        if [ -z "$input" ]; then
+          echo "no results for \"$*\""
+          exit 0
+        fi
       fi
+      unset FZF_DEFAULT_COMMAND
       fzf_exit=0
-      result=$(echo "$rg_out" | fzf --delimiter=$'\t' \
+      result=$(
+        printf '%s' "$input" | fzf \
+            --disabled \
+            --ansi \
+            --query "$*" \
+            --delimiter="$sep" \
+            --bind "$bind_cmd" \
             --preview 'bat --highlight-line {2} {1}' \
-            --preview-window 'right:60%,+{2}+3/3') || fzf_exit=$?
-      [ "$fzf_exit" -eq 130 ] && exit 0
-      [ -z "$result" ] && exit 0
-      file=$(echo "$result" | cut -f1)
-      line=$(echo "$result" | cut -f2)
+            --preview-window 'right:60%,+{2}+3/3'
+      ) || fzf_exit=$?
+      [ "$fzf_exit" -ne 0 ] && exit 0
+      IFS=$'\t' read -r file line _ <<< "$result"
       bat --paging=always --highlight-line "$line" --pager "less +$line" "$file"
     '';
   };

@@ -1,33 +1,29 @@
 # modules/fuzzy
 
-A Nix home-manager module for in-terminal code review.
-
-Wraps [bat](https://github.com/sharkdp/bat), [delta](https://github.com/dandavison/delta),
-[fzf](https://github.com/junegunn/fzf), [fd](https://github.com/sharkdp/fd), and
-[ripgrep](https://github.com/BurntSushi/ripgrep) into a cohesive setup that lets you read diffs,
-navigate files, and search code without leaving the terminal — reducing context switching and keeping
-you focused on one terminal per workspace.
+A home-manager module that wires [bat](https://github.com/sharkdp/bat), [delta](https://github.com/dandavison/delta), [fzf](https://github.com/junegunn/fzf), [fd](https://github.com/sharkdp/fd), and [ripgrep](https://github.com/BurntSushi/ripgrep) into a cohesive terminal setup — fuzzy file browsing, live code search, and syntax-highlighted git diffs, all auto-themed to your macOS appearance.
 
 ## Commands
 
 ### `ff [query]`
 
-Fuzzy file finder. Searches files in the current directory, opens the selected file in `bat`.
+Fuzzy file finder. Opens empty — type to load and filter files, select to open in `bat`.
+With a query, pre-checks for matches before opening; exits with a message if none found.
 
 ```sh
-ff                    # browse all files
-ff primary.nix        # pre-filter by name
+ff          # open empty, type to browse
+ff file.txt # pre-filter — exits if no match, else opens with query pre-filled
 ```
 
 <img width="700" alt="ff demo" src="./demos/ff.gif">
 
-### `fs <pattern>`
+### `fs [query]`
 
-Fuzzy string search. Runs `ripgrep`, lets you pick a match, opens the file at the matched line.
+Live string search. Opens empty — type to search via `ripgrep` interactively, select to open
+the file at the matched line. With a query, pre-checks for matches before opening.
 
 ```sh
-fs fn main
-fs TODO
+fs       # open empty, type to search
+fs text  # pre-check — exits if no match, else opens with query pre-filled
 ```
 
 <img width="700" alt="fs demo" src="./demos/fs.gif">
@@ -46,27 +42,7 @@ git log -p
 
 <img width="700" alt="git show demo" src="./demos/git-show.gif">
 
-## Tools
-
-| tool | what it does |
-|---|---|
-| [bat](https://github.com/sharkdp/bat) | syntax-highlighted file viewer, replaces `cat` |
-| [delta](https://github.com/dandavison/delta) | syntax-highlighted diff viewer, wired as `git` pager |
-| [fzf](https://github.com/junegunn/fzf) | interactive fuzzy finder, powers `ff` and `fs` |
-| [fd](https://github.com/sharkdp/fd) | fast file finder, used as fzf's default source |
-| [ripgrep](https://github.com/BurntSushi/ripgrep) | fast code search, used by `fs` |
-
-## Wire up
-
-### Internal (same repo)
-
-In `flake.nix`, add to each `darwinSystem` that needs it:
-
-```nix
-{ home-manager.sharedModules = [ ./modules/fuzzy ]; }
-```
-
-### External (separate flake)
+## Install
 
 Add this repo as a flake input:
 
@@ -78,15 +54,13 @@ inputs.env = {
 };
 ```
 
-Then wire the module:
+Wire the module:
 
 ```nix
 { home-manager.sharedModules = [ inputs.env.homeManagerModules.fuzzy ]; }
 ```
 
-## Enable
-
-In your home-manager user config:
+Then in your home-manager user config:
 
 ```nix
 programs.fuzzy.enable = true;
@@ -97,42 +71,36 @@ programs.fuzzy.enable = true;
 | option | type | default | description |
 |---|---|---|---|
 | `enable` | bool | false | enable the module |
-| `theme.bat.dark` | str | `"Monokai Extended"` | bat theme in dark mode |
-| `theme.bat.light` | str | `"Monokai Extended Light"` | bat theme in light mode |
-| `theme.delta.dark` | str | `"Monokai Extended"` | delta theme in dark mode |
-| `theme.delta.light` | str | `"Monokai Extended Light"` | delta theme in light mode |
+| `theme.bat.dark` | str | `"Catppuccin Mocha"` | bat theme in dark mode |
+| `theme.bat.light` | str | `"Catppuccin Latte"` | bat theme in light mode |
+| `theme.delta.dark` | str | `"Catppuccin Mocha"` | delta theme in dark mode |
+| `theme.delta.light` | str | `"Catppuccin Latte"` | delta theme in light mode |
 | `ff.enable` | bool | true | enable `ff` binary |
-| `fs.enable` | bool | true | enable `fs` binary |
+| `fs.enable` | bool | true | enable `fs` live search binary |
+
+Any of the underlying tools can be tuned via native [HM options](https://nix-community.github.io/home-manager/options.xhtml) alongside `programs.fuzzy`:
+
+```nix
+programs.bat.config.style = "numbers,changes";
+programs.delta.options = { line-numbers = true; };
+programs.fzf.defaultOptions = [ "--height 50%" "--layout=reverse" ];
+```
 
 ## Themes
 
-`bat` and `delta` can each use any theme available in their respective theme sets.
-macOS system appearance is detected automatically — set a dark and light variant for each.
+macOS system appearance is detected automatically — set a dark and light variant for each tool:
 
 ```sh
 bat --list-themes
 delta --list-syntax-themes
 ```
 
-## What gets installed
+## Tools
 
-- `bat` and `delta` — enabled and wrapped with macOS dark/light theme detection via `BAT_THEME`;
-  `delta` is wired as `git`'s pager
-- `fd` — available in the shell; used as fzf's default command
-- `fzf` — enabled with zsh integration
-- `ff` and `fs` — standalone binaries; each bundles its own runtime dependencies
-  (`fd`, `ripgrep`, `bat`)
-
-Tune these tools via native [HM options](https://nix-community.github.io/home-manager/options.xhtml)
-alongside `programs.fuzzy`:
-
-```nix
-programs.fuzzy.enable = true;
-
-programs.bat.config = {
-  color = "always";
-  style = "numbers,changes";
-};
-programs.delta.options = { line-numbers = true; };
-programs.fzf.defaultOptions = [ "--height 50%" "--layout=reverse" ];
-```
+| tool | role |
+|---|---|
+| [bat](https://github.com/sharkdp/bat) | syntax-highlighted file viewer (`cat` replacement), used by `ff` and `fs` |
+| [delta](https://github.com/dandavison/delta) | diff pager, auto-wired as `git`'s pager |
+| [fzf](https://github.com/junegunn/fzf) | interactive finder, powers `ff` and `fs` |
+| [fd](https://github.com/sharkdp/fd) | fast file traversal, drives `ff` |
+| [ripgrep](https://github.com/BurntSushi/ripgrep) | fast code search, drives `fs` |

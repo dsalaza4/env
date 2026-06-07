@@ -68,7 +68,15 @@ git config --global core.pager delta
 echo 'source "$(fzf-share)/key-bindings.zsh"' >> ~/.zshrc
 ```
 
-Themes are fixed at the defaults (`Catppuccin Mocha` / `Catppuccin Latte`).
+Themes default to `Catppuccin Mocha` (dark) and `Catppuccin Latte` (light).
+Override per-tool via env vars in your shell profile:
+
+```sh
+export FUZZY_BAT_DARK_THEME="Dracula"
+export FUZZY_BAT_LIGHT_THEME="GitHub"
+export FUZZY_DELTA_DARK_THEME="Dracula"
+export FUZZY_DELTA_LIGHT_THEME="GitHub"
+```
 
 ### With Home Manager
 

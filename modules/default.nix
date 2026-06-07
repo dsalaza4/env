@@ -2,7 +2,7 @@ let
   fuzzy = import ./fuzzy;
 in
 {
-  homeManagerModules = fuzzy.homeManagerModules;
+  inherit (fuzzy) homeManagerModules;
   sharedModules = builtins.attrValues fuzzy.homeManagerModules;
-  packages = fuzzy.packages;
+  inherit (fuzzy) packages;
 }

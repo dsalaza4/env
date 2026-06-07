@@ -28,10 +28,21 @@
 
         perSystem = { pkgs, ... }: {
           packages = modules.packages pkgs;
+
+          checks = {
+            statix = pkgs.runCommand "statix" { buildInputs = [ pkgs.statix ]; } ''
+              statix check ${./.}
+              touch $out
+            '';
+            nixfmt-tree = pkgs.runCommand "nixfmt-tree" { buildInputs = [ pkgs.nixfmt-tree ]; } ''
+              treefmt --fail-on-change --no-cache --walk filesystem --tree-root ${./.}
+              touch $out
+            '';
+          };
         };
 
         flake = {
-          homeManagerModules = modules.homeManagerModules;
+          inherit (modules) homeManagerModules;
 
           darwinConfigurations = {
             personal = inputs.nix-darwin.lib.darwinSystem {

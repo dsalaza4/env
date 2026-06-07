@@ -218,8 +218,8 @@
         enable = true;
         settings = {
           user = {
-            name = primaryUser.name;
-            email = primaryUser.email;
+            inherit (primaryUser) name;
+            inherit (primaryUser) email;
           };
         };
       };

@@ -6,32 +6,27 @@
   },
 }:
 let
-  withAutoTheme =
-    {
-      pkg,
-      name,
-      dark,
-      light,
-    }:
-    pkgs.symlinkJoin {
-      inherit name;
-      paths = [ pkg ];
-      nativeBuildInputs = [ pkgs.makeWrapper ];
-      postBuild = ''
-        wrapProgram $out/bin/${name} \
-          --run 'if [ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" = "Dark" ]; then export BAT_THEME="${"$"}{FUZZY_THEME_DARK:-${dark}}"; else export BAT_THEME="${"$"}{FUZZY_THEME_LIGHT:-${light}}"; fi'
-      '';
-      meta = pkg.meta;
-    };
-  bat = withAutoTheme {
-    pkg = pkgs.bat;
+  bat = pkgs.symlinkJoin {
     name = "bat";
-    inherit (theme) dark light;
+    paths = [ pkgs.bat ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/bat \
+        --set-default BAT_THEME "auto:system" \
+        --set-default BAT_THEME_DARK "${theme.dark}" \
+        --set-default BAT_THEME_LIGHT "${theme.light}"
+    '';
+    meta = pkgs.bat.meta;
   };
-  delta = withAutoTheme {
-    pkg = pkgs.delta;
+  delta = pkgs.symlinkJoin {
     name = "delta";
-    inherit (theme) dark light;
+    paths = [ pkgs.delta ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/delta \
+        --run 'if [ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" = "Dark" ]; then export BAT_THEME="${"$"}{BAT_THEME_DARK:-${theme.dark}}"; else export BAT_THEME="${"$"}{BAT_THEME_LIGHT:-${theme.light}}"; fi'
+    '';
+    meta = pkgs.delta.meta;
   };
   ff = pkgs.writeShellApplication {
     name = "ff";

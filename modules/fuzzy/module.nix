@@ -8,7 +8,7 @@ let
   cfg = config.programs.fuzzy;
   fuzzyPkgs = import ./packages.nix {
     inherit pkgs;
-    theme = cfg.theme;
+    inherit (cfg) theme;
   };
 in
 {
@@ -43,21 +43,21 @@ in
     ++ lib.optional cfg.ff.enable fuzzyPkgs.ff
     ++ lib.optional cfg.fs.enable fuzzyPkgs.fs;
 
-    programs.bat = {
-      enable = true;
-      package = fuzzyPkgs.bat;
-    };
-
-    programs.delta = {
-      enable = true;
-      enableGitIntegration = true;
-      package = fuzzyPkgs.delta;
-    };
-
-    programs.fzf = {
-      enable = true;
-      enableZshIntegration = true;
-      defaultCommand = "fd --type f --hidden --follow --exclude .git";
+    programs = {
+      bat = {
+        enable = true;
+        package = fuzzyPkgs.bat;
+      };
+      delta = {
+        enable = true;
+        enableGitIntegration = true;
+        package = fuzzyPkgs.delta;
+      };
+      fzf = {
+        enable = true;
+        enableZshIntegration = true;
+        defaultCommand = "fd --type f --hidden --follow --exclude .git";
+      };
     };
   };
 }

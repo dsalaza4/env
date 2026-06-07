@@ -69,11 +69,11 @@ echo 'source "$(fzf-share)/key-bindings.zsh"' >> ~/.zshrc
 ```
 
 Themes default to `Catppuccin Mocha` (dark) and `Catppuccin Latte` (light).
-Override via env vars in your shell profile — applies to both `bat` and `delta`:
+Override via env vars in your shell profile — `bat` reads these natively, `delta` inherits them:
 
 ```sh
-export FUZZY_THEME_DARK="Dracula"
-export FUZZY_THEME_LIGHT="GitHub"
+export BAT_THEME_DARK="Dracula"
+export BAT_THEME_LIGHT="GitHub"
 ```
 
 ### With Home Manager

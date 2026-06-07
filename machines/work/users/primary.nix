@@ -44,18 +44,6 @@
     };
     programs = {
       fuzzy.enable = true;
-      delta = {
-        options = {
-          line-numbers = true;
-        };
-      };
-      bat = {
-        enable = true;
-        config = {
-          color = "always";
-          style = "numbers,changes";
-        };
-      };
       fzf.defaultOptions = [
         "--height 50%"
         "--border"

@@ -24,7 +24,8 @@ let
     nativeBuildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
       wrapProgram $out/bin/delta \
-        --run 'if [ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" = "Dark" ]; then export BAT_THEME="${"$"}{BAT_THEME_DARK:-${theme.dark}}"; else export BAT_THEME="${"$"}{BAT_THEME_LIGHT:-${theme.light}}"; fi'
+        --run 'if [ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" = "Dark" ]; then export BAT_THEME="${"$"}{BAT_THEME_DARK:-${theme.dark}}"; else export BAT_THEME="${"$"}{BAT_THEME_LIGHT:-${theme.light}}"; fi' \
+        --add-flags "--line-numbers"
     '';
     meta = pkgs.delta.meta;
   };
@@ -37,6 +38,7 @@ let
     runtimeInputs = [
       pkgs.fd
       pkgs.fzf
+      pkgs.less
       bat
     ];
     text = ''
@@ -56,11 +58,11 @@ let
             --ansi \
             --query "$*" \
             --bind "$bind_cmd" \
-            --preview 'bat {}' \
+            --preview 'bat --style=numbers,changes --color=always {}' \
             --preview-window 'right:50%'
       ) || fzf_exit=$?
       [ "$fzf_exit" -ne 0 ] && exit 0
-      bat "$file"
+      bat --style=numbers,changes --color=always "$file"
     '';
   };
   fs = pkgs.writeShellApplication {
@@ -72,6 +74,7 @@ let
     runtimeInputs = [
       pkgs.ripgrep
       pkgs.fzf
+      pkgs.less
       bat
     ];
     text = ''
@@ -93,12 +96,12 @@ let
             --query "$*" \
             --delimiter=":" \
             --bind "$bind_cmd" \
-            --preview 'bat --highlight-line {2} {1}' \
+            --preview 'bat --style=numbers,changes --color=always --highlight-line {2} {1}' \
             --preview-window 'right:50%,+{2}+3/3'
       ) || fzf_exit=$?
       [ "$fzf_exit" -ne 0 ] && exit 0
       IFS=: read -r file line <<< "$result"
-      bat --paging=always --highlight-line "$line" --pager "less +$line" "$file"
+      bat --style=numbers,changes --color=always --highlight-line "$line" --pager "less +$line" "$file"
     '';
   };
   fuzzy = pkgs.symlinkJoin {

@@ -1,6 +1,6 @@
 # modules/fuzzy
 
-A home-manager module that wires [bat](https://github.com/sharkdp/bat), [delta](https://github.com/dandavison/delta), [fzf](https://github.com/junegunn/fzf), [fd](https://github.com/sharkdp/fd), and [ripgrep](https://github.com/BurntSushi/ripgrep) into a cohesive terminal setup — fuzzy file browsing, live code search, and syntax-highlighted git diffs, all auto-themed to your macOS appearance.
+A home-manager module for in-terminal code navigation — fuzzy file browsing, live code search, and syntax-highlighted git diffs, all auto-themed to your macOS appearance.
 
 ## Commands
 

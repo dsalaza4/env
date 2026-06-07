@@ -33,7 +33,8 @@ just update         # Update all flake inputs
 - **Editor**: Zed set as default for plain text and source code
 - **System**: macOS defaults (Dock, Finder, key repeat), Cloudflare DNS, Touch ID for sudo
 - **Security**: 1Password GUI
-- **Dev tools**: direnv + nix-direnv, git with per-machine identity
+- **Dev tools**: direnv + nix-direnv, git with per-machine identity, Colima for containers
+- **Terminal code nav**: fuzzy file browsing, live code search, and syntax-highlighted git diffs via the [fuzzy module](./modules/fuzzy)
 
 ## Structure
 
@@ -45,6 +46,8 @@ machines/
     package-managers/
   work/            # Same layout, work identity
   test/            # Minimal CI config
+modules/
+  fuzzy/           # Reusable HM module — file browsing, code search, git diffs
 flake.nix          # Flake inputs and darwinConfigurations
 justfile           # Build commands
 install.sh         # Bootstrap script

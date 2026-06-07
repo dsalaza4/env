@@ -52,6 +52,26 @@ git log -p
 
 ## Install
 
+### Standalone
+
+```sh
+nix profile install github:dsalazar/env#fuzzy
+```
+
+Two integrations need a one-time manual setup:
+
+```sh
+# wire delta as git's pager
+git config --global core.pager delta
+
+# wire fzf shell key bindings (adjust path for your shell / package manager)
+echo 'source "$(fzf-share)/key-bindings.zsh"' >> ~/.zshrc
+```
+
+Themes are fixed at the defaults (`Catppuccin Mocha` / `Catppuccin Latte`).
+
+### With Home Manager
+
 Add this repo as a flake input:
 
 ```nix
@@ -68,7 +88,7 @@ Wire the module:
 { home-manager.sharedModules = [ inputs.env.homeManagerModules.fuzzy ]; }
 ```
 
-Then in your home-manager user config:
+Then in your Home Manager user config:
 
 ```nix
 programs.fuzzy.enable = true;
@@ -86,7 +106,7 @@ programs.fuzzy.enable = true;
 | `ff.enable` | bool | true | enable `ff` binary |
 | `fs.enable` | bool | true | enable `fs` live search binary |
 
-Any of the underlying tools can be tuned via native [HM options](https://nix-community.github.io/home-manager/options.xhtml)
+Any of the underlying tools can be tuned via native [Home Manager options](https://nix-community.github.io/home-manager/options.xhtml)
 alongside `programs.fuzzy`:
 
 ```nix

@@ -41,7 +41,12 @@
     '';
     serviceConfig = {
       RunAtLoad = false;
-      StartCalendarInterval = [ { Hour = 13; Minute = 0; } ];
+      StartCalendarInterval = [
+        {
+          Hour = 13;
+          Minute = 0;
+        }
+      ];
       StandardOutPath = "/var/log/nix-gc.log";
       StandardErrorPath = "/var/log/nix-gc.log";
     };

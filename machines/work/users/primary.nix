@@ -47,7 +47,6 @@
       delta = {
         options = {
           line-numbers = true;
-          word-diff-regex = "\\w+";
         };
       };
       bat = {
@@ -65,8 +64,6 @@
         "--bind=ctrl-/:toggle-preview"
         "--ansi"
         "--select-1"
-        "--ignore-case"
-        "--preview-window right:60%"
       ];
       ripgrep = {
         enable = true;

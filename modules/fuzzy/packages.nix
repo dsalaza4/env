@@ -93,7 +93,7 @@ let
             --delimiter="$sep" \
             --bind "$bind_cmd" \
             --preview 'bat --highlight-line {2} {1}' \
-            --preview-window 'right:60%,+{2}+3/3'
+            --preview-window 'right:50%,+{2}+3/3'
       ) || fzf_exit=$?
       [ "$fzf_exit" -ne 0 ] && exit 0
       IFS=$'\t' read -r file line _ <<< "$result"

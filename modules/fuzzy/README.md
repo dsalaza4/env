@@ -1,6 +1,6 @@
 # modules/fuzzy
 
-A home-manager module for in-terminal code navigation built around short-lived pickers —
+In-terminal code navigation built around short-lived pickers —
 run a command, select, return to the shell.
 Covers fuzzy file browsing, live code search, and syntax-highlighted git diffs,
 all auto-themed to your macOS appearance.
@@ -102,7 +102,7 @@ Then in your Home Manager user config:
 programs.fuzzy.enable = true;
 ```
 
-## Options
+#### Options
 
 | option | type | default | description |
 |---|---|---|---|

@@ -37,9 +37,6 @@
         wget
         yq
         zoom-us
-        (pkgs.writeShellScriptBin "zed" ''
-          exec "/Users/${primaryUser.username}/Applications/Home Manager Apps/Zed.app/Contents/MacOS/cli" "$@"
-        '')
       ];
     };
     programs = {
@@ -123,71 +120,6 @@
           ];
         };
       };
-      zed-editor = {
-        enable = true;
-        extensions = [
-          "git-firefly"
-          "github-theme"
-          "html"
-          "log"
-          "material-icon-theme"
-          "nix"
-          "terraform"
-          "toml"
-        ];
-        userSettings = {
-          # Font
-          ui_font_family = "FiraCode Nerd Font Mono";
-          ui_font_size = 15;
-          buffer_font_family = "FiraCode Nerd Font Mono";
-          buffer_font_size = 13;
-
-          # Theme
-          icon_theme = "Material Icon Theme";
-          theme = {
-            mode = "system";
-            light = "GitHub Light Default";
-            dark = "GitHub Dark Dimmed";
-          };
-
-          # Editor
-          colorize_brackets = true;
-          ensure_final_newline_on_save = true;
-          wrap_guides = [ 100 ];
-          soft_wrap = "none";
-          tab_size = 2;
-          cursor_blink = true;
-
-          # Tabs
-          preview_tabs = {
-            enable_preview_from_file_finder = true;
-          };
-          tabs = {
-            close_position = "left";
-            activate_on_close = "left_neighbour";
-          };
-
-          # Minimap
-          minimap = {
-            show = "auto";
-            thumb = "always";
-            max_width_columns = 80;
-          };
-
-          # Keybindings
-          base_keymap = "VSCode";
-
-          # Languages
-          languages = {
-            Nix = {
-              language_servers = [
-                "nixd"
-                "!nil"
-              ];
-            };
-          };
-        };
-      };
       git = {
         enable = true;
         settings = {
@@ -213,7 +145,7 @@
         autosuggestion.enable = true;
         syntaxHighlighting.enable = true;
         sessionVariables = {
-          EDITOR = "zed --wait";
+          EDITOR = "hx";
         };
         oh-my-zsh = {
           enable = true;
@@ -233,14 +165,6 @@
         isService = true;
         setDockerHost = true;
       };
-    };
-    home.activation.setDefaultApps = {
-      after = [ "writeBoundary" ];
-      before = [ ];
-      data = ''
-        ${pkgs.duti}/bin/duti -s dev.zed.Zed public.plain-text all
-        ${pkgs.duti}/bin/duti -s dev.zed.Zed public.source-code all
-      '';
     };
   };
 }

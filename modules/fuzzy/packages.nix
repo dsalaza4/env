@@ -18,6 +18,17 @@ let
     '';
     meta = pkgs.bat.meta;
   };
+  fzf = pkgs.symlinkJoin {
+    name = "fzf";
+    paths = pkgs.fzf.all;
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/fzf \
+        --set-default FZF_DEFAULT_OPTS "--height 50% --border --layout=reverse --info=inline --bind=ctrl-/:toggle-preview --ansi --select-1"
+    '';
+    meta = pkgs.fzf.meta // { outputsToInstall = [ "out" ]; };
+    passthru.version = pkgs.fzf.version;
+  };
   delta = pkgs.symlinkJoin {
     name = "delta";
     paths = [ pkgs.delta ];
@@ -37,7 +48,7 @@ let
     ];
     runtimeInputs = [
       pkgs.fd
-      pkgs.fzf
+      fzf
       pkgs.less
       bat
     ];
@@ -73,7 +84,7 @@ let
     ];
     runtimeInputs = [
       pkgs.ripgrep
-      pkgs.fzf
+      fzf
       pkgs.less
       bat
     ];
@@ -109,6 +120,7 @@ let
     paths = [
       bat
       delta
+      fzf
       ff
       fs
     ];
@@ -118,6 +130,7 @@ in
   inherit
     bat
     delta
+    fzf
     ff
     fs
     fuzzy

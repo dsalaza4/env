@@ -43,19 +43,6 @@
     };
     programs = {
       fuzzy.enable = true;
-      fzf.defaultOptions = [
-        "--height 50%"
-        "--border"
-        "--layout=reverse"
-        "--info=inline"
-        "--bind=ctrl-/:toggle-preview"
-        "--ansi"
-        "--select-1"
-      ];
-      ripgrep = {
-        enable = true;
-        arguments = [ "--ignore-case" ];
-      };
       direnv = {
         enable = true;
         enableZshIntegration = true;

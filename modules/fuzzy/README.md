@@ -38,7 +38,7 @@ fs text  # pre-check — exits if no match, else opens with query pre-filled
 ### `git diff` (and friends)
 
 `delta` is wired as `git`'s pager automatically.
-All diff output gets syntax highlighting, line numbers, and word-level diff markers —
+All diff output gets syntax highlighting and line numbers —
 no extra commands needed.
 
 ```sh
@@ -68,13 +68,16 @@ git config --global core.pager delta
 echo 'source "$(fzf-share)/key-bindings.zsh"' >> ~/.zshrc
 ```
 
-Themes default to `Catppuccin Mocha` (dark) and `Catppuccin Latte` (light).
+**Themes** default to `Catppuccin Mocha` (dark) and `Catppuccin Latte` (light).
 Override via env vars in your shell profile — `bat` reads these natively, `delta` inherits them:
 
 ```sh
 export BAT_THEME_DARK="Dracula"
 export BAT_THEME_LIGHT="GitHub"
 ```
+
+**fzf** ships with sensible defaults (height, border, layout, preview toggle on `ctrl-/`).
+See the [fzf docs](https://github.com/junegunn/fzf#environment-variables) to override.
 
 ### With Home Manager
 
@@ -110,13 +113,27 @@ programs.fuzzy.enable = true;
 | `ff.enable` | bool | true | enable `ff` binary |
 | `fs.enable` | bool | true | enable `fs` live search binary |
 
-Any of the underlying tools can be tuned via native [Home Manager options](https://nix-community.github.io/home-manager/options.xhtml)
-alongside `programs.fuzzy`:
+**Themes** are set via module options:
 
 ```nix
-programs.bat.config.style = "numbers,changes";
-programs.delta.options = { line-numbers = true; };
-programs.fzf.defaultOptions = [ "--height 50%" "--layout=reverse" ];
+programs.fuzzy = {
+  enable = true;
+  theme.dark = "Dracula";
+  theme.light = "GitHub";
+};
+```
+
+**fzf defaults** can be overridden via `programs.fzf.defaultOptions` — these replace the built-in defaults entirely:
+
+```nix
+programs.fzf.defaultOptions = [ "--height 70%" "--layout=reverse" "--border" ];
+```
+
+Any other tool can be further tuned via native [Home Manager options](https://nix-community.github.io/home-manager/options.xhtml) alongside `programs.fuzzy`:
+
+```nix
+programs.delta.options.side-by-side = true;
+programs.bat.config.pager = "less -RF";
 ```
 
 ## Themes

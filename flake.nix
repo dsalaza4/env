@@ -42,7 +42,7 @@
         };
 
         flake = {
-          inherit (modules) homeManagerModules darwinModules;
+          inherit (modules) home-manager darwin;
 
           darwinConfigurations = import ./machines { inherit inputs modules; };
         };

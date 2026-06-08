@@ -26,7 +26,9 @@ let
       wrapProgram $out/bin/fzf \
         --set-default FZF_DEFAULT_OPTS "--height 50% --border --layout=reverse --info=inline --bind=ctrl-/:toggle-preview --ansi --select-1"
     '';
-    meta = pkgs.fzf.meta // { outputsToInstall = [ "out" ]; };
+    meta = pkgs.fzf.meta // {
+      outputsToInstall = [ "out" ];
+    };
     passthru.version = pkgs.fzf.version;
   };
   delta = pkgs.symlinkJoin {

@@ -4,7 +4,7 @@
     system = "aarch64-darwin";
     modules = [
       ./personal
-      modules.sharedModule
+      modules.all
     ];
     specialArgs = {
       inherit inputs;
@@ -19,7 +19,7 @@
     system = "aarch64-darwin";
     modules = [
       ./work
-      modules.sharedModule
+      modules.all
     ];
     specialArgs = {
       inherit inputs;

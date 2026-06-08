@@ -2,11 +2,11 @@
   pkgs,
   theme ? {
     dark = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/catppuccin/micro/main/themes/catppuccin-mocha.micro";
+      url = "https://raw.githubusercontent.com/catppuccin/micro/015a2bb208f61a2d5a33121de2644bf4a059436b/themes/catppuccin-mocha.micro";
       hash = "sha256-pWO6m6w+5AsUXqJxTwHPG5puZ8PE+7JE7KcbXk8caDs=";
     };
     light = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/catppuccin/micro/main/themes/catppuccin-latte.micro";
+      url = "https://raw.githubusercontent.com/catppuccin/micro/015a2bb208f61a2d5a33121de2644bf4a059436b/themes/catppuccin-latte.micro";
       hash = "sha256-4VnfuunlmHmzzFFLg1mRkK8gpNuzIkYPtguCnqpjEwg=";
     };
   },

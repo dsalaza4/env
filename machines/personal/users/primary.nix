@@ -56,34 +56,6 @@
           };
         };
       };
-      starship = {
-        enable = true;
-        settings = {
-          add_newline = true;
-          direnv.disabled = false;
-          git_metrics.disabled = false;
-          nix_shell.disabled = true;
-          nodejs.disabled = true;
-        };
-      };
-      zsh = {
-        enable = true;
-        enableCompletion = true;
-        autosuggestion.enable = true;
-        syntaxHighlighting.enable = true;
-        sessionVariables = {
-          EDITOR = "hx";
-        };
-        oh-my-zsh = {
-          enable = true;
-          plugins = [ "git" ];
-        };
-        initContent = ''
-          if test -f "$HOME/.zshrc.profile"; then
-            source "$HOME/.zshrc.profile"
-          fi
-        '';
-      };
     };
     services.colima = {
       enable = true;

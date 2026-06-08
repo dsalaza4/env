@@ -1,13 +1,22 @@
 let
-  mods = map import [
-    ./fuzzy
-    ./editor
-    ./terminal
-    ./system
-  ];
-  home-manager = builtins.foldl' (acc: m: acc // (m.homeManagerModules or { })) { } mods;
-  darwin = builtins.foldl' (acc: m: acc // (m.darwinModules or { })) { } mods;
-  packages = pkgs: builtins.foldl' (acc: m: acc // ((m.packages or (_: { })) pkgs)) { } mods;
+  home-manager = {
+    fuzzy = import ./fuzzy/module.nix;
+    editor = import ./editor/module.nix;
+    terminal = import ./terminal/module.nix;
+  };
+  darwin = {
+    system = import ./system/module.nix;
+  };
+  packages =
+    pkgs:
+    let
+      fuzzy = import ./fuzzy/packages.nix { inherit pkgs; };
+      editor = import ./editor/packages.nix { inherit pkgs; };
+    in
+    {
+      inherit (fuzzy) fuzzy ff fs;
+      inherit (editor) helix;
+    };
   all = {
     home-manager.sharedModules = builtins.attrValues home-manager;
     imports = builtins.attrValues darwin;

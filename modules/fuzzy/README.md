@@ -110,8 +110,6 @@ programs.fuzzy.enable = true;
 | `enable` | bool | false | enable the module |
 | `theme.dark` | str | `"Catppuccin Mocha"` | syntax theme in dark mode (bat and delta) |
 | `theme.light` | str | `"Catppuccin Latte"` | syntax theme in light mode (bat and delta) |
-| `ff.enable` | bool | true | enable `ff` binary |
-| `fs.enable` | bool | true | enable `fs` live search binary |
 
 **Themes** are set via module options:
 

@@ -28,20 +28,14 @@ in
       };
     };
 
-    ff.enable = lib.mkEnableOption "ff — fuzzy file finder" // {
-      default = true;
-    };
-    fs.enable = lib.mkEnableOption "fs — fuzzy string search" // {
-      default = true;
-    };
   };
 
   config = lib.mkIf cfg.enable {
     home.packages = [
       pkgs.fd
-    ]
-    ++ lib.optional cfg.ff.enable fuzzyPkgs.ff
-    ++ lib.optional cfg.fs.enable fuzzyPkgs.fs;
+      fuzzyPkgs.ff
+      fuzzyPkgs.fs
+    ];
 
     programs = {
       bat = {

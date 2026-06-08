@@ -61,7 +61,7 @@
           adjust-cell-height = 2;
 
           # Theme
-          theme = "dark:GitHub Dark Dimmed,light:GitHub";
+          theme = "dark:catppuccin-mocha,light:catppuccin-latte";
 
           # Window and appearance
           macos-titlebar-style = "transparent";

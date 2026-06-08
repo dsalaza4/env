@@ -57,14 +57,14 @@ git log -p
 Try without installing:
 
 ```sh
-nix run github:dsalazar/env#ff
-nix run github:dsalazar/env#fs
+nix run github:dsalaza4/env#ff
+nix run github:dsalaza4/env#fs
 ```
 
 Or install permanently:
 
 ```sh
-nix profile install github:dsalazar/env#fuzzy
+nix profile install github:dsalaza4/env#fuzzy
 ```
 
 Two integrations need a one-time manual setup:
@@ -94,7 +94,7 @@ Add this repo as a flake input:
 
 ```nix
 inputs.env = {
-  url = "github:dsalazar/env";
+  url = "github:dsalaza4/env";
   inputs.nixpkgs.follows = "nixpkgs";
   inputs.home-manager.follows = "home-manager";
 };

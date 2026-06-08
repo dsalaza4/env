@@ -4,9 +4,8 @@
     system = "aarch64-darwin";
     modules = [
       ./personal
-      { home-manager.sharedModules = modules.sharedModules; }
-    ]
-    ++ modules.darwinSharedModules;
+      modules.sharedModule
+    ];
     specialArgs = {
       inherit inputs;
       primaryUser = {
@@ -20,9 +19,8 @@
     system = "aarch64-darwin";
     modules = [
       ./work
-      { home-manager.sharedModules = modules.sharedModules; }
-    ]
-    ++ modules.darwinSharedModules;
+      modules.sharedModule
+    ];
     specialArgs = {
       inherit inputs;
       primaryUser = {

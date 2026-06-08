@@ -5,7 +5,8 @@
     modules = [
       ./personal
       { home-manager.sharedModules = modules.sharedModules; }
-    ];
+    ]
+    ++ modules.darwinSharedModules;
     specialArgs = {
       inherit inputs;
       primaryUser = {
@@ -20,7 +21,8 @@
     modules = [
       ./work
       { home-manager.sharedModules = modules.sharedModules; }
-    ];
+    ]
+    ++ modules.darwinSharedModules;
     specialArgs = {
       inherit inputs;
       primaryUser = {

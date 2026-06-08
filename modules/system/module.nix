@@ -31,7 +31,7 @@
     };
   };
 
-  nix.enable = false; # Determinate Nix required
+  nix.enable = false;
 
   launchd.daemons.nix-gc = {
     script = ''
@@ -51,11 +51,11 @@
       StandardErrorPath = "/var/log/nix-gc.log";
     };
   };
+
   nixpkgs.config.allowUnfree = true;
 
   fonts.packages = [ pkgs.nerd-fonts.fira-code ];
   time.timeZone = "America/Bogota";
-
   security.pam.services.sudo_local.touchIdAuth = true;
 
   networking = {

@@ -86,6 +86,7 @@ let
       pkgs.ripgrep
       fzf
       pkgs.less
+      pkgs.ncurses
       bat
     ];
     text = ''
@@ -112,7 +113,11 @@ let
       ) || fzf_exit=$?
       [ "$fzf_exit" -ne 0 ] && exit 0
       IFS=: read -r file line <<< "$result"
-      bat --style=numbers,changes --color=always --highlight-line "$line" --pager "less +$line" "$file"
+      if [ "$(wc -l < "$file")" -le "$(tput lines)" ]; then
+        bat --style=numbers,changes --color=always --paging=never --highlight-line "$line" "$file"
+      else
+        bat --style=numbers,changes --color=always --paging=always --highlight-line "$line" --pager "less +$line" "$file"
+      fi
     '';
   };
   fuzzy = pkgs.symlinkJoin {

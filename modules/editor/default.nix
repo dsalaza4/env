@@ -8,7 +8,7 @@ let
       all = import ./packages.nix { inherit pkgs; };
     in
     {
-      inherit (all) micro editor;
+      inherit (all) helix editor;
     };
 in
 {

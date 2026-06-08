@@ -54,6 +54,15 @@ git log -p
 
 ### Standalone
 
+Try without installing:
+
+```sh
+nix run github:dsalazar/env#ff
+nix run github:dsalazar/env#fs
+```
+
+Or install permanently:
+
 ```sh
 nix profile install github:dsalazar/env#fuzzy
 ```

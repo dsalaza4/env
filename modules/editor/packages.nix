@@ -1,0 +1,40 @@
+{
+  pkgs,
+  theme ? {
+    dark = pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/catppuccin/micro/main/themes/catppuccin-mocha.micro";
+      hash = "sha256-pWO6m6w+5AsUXqJxTwHPG5puZ8PE+7JE7KcbXk8caDs=";
+    };
+    light = pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/catppuccin/micro/main/themes/catppuccin-latte.micro";
+      hash = "sha256-4VnfuunlmHmzzFFLg1mRkK8gpNuzIkYPtguCnqpjEwg=";
+    };
+  },
+}:
+let
+  darkName = pkgs.lib.removeSuffix ".micro" theme.dark.name;
+  lightName = pkgs.lib.removeSuffix ".micro" theme.light.name;
+  micro = pkgs.writeShellApplication {
+    name = "micro";
+    text = ''
+      _cs="''${XDG_CONFIG_HOME:-$HOME/.config}/micro/colorschemes"
+      mkdir -p "$_cs"
+      ln -sf ${theme.dark} "$_cs/${theme.dark.name}"
+      ln -sf ${theme.light} "$_cs/${theme.light.name}"
+      if [ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" = "Dark" ]; then
+        _theme="${darkName}"
+      else
+        _theme="${lightName}"
+      fi
+      exec ${pkgs.micro}/bin/micro -colorscheme "$_theme" "$@"
+    '';
+  };
+  editor = micro;
+in
+{
+  inherit
+    micro
+    editor
+    theme
+    ;
+}

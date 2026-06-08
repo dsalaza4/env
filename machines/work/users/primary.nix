@@ -44,6 +44,7 @@
     };
     programs = {
       fuzzy.enable = true;
+      editor.enable = true;
       direnv = {
         enable = true;
         enableZshIntegration = true;

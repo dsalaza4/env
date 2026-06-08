@@ -8,7 +8,7 @@ let
       all = import ./packages.nix { inherit pkgs; };
     in
     {
-      inherit (all) fuzzy;
+      inherit (all) fuzzy ff fs;
     };
 in
 {

@@ -60,7 +60,7 @@
           adjust-cell-height = 2;
 
           # Theme
-          theme = "dark:catppuccin-mocha,light:catppuccin-latte";
+          theme = "dark:Catppuccin Mocha,light:Catppuccin Latte";
 
           # Window and appearance
           macos-titlebar-style = "transparent";

@@ -2,12 +2,12 @@
   pkgs,
   theme ? {
     dark = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/catppuccin/micro/015a2bb208f61a2d5a33121de2644bf4a059436b/themes/catppuccin-mocha.micro";
-      hash = "sha256-pWO6m6w+5AsUXqJxTwHPG5puZ8PE+7JE7KcbXk8caDs=";
+      url = "https://raw.githubusercontent.com/catppuccin/micro/015a2bb208f61a2d5a33121de2644bf4a059436b/themes/catppuccin-mocha-transparent.micro";
+      hash = "sha256-v1rCrl13pQGVaZHxkH2qdG8tDUyXjSH8oieR6eTNEG8=";
     };
     light = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/catppuccin/micro/015a2bb208f61a2d5a33121de2644bf4a059436b/themes/catppuccin-latte.micro";
-      hash = "sha256-4VnfuunlmHmzzFFLg1mRkK8gpNuzIkYPtguCnqpjEwg=";
+      url = "https://raw.githubusercontent.com/catppuccin/micro/015a2bb208f61a2d5a33121de2644bf4a059436b/themes/catppuccin-latte-transparent.micro";
+      hash = "sha256-GDr54mUa3bdcvlUKohWHEUr1adA2LHIO3o/6y0L6fC4=";
     };
   },
 }:

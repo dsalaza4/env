@@ -2,6 +2,7 @@ let
   mods = map import [
     ./fuzzy
     ./editor
+    ./terminal
   ];
   homeManagerModules = builtins.foldl' (acc: m: acc // m.homeManagerModules) { } mods;
   packages = pkgs: builtins.foldl' (acc: m: acc // (m.packages pkgs)) { } mods;

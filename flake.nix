@@ -44,44 +44,7 @@
         flake = {
           inherit (modules) homeManagerModules;
 
-          darwinConfigurations = {
-            personal = inputs.nix-darwin.lib.darwinSystem {
-              system = "aarch64-darwin";
-              modules = [
-                ./machines/personal
-                { home-manager.sharedModules = modules.sharedModules; }
-              ];
-              specialArgs = {
-                inherit inputs;
-                primaryUser = {
-                  email = "podany270895@gmail.com";
-                  name = "Daniel Salazar";
-                  username = "dsalazar";
-                };
-              };
-            };
-            work = inputs.nix-darwin.lib.darwinSystem {
-              system = "aarch64-darwin";
-              modules = [
-                ./machines/work
-                { home-manager.sharedModules = modules.sharedModules; }
-              ];
-              specialArgs = {
-                inherit inputs;
-                primaryUser = {
-                  email = "dsalazar@fluidattacks.com";
-                  name = "Daniel Salazar";
-                  username = "dsalazar";
-                };
-              };
-            };
-
-            test = inputs.nix-darwin.lib.darwinSystem {
-              system = "aarch64-darwin";
-              modules = [ ./machines/test ];
-              specialArgs = { inherit inputs; };
-            };
-          };
+          darwinConfigurations = import ./machines { inherit inputs modules; };
         };
       }
     );

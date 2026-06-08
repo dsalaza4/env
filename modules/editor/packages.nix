@@ -26,8 +26,7 @@ let
       exec ${pkgs.helix}/bin/hx --config "$_cache/config.toml" "$@"
     '';
   };
-  editor = helix;
 in
 {
-  inherit helix editor theme;
+  inherit helix;
 }

@@ -18,13 +18,22 @@ let
     '';
     meta = pkgs.bat.meta;
   };
+  fzfOptions = [
+    "--height 50%"
+    "--border"
+    "--layout=reverse"
+    "--info=inline"
+    "--bind=ctrl-/:toggle-preview"
+    "--ansi"
+    "--select-1"
+  ];
   fzf = pkgs.symlinkJoin {
     name = "fzf";
     paths = pkgs.fzf.all;
     nativeBuildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
       wrapProgram $out/bin/fzf \
-        --set-default FZF_DEFAULT_OPTS "--height 50% --border --layout=reverse --info=inline --bind=ctrl-/:toggle-preview --ansi --select-1"
+        --set-default FZF_DEFAULT_OPTS "${pkgs.lib.concatStringsSep " " fzfOptions}"
     '';
     meta = pkgs.fzf.meta // {
       outputsToInstall = [ "out" ];
@@ -141,5 +150,6 @@ in
     ff
     fs
     fuzzy
+    fzfOptions
     ;
 }

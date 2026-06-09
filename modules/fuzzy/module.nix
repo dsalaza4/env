@@ -51,6 +51,7 @@ in
         enable = true;
         enableZshIntegration = true;
         defaultCommand = "fd --type f --hidden --follow --exclude .git";
+        defaultOptions = fuzzyPkgs.fzfOptions;
         package = fuzzyPkgs.fzf;
       };
     };

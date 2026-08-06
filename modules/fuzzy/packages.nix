@@ -64,10 +64,30 @@ let
       bat
     ];
     text = ''
-      bind_cmd='change:reload:[ -n {q} ] && fd --type f --hidden --follow --exclude .git 2>/dev/null || true'
+      usage() {
+        echo "usage: ff [-d dir] [-c] [query]" >&2
+      }
+      dir=""
+      case_flag="-i"
+      while getopts ":d:c" opt; do
+        case "$opt" in
+          d) dir=$OPTARG ;;
+          c) case_flag="+i" ;;
+          :) echo "option -$OPTARG requires a directory" >&2; usage; exit 1 ;;
+          *) echo "unknown option -$OPTARG" >&2; usage; exit 1 ;;
+        esac
+      done
+      shift $((OPTIND - 1))
+      if [ -n "$dir" ] && [ ! -d "$dir" ]; then
+        echo "not a directory: $dir" >&2
+        exit 1
+      fi
+      fd_args=(--type f --hidden --follow --exclude .git)
+      [ -n "$dir" ] && fd_args+=(--search-path "$dir")
+      bind_cmd="change:reload:[ -n {q} ] && fd ''${fd_args[*]@Q} 2>/dev/null || true"
       input=""
       if [ -n "$*" ]; then
-        input=$(fd --type f --hidden --follow --exclude .git | fzf --filter "$*" -i)
+        input=$(fd "''${fd_args[@]}" | fzf --filter "$*" "$case_flag")
         if [ -z "$input" ]; then
           echo "no files found for \"$*\""
           exit 0
@@ -78,6 +98,7 @@ let
       file=$(
         printf '%s' "$input" | fzf \
             --ansi \
+            "$case_flag" \
             --query "$*" \
             --bind "$bind_cmd" \
             --preview 'bat --style=numbers,changes --color=always {}' \
@@ -101,10 +122,31 @@ let
       bat
     ];
     text = ''
-      bind_cmd='change:reload:[ -n {q} ] && rg --line-number --no-heading --color=always -- {q} 2>/dev/null | cut -d: -f1,2 || true'
+      usage() {
+        echo "usage: fs [-d dir] [-c] [query]" >&2
+      }
+      dir=""
+      case_flag="-i"
+      while getopts ":d:c" opt; do
+        case "$opt" in
+          d) dir=$OPTARG ;;
+          c) case_flag="-s" ;;
+          :) echo "option -$OPTARG requires a directory" >&2; usage; exit 1 ;;
+          *) echo "unknown option -$OPTARG" >&2; usage; exit 1 ;;
+        esac
+      done
+      shift $((OPTIND - 1))
+      if [ -n "$dir" ] && [ ! -d "$dir" ]; then
+        echo "not a directory: $dir" >&2
+        exit 1
+      fi
+      rg_args=(--line-number --no-heading --color=always "$case_flag")
+      path_args=()
+      [ -n "$dir" ] && path_args=("$dir")
+      bind_cmd="change:reload:[ -n {q} ] && rg ''${rg_args[*]@Q} -- {q} ''${path_args[*]@Q} 2>/dev/null | cut -d: -f1,2 || true"
       input=""
       if [ -n "$*" ]; then
-        input=$(rg --line-number --no-heading --color=always -- "$*" 2>/dev/null | cut -d: -f1,2)
+        input=$(rg "''${rg_args[@]}" -- "$*" "''${path_args[@]}" 2>/dev/null | cut -d: -f1,2)
         if [ -z "$input" ]; then
           echo "no results for \"$*\""
           exit 0

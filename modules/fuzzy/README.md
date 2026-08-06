@@ -7,7 +7,14 @@ all auto-themed to your macOS appearance.
 
 ## Commands
 
-### `ff [query]`
+`ff` and `fs` share two flags, which must come before the query:
+
+| flag | effect |
+|---|---|
+| `-d dir` | search under `dir` instead of the current directory |
+| `-c` | case sensitive matching — insensitive by default |
+
+### `ff [-d dir] [-c] [query]`
 
 Fuzzy file finder.
 Opens empty — type to load and filter files, select to open in `bat`.
@@ -15,13 +22,15 @@ With a query, pre-checks for matches before opening;
 exits with a message if none found.
 
 ```sh
-ff          # open empty, type to browse
-ff file.txt # pre-filter — exits if no match, else opens with query pre-filled
+ff            # open empty, type to browse
+ff file.txt   # pre-filter — exits if no match, else opens with query pre-filled
+ff -d modules # browse only under modules/
+ff -c README  # matches README.md, not readme.md
 ```
 
 <img width="700" alt="ff demo" src="./demos/ff.gif">
 
-### `fs [query]`
+### `fs [-d dir] [-c] [query]`
 
 Live string search.
 Opens empty — type to search via `ripgrep` interactively,
@@ -29,8 +38,10 @@ select to open the file at the matched line.
 With a query, pre-checks for matches before opening.
 
 ```sh
-fs       # open empty, type to search
-fs text  # pre-check — exits if no match, else opens with query pre-filled
+fs                 # open empty, type to search
+fs text            # pre-check — exits if no match, else opens with query pre-filled
+fs -d modules text # search only under modules/
+fs -c Text         # matches "Text", not "text"
 ```
 
 <img width="700" alt="fs demo" src="./demos/fs.gif">

@@ -43,7 +43,8 @@
       RunAtLoad = false;
       StartCalendarInterval = [
         {
-          Hour = 13;
+          Weekday = 5;
+          Hour = 22;
           Minute = 0;
         }
       ];

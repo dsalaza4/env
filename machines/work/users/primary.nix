@@ -9,7 +9,7 @@
       stateVersion = "25.11";
 
       packages = with pkgs; [
-        awscli
+        awscli2
         binutils
         cargo-dist
         claude-code

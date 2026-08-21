@@ -44,6 +44,8 @@ in
         autosuggestion.enable = true;
         syntaxHighlighting.enable = true;
         sessionVariables = {
+          # awscli2 pipes every command through less unless this is empty
+          AWS_PAGER = "";
           EDITOR = "hx";
         };
         oh-my-zsh = {

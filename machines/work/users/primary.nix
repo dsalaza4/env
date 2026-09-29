@@ -75,7 +75,7 @@
           };
           ui = {
             agent_panel_sort = "priority";
-            toast.delivery = "terminal";
+            toast.delivery = "herdr";
           };
           keys = {
             open_notification_target = [

@@ -5,6 +5,17 @@
   };
 
   home-manager.users.${primaryUser.username} = {
+    imports = [
+      (
+        { config, lib, ... }:
+        {
+          # Claude Code rewrites ~/.claude/settings.json itself, so let herdr merge its hook in place.
+          home.activation.herdrClaudeIntegration = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            run ${lib.getExe config.programs.herdr.package} integration install claude
+          '';
+        }
+      )
+    ];
     home = {
       stateVersion = "25.11";
 

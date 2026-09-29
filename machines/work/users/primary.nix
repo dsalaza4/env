@@ -58,6 +58,27 @@
             light_name = "catppuccin-latte";
             dark_name = "catppuccin";
           };
+          update = {
+            version_check = false;
+            manifest_check = false;
+          };
+          ui = {
+            agent_panel_sort = "priority";
+            toast.delivery = "terminal";
+          };
+          keys = {
+            open_notification_target = [
+              "prefix+o"
+              "ctrl+shift+o"
+            ];
+            previous_agent = "ctrl+shift+a";
+            next_agent = "ctrl+shift+s";
+            switch_workspace = "ctrl+shift+1..9";
+            goto = [
+              "prefix+g"
+              "ctrl+shift+g"
+            ];
+          };
         };
       };
       git = {

@@ -23,7 +23,6 @@
         awscli2
         binutils
         cargo-dist
-        claude-code
         coreutils
         docker-client
         docker-compose
@@ -51,6 +50,11 @@
       ];
     };
     programs = {
+      claude-code = {
+        enable = true;
+        package = pkgs.claude-code;
+        skills = ./skills;
+      };
       fuzzy.enable = true;
       editor.enable = true;
       terminal.enable = true;

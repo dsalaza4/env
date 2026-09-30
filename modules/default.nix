@@ -1,5 +1,6 @@
 let
   home-manager = {
+    agents = import ./agents/module.nix;
     fuzzy = import ./fuzzy/module.nix;
     editor = import ./editor/module.nix;
     terminal = import ./terminal/module.nix;

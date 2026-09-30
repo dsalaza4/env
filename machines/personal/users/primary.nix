@@ -12,7 +12,6 @@
         awscli2
         binutils
         cargo-dist
-        claude-code
         coreutils
         docker-client
         docker-compose
@@ -39,6 +38,7 @@
       ];
     };
     programs = {
+      agents.enable = true;
       fuzzy.enable = true;
       editor.enable = true;
       terminal.enable = true;

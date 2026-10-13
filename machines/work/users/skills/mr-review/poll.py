@@ -72,7 +72,7 @@ if not mrs:
 queue = {m["iid"]: m for m in mrs if m["author"]["username"] != ME}
 print("open:", *sorted(queue), "| own (skipped):", *sorted(m["iid"] for m in mrs if m["author"]["username"] == ME))
 
-review, verify, ready = [], [], {}
+review, verify, ready, unposted = [], [], {}, []
 for iid in sorted(queue):
     if not (state / f"{iid}.json").exists() and not busy(iid):
         review.append(iid)
@@ -84,6 +84,8 @@ for f in sorted(state.glob("*.json")):
         print(iid, "closed or left the queue: state dropped")
         continue
     s = json.loads(f.read_text())
+    if s.get("unposted"):
+        unposted.append(f"{URL}{iid} {s['unposted']}")
     moved = s["reviewed_head"] != queue[iid]["sha"]
     if moved and not busy(iid) and same_content(iid, s):
         f.write_text(json.dumps(s))
@@ -117,3 +119,6 @@ print("NEWLY_READY:", *newly)
 print("READY FOR APPROVAL:")
 for r in ready.values() or ["(none)"]:
     print(" ", r)
+print("UNPOSTED (awaiting the user):")
+for u in unposted or ["(none)"]:
+    print(" ", u)

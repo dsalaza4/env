@@ -24,7 +24,7 @@ Never approve, unapprove or merge. On existing threads, the user decides.
 Skill dir `/Users/dsalazar/.claude/skills/mr-review/` (read-only):
 
 - `poll.py`: one queue pass; prints `TO_REVIEW`, `TO_VERIFY`,
-  `NEWLY_READY`, `READY FOR APPROVAL`.
+  `NEWLY_READY`, `READY FOR APPROVAL`, `UNPOSTED`.
 - `brief.md`: first-review agent prompt. `verify.md`: verify agent prompt.
 - `ste.md`: add for docs STE100 series MRs.
 - `pitfalls.md`: per-component lessons; paste the relevant ones into prompts.
@@ -47,7 +47,8 @@ State in `~/.local/state/`:
    a reviewer or it is merged. For a merged MR, phrase findings as
    follow-ups for a new MR; post only when the user asks.
 
-Every run ends with the `READY FOR APPROVAL` links. Background-task
+Every run ends with the `READY FOR APPROVAL` links and the `UNPOSTED`
+list. Background-task
 completion notices repeat agent reports: acknowledge in one line, do not
 re-summarize.
 
@@ -94,7 +95,10 @@ dropping them.
   raised.
 - **Blocked post**: record `unposted`, return the full thread text and
   anchor (path, line, base/start/head SHA). The orchestrator asks the user
-  to allow the post once or post it by hand.
+  to allow the post once or post it by hand. The poll lists every MR with
+  `unposted` each round, so none drops out of the queue. Once the user
+  decides, the orchestrator updates the state: a posted finding becomes
+  an `open` thread, and `unposted` is removed either way.
 - **State**:
   ```json
   {

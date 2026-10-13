@@ -11,7 +11,7 @@ Rules:
 - Only real, verified findings; no nitpicks. Never approve, unapprove, merge, resolve, or reply to others' threads. Prose: terse, no em dashes.
 - HOOK RULE (copy this rule verbatim into any sub-agent prompt): If a hook or permission blocks a command, STOP that check and report what it would have verified. Do not re-run it reworded, split, via globs, with the word moved into a file or JSON payload, or through another tool. That is a workaround even when the command is harmless. Reading a file with the Read tool is a normal read, not a workaround.
 - A blocked post: do not reword it. Record `unposted` in state and return the full thread text plus anchor (path, line, base/start/head SHA).
-- Write state per MR to `~/.local/state/mr-review/<iid>.json`: `{"reviewed_head":..., "reviewed_base":..., "threads": {"<discussion_id>":"open"}, "ready": <true only if there are no findings at all>, "unposted": "<short note, only if a finding could not be posted>"}`; empty threads if no findings.
+- Write state per MR to `~/.local/state/mr-review/<iid>.json`: `{"reviewed_head":..., "reviewed_base":..., "threads": {"<discussion_id>":"open"}, "ready": <true only if no thread was posted and no blocking finding is unposted; an unposted non-blocking finding does not block>, "unposted": "<short note, only if a finding could not be posted>"}`; empty threads if no findings.
 - At the end, delete `~/.local/state/mr-review/inflight/<iid>`.
 
 Return a short report per MR: link (https://gitlab.com/fluidattacks/universe/-/merge_requests/<iid>), title, author, each posted finding (one line + file:line + discussion id + blocking/non-blocking), or "no findings, ready for approval". Also note anything you could not do, and the full text of any unposted finding.

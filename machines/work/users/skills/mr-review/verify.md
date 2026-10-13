@@ -8,6 +8,6 @@ Per MR:
 - Per thread decide AGREE (fixed correctly, pushback holds, or a cited follow-up issue exists, is open, and covers it) or DISAGREE (what is still wrong). Verify against the code or config at the new base, not the reply. Confirm any cited issue exists and is open.
 - Verify the fix itself, not only that the author applied our suggestion: our suggested wording or code can be wrong too.
 - Review any other prose or code the range-diff shows changed.
-- Update the state file: reviewed_head/base to current, threads "reported", `"ready": true` only if every thread is AGREE and no new blocking finding (non-blocking nits do not block). Delete `~/.local/state/mr-review/inflight/<iid>`.
+- Update the state file: reviewed_head/base to current, threads "reported", `"ready": true` only if every thread is AGREE and no new blocking finding, posted or unposted (non-blocking nits do not block). Record any finding a hook kept from posting in `unposted`. Delete `~/.local/state/mr-review/inflight/<iid>`.
 
 Return per MR: link, per thread AGREE/DISAGREE with one-line evidence, new findings (file:line, blocking or not), ready yes/no, and anything a hook blocked (do not work around hooks).

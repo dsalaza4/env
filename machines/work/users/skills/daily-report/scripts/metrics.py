@@ -2,20 +2,17 @@
 
 usage: metrics.py ISSUE_IID PROGRESS_DATE
 
-Reads task_completion_status and created_at from GitLab through glab.
-Days elapsed are business days from creation to the progress date,
-inclusive. The ETA is the progress date plus ceil(days-left) business
-days, which is what reproduces the standard's worked examples.
+Days elapsed are business days (weekdays) from the day of the issue's
+first MR to the progress date, inclusive. The ETA is the progress date
+plus ceil(days-left) business days, which reproduces the standard's
+worked examples.
 """
 
 import datetime
-import json
 import math
-import os
-import subprocess
 import sys
 
-PROJECT = os.environ.get("REPORT_PROJECT", "20741933")
+import gl
 
 
 def business_days_between(start, end):
@@ -37,36 +34,46 @@ def add_business_days(start, count):
     return current
 
 
-def main():
-    iid, progress = sys.argv[1], datetime.date.fromisoformat(sys.argv[2])
-    raw = subprocess.run(
-        ["glab", "api", f"projects/{PROJECT}/issues/{iid}"],
-        capture_output=True, text=True, check=True,
-    ).stdout
-    issue = json.loads(raw)
+def first_mr(iid):
+    # Related MRs include ones that only mention the issue; a rejected first MR still marks the start.
+    related = gl.get_all(f"projects/{gl.PROJECT}/issues/{iid}/related_merge_requests?per_page=100")
+    own = [m for m in related if m["project_id"] == int(gl.PROJECT) and gl.mentions(m["title"], iid)]
+    return min(own, key=lambda m: m["created_at"]) if own else None
+
+
+def lines(iid, progress, issue=None):
+    issue = issue or gl.get(f"projects/{gl.PROJECT}/issues/{iid}")
     tasks = issue.get("task_completion_status") or {}
     done, total = tasks.get("completed_count", 0), tasks.get("count", 0)
-    created = datetime.date.fromisoformat(issue["created_at"][:10])
+    first = first_mr(iid)
+    start = datetime.date.fromisoformat(first["created_at"][:10]) if first else None
+    head = f"# {iid} {issue['state']} tasks {done}/{total}"
+    head += f" first MR {first['iid']} on {start}" if first else ""
 
-    print(f"# {iid} {issue['state']} tasks {done}/{total} created {created}")
     if issue["state"] != "opened":
-        print("# closed: omit the metrics line")
-        return
+        return [head, "# closed: omit the metrics line"]
+    if not first:
+        return [head, "# no MR yet: omit the metrics line"]
     if done == 0:
-        print("# nothing ticked: omit the metrics line")
-        return
+        return [head, "# nothing ticked: omit the metrics line"]
 
-    days = business_days_between(created, progress)
+    days = business_days_between(start, progress)
     rate = done / days
     todo = total - done
     left = todo / rate
     eta = add_business_days(progress, math.ceil(left))
-    if days > 20 and left > 60:
-        print("# rate diluted over a long-open issue: consider omitting")
-    print(
+    return [head, (
         f"Speed: {done} / {days} = {round(rate, 2)} items/day, "
         f"TODO: {todo}, ETC: {todo} / {round(rate, 2)} = {round(left, 2)} days ({eta})"
-    )
+    )]
+
+
+def main():
+    iid, progress = int(sys.argv[1]), datetime.date.fromisoformat(sys.argv[2])
+    try:
+        print("\n".join(lines(iid, progress)))
+    except gl.ApiError as error:
+        sys.exit(f"ERROR: {error}")
 
 
 if __name__ == "__main__":

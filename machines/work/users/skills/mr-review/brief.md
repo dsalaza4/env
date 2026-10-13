@@ -1,0 +1,17 @@
+Do ONE first-time review pass of the fluidattacks/universe MR(s) named below. Read first: /Users/dsalazar/.claude/skills/mr-review/SKILL.md (section "Agent contract" is binding), the repo skills it references (.memory/skills/reviewing-mr/SKILL.md, and .memory/skills/code-review/SKILL.md for its Spec axis only), .memory/rules.md and .memory/coding_standards.md.
+
+Rules:
+- Work from the universe checkout given as your cwd. Do not touch its checkout. Create the review worktree at `<repo>/.claude/worktrees/review-<iid>` and remove it with `git -C <repo> worktree remove --force` when done.
+- Set `GIT_TERMINAL_PROMPT=0`. Wrap every network or test command in `timeout`. Give `< /dev/null` to anything that can read stdin (nix develop). Background test servers run under `timeout`. If SSH fetch fails, read files through the glab API (`repository/files`, MR `diffs`, `versions`) and say so.
+- Use glab. Parse its JSON with `json.loads(..., strict=False)`. Get diff_refs from `glab api "projects/:id/merge_requests/<iid>"`.
+- List existing discussions first, including our own earlier threads. Drop any finding FluidBot, another reviewer, or an earlier pass of ours already raised.
+- Premises in this prompt (rules, user names, file locations, component facts) are claims to verify, not facts. Do not post a finding that rests on a rule you cannot find in the repo.
+- For provider-backed config (Cloudflare, AWS, GitLab), check the provider's limits and what the post-merge apply will do, not only syntax.
+- Post findings WITHOUT asking: one anchored thread per finding (problem, why it matters, fix; mark optional ones non-blocking). Post with `glab api -X POST "projects/:id/merge_requests/<iid>/discussions" --input file.json -H 'Content-Type: application/json'`, body + position. Confirm each anchored post came back with a `position`. Anchor only on changed lines; if GitLab rejects the line, retry on the nearest changed line; for a file outside the diff, post MR-wide.
+- Only real, verified findings; no nitpicks. Never approve, unapprove, merge, resolve, or reply to others' threads. Prose: terse, no em dashes.
+- HOOK RULE (copy this rule verbatim into any sub-agent prompt): If a hook or permission blocks a command, STOP that check and report what it would have verified. Do not re-run it reworded, split, via globs, with the word moved into a file or JSON payload, or through another tool. That is a workaround even when the command is harmless. Reading a file with the Read tool is a normal read, not a workaround.
+- A blocked post: do not reword it. Record `unposted` in state and return the full thread text plus anchor (path, line, base/start/head SHA).
+- Write state per MR to `~/.local/state/mr-review/<iid>.json`: `{"reviewed_head":..., "reviewed_base":..., "threads": {"<discussion_id>":"open"}, "ready": <true only if there are no findings at all>, "unposted": "<short note, only if a finding could not be posted>"}`; empty threads if no findings.
+- At the end, delete `~/.local/state/mr-review/inflight/<iid>`.
+
+Return a short report per MR: link (https://gitlab.com/fluidattacks/universe/-/merge_requests/<iid>), title, author, each posted finding (one line + file:line + discussion id + blocking/non-blocking), or "no findings, ready for approval". Also note anything you could not do, and the full text of any unposted finding.

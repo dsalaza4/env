@@ -11,20 +11,35 @@ produce a conformant report from GitLab, and the mistakes already made.
 
 ## Workflow
 
-1. **Sweep** the local day: `scripts/sweep_day.sh YYYY-MM-DD`.
-2. **Read** every touched MR description and every issue that was
-   opened, closed or advanced (milestone, task counts, closing note).
-3. **Write** `~/report.txt` from scratch in the grammar below. Never
+Scripts live in `/Users/dsalazar/.claude/skills/daily-report/scripts/`.
+Steps 1 and 2 read the existing `~/report.txt`, so run them before
+overwriting it.
+
+1. **Sweep** the local day with details, into a scratchpad file, then
+   read the file (the output is long):
+   `python3 /Users/dsalazar/.claude/skills/daily-report/scripts/sweep_day.py YYYY-MM-DD --details`.
+   It prints the events, your MRs with their descriptions, issues
+   opened or closed, reviewed MRs, GitHub items, what went stale in the
+   previous report, and every touched issue with milestone, task counts,
+   metrics line and closing note.
+2. **Build** the plan list:
+   `python3 /Users/dsalazar/.claude/skills/daily-report/scripts/plan.py`.
+3. **Report** to the user in chat: the `STALE IN PREVIOUS REPORT` lines,
+   issues opened today (assignee, milestone, which have none), and every
+   `CHECKLIST BEHIND?` flag.
+4. **Write** `~/report.txt` from scratch in the grammar below. Never
    carry yesterday's content forward.
-4. **Compute** metrics with `scripts/metrics.py`.
-5. **Build** the plan list with `scripts/plan.sh`.
-6. **Validate** MR titles and descriptions with `scripts/validate_mrs.py`
-   when asked, and report findings rather than editing MRs.
-7. Leave `Collaborations:` as an empty heading. The user supplies them.
+5. **Validate** MR titles and descriptions with `validate_mrs.py` when
+   asked, and report findings rather than editing MRs.
+6. Leave `Collaborations:` as an empty heading. The user supplies them.
 
 On "update", "again" or "sweep": re-run the sweep, diff against the
 report, change only what moved, and say what moved. Re-check the
 metrics task counts every time; they change without any MR.
+
+On "issue updated": re-fetch that issue's title, milestone, state and
+tasks (`metrics.py <iid> <date>` prints the header and line), recompute
+or add the metrics line, and say exactly what changed.
 
 ## The local day
 
@@ -87,6 +102,8 @@ Structural rules:
   or any priority text (R9). The plan list has no action sub-bullets.
 - Order MR blocks inside an issue by merge time, merged before pending,
   rejected last.
+- Stacked MRs in different states (one merged, one pending) get separate
+  blocks. Place a stack by the merge time of its first MR.
 
 ## Content rules
 
@@ -96,6 +113,14 @@ re-read them). An issue with no milestone, or with no MR, cannot form a
 conformant block (R2). Leave it out and tell the user, naming the issue
 and what it needs. This covers duplicates closed without work, and
 issues closed on a decision alone.
+
+An issue closed today with no MR today is not a block either. Tell the
+user which MR closed it and on which day (usually a `STALE IN PREVIOUS
+REPORT` line).
+
+**Issues opened today.** The grammar has no section for them. After
+each sweep, list them to the user in chat with assignee and milestone,
+and say which have no milestone.
 
 **Titles.** Use the GitLab issue title verbatim, minus the leading
 `[Component]` prefix. Do not paraphrase: the reader must be able to find
@@ -123,20 +148,25 @@ understand it?
 **Metrics line.** Optional; include it when the issue has a task list
 and at least one item is ticked. Source: the issue's
 `task_completion_status`, not your own count. Omit it for closed issues,
-for zero ticked items, and when the rate is diluted into nonsense (an
-issue open for months with work only starting now). Say why you omitted
-it. `scripts/metrics.py` does the arithmetic: days elapsed are business
-days from issue creation to the progress date inclusive, and the ETA is
-the progress date plus `ceil(days-left)` business days (reverse-derived
-from the standard's worked examples). Always pass today's progress date;
-a stale date gives a wrong rate. If the rate looks wrong because ticked
-items lag merged work, tell the user the checklist is behind.
+for zero ticked items, and for issues with no MR yet; say why you
+omitted it. `metrics.py` does the arithmetic (the sweep calls it): days
+elapsed are business days (weekdays; holidays count as working days)
+from the day of the issue's first MR to the progress date, inclusive,
+and the ETA is the progress date plus `ceil(days-left)` business days
+(reverse-derived from the standard's worked examples). Always pass
+today's progress date; a stale date gives a wrong rate.
+
+**Checklist behind.** When MRs for an issue merged today and its task
+count did not move (`CHECKLIST BEHIND?`), tell the user. Do not invent
+a metrics line. The user updates the issue and asks for an update.
 
 **Reviewed list.** MRs whose approval note by the user is timestamped in
 the local day, from the events feed (`action=approved`), deduplicated,
 ascending. Do not use the `approved_by_ids` filter: it misses MRs whose
 approval a later push reset, and includes MRs approved on earlier days
-that merely updated today.
+that merely updated today. The sweep already excludes the user's own
+MRs (trusted authors self-approve); do not subtract them again. MRs by
+`rotates-bot` that the user approved count as reviewed.
 
 **Collaborations.** Rewrite the user's notes impersonally (§05 forbids a
 person as agent): "He needed X" becomes the outcome; "We agreed" becomes
@@ -146,9 +176,11 @@ expectation. Keep the substance and the reasoning. Plain terms: "RFC" is
 meeting name as the login, e.g. `(engineering weekly meeting)`.
 
 **Plan list.** Exactly the open issues assigned to the user, from
-`scripts/plan.sh`. Not issues they opened but left unassigned, not
-issues assigned to others. Keep the user's chosen order; place new
-assigned issues by their `priority::` label and say where you put them.
+`plan.py`. Not issues they opened but left unassigned, not issues
+assigned to others. The script keeps the previous report's order,
+drops issues no longer open and assigned, and places new ones after the
+last kept issue of the same or higher `priority::` label. Paste its list
+and tell the user about every `# dropped` and `# NEW` line.
 
 **Help list.** `* None.` unless something blocks the user. A help item
 needs a resolver's login; if a blocker appears in collaborations or a
@@ -156,7 +188,7 @@ closing note, ask for the resolver rather than inventing one.
 
 ## Validating MR titles and descriptions
 
-`scripts/validate_mrs.py` checks, against rules read from trunk:
+`validate_mrs.py YYYY-MM-DD` checks, against rules read from trunk:
 
 - Hard (CI-enforced): title matches `product\type(scope): #NNNN desc`,
   product from trunk's `.git-commit-template`, lowercase, no trailing
@@ -179,14 +211,20 @@ checkout: the checkout is often behind. The commit rules live in
   different issue. A vanished issue or an MR whose `#NNNN` changed
   means re-reading, not an error.
 - MRs merge minutes after a sweep. Something created or merged after the
-  last sweep of a day belongs to that day's report; mention it when it
-  surfaces the next day instead of silently back-filling.
+  last sweep of a day belongs to that day's report. The sweep lists it
+  under `STALE IN PREVIOUS REPORT`; mention it to the user instead of
+  silently back-filling.
 - Closing notes carry the best closure bullets (verification evidence,
   what was deliberately left unticked). Read them.
 - An expired `GITLAB_TOKEN` in the environment makes every call return
-  an error object, and `glab` prefers it over stored credentials. Tell
-  the user to check `type glab` and refresh the token.
+  an error object, and `glab` prefers it over stored credentials. The
+  scripts print `ERROR: ...` with this hint; tell the user to check
+  `type glab` and refresh the token. A section that prints `ERROR` is
+  unknown, not empty.
 - The scratchpad is wiped between sessions. The scripts live with this
   skill for that reason.
-- A worktree-isolated session refuses compound shell commands. Write
-  multi-step logic to a script file and run it.
+- A worktree-isolated session refuses compound shell commands and
+  commands that run a script through a variable path. Call every script
+  by its literal absolute path, one script per command. For extra logic,
+  write a script file into the scratchpad and run it by its literal
+  path.

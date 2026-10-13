@@ -1,14 +1,15 @@
 ---
 name: mr-review
-description: Review every open fluidattacks/universe MR that lists the user as reviewer — check out the branch, read the whole change, post review threads, then track them and report whether the author's fixes hold up so the user can give final approval. Use when the user asks to review their MR queue.
+description: Review every open fluidattacks/universe MR that lists the user as reviewer. Poll the queue, launch background agents that review in worktrees and post threads, verify the authors' fixes, and keep a list of MRs ready for the user's approval. Use when the user asks to review their MR queue, do a round, or review one MR URL.
 disable-model-invocation: true
 ---
 
 # MR Review
 
-Run from inside `~/fluidattacks/universe`, using only the `glab` channel of
-each repository skill. This skill only adds the queue, the threads and the
-follow-up; read these first and follow them for how to review:
+Run from inside a universe checkout (cwd), so `:id` resolves in `glab api`.
+Use only the `glab` channel of each repository skill. How to review comes
+from the repo skills; this skill adds the queue, the agents, the threads
+and the follow-up:
 
 - `.memory/skills/reviewing-mr/SKILL.md`
 - `.memory/skills/code-review/SKILL.md`, for its Spec axis only
@@ -16,101 +17,130 @@ follow-up; read these first and follow them for how to review:
 Where they conflict with this skill, they win, except for one deliberate
 override: post the findings without asking.
 
-Never approve, unapprove, or merge. Final approval belongs to the user.
+Never approve, unapprove or merge. On existing threads, the user decides.
 
-Each run is one idempotent pass over the queue. To keep tracking, run it
-under `/loop` (e.g. `/loop 15m /mr-review`).
+## Files
 
-## State
+Skill dir `/Users/dsalazar/.claude/skills/mr-review/` (read-only):
 
-Keep one file per MR in `~/.local/state/mr-review/<iid>.json`:
+- `poll.py`: one queue pass; prints `TO_REVIEW`, `TO_VERIFY`,
+  `NEWLY_READY`, `READY FOR APPROVAL`.
+- `brief.md`: first-review agent prompt. `verify.md`: verify agent prompt.
+- `ste.md`: add for docs STE100 series MRs.
+- `pitfalls.md`: per-component lessons; paste the relevant ones into prompts.
 
-```json
-{
-  "reviewed_head": "<sha>",
-  "reviewed_base": "<sha>",
-  "threads": { "<discussion_id>": "open | reported" }
-}
-```
+State in `~/.local/state/`:
 
-GitLab is the source of truth for threads. The file only remembers what was
-reviewed and reported, so a pass never repeats work or notifications.
-Delete it once the MR is merged or closed.
+- `mr-review/<iid>.json`: per-MR state (schema below).
+- `mr-review/inflight/<iid>`: marker while an agent works on the MR.
+- `mr-review-reported.json`: MRs already announced as ready.
 
-## 1. Queue
+## Modes
 
-```bash
-me=$(glab api user | jq -r .username)
-glab api "projects/:id/merge_requests?reviewer_username=$me&state=opened&per_page=100" --paginate
-```
+1. **Loop** (`/loop 15m /mr-review`): silent. Speak only for
+   `NEWLY_READY` (PushNotification, links, one-line why per MR), a
+   blocked post, a hook workaround, or a disagreement with an author.
+   Otherwise end with `quiet`.
+2. **Round** ("do a round"): one pass, a short table of what is running,
+   then one summary when every agent finishes.
+3. **Single URL** ("review <url>"): review that MR even if the user is not
+   a reviewer or it is merged. For a merged MR, phrase findings as
+   follow-ups for a new MR; post only when the user asks.
 
-Do not skip drafts: FluidBot toggles draft while pipelines run. For each MR,
-read `diff_refs` from `glab api "projects/:id/merge_requests/<iid>"`, then:
+Every run ends with the `READY FOR APPROVAL` links. Background-task
+completion notices repeat agent reports: acknowledge in one line, do not
+re-summarize.
 
-- No state file: **review** (step 2).
-- Tracked threads newly resolved: **verify** (step 4).
-- Otherwise: nothing to do; the author is still working.
+## Pass
 
-## 2. Review
+1. `python3 /Users/dsalazar/.claude/skills/mr-review/poll.py` from the
+   repo. It skips the user's own MRs, absorbs pure rebases (range-diff all
+   `=`), skips MRs in flight, drops state for MRs that left the queue, and
+   fails closed on an empty queue.
+2. `TO_REVIEW`: group up to 3 small related docs MRs per agent; one agent
+   per code or infra MR. `TO_VERIFY`: one agent for several MRs.
+3. Per agent: `touch` each MR's inflight marker, then launch a background
+   agent with `brief.md` or `verify.md` (plus `ste.md` for docs series)
+   and MR context: the issue, the series, relevant `pitfalls.md` entries,
+   and what earlier MRs of the same issue changed. State premises as
+   things to verify, not facts.
+4. When an agent returns: delete its markers, relay the report, rerun the
+   poll, print the ready links.
 
-Check out the MR in a worktree, so the user's checkout is untouched:
+The orchestrator does not review; it polls, groups, launches and relays.
 
-```bash
-git fetch origin <source_branch> trunk
-git worktree add --detach .claude/worktrees/review-<iid> <head_sha>
-```
+## Agent contract
 
-Review it there following `reviewing-mr` steps 3–4, reading the whole
-change (`git diff <base_sha>...<head_sha>`), plus the Spec axis of
-`code-review` against the issue in the commit title. Drop any finding that
-FluidBot or another reviewer already raised in the MR's discussions.
+Every brief must keep these; edit `brief.md`/`verify.md` rather than
+dropping them.
 
-## 3. Post threads
+- **Worktree**: `<repo>/.claude/worktrees/review-<iid>`, detached at the
+  head SHA; remove with `git -C <repo> worktree remove --force`.
+- **No hangs**: `GIT_TERMINAL_PROMPT=0`; `timeout` on every network or
+  test command; `< /dev/null` for anything that can read stdin; fetch
+  each SHA separately; on SSH failure, read through the glab API and say
+  so.
+- **Hooks**: if a hook blocks a command, stop that check and report what
+  it would have verified. Never rerun it reworded, split, via globs, with
+  the word in a file or payload, or through another tool. Copy this rule
+  verbatim into any sub-agent prompt. A Read tool read is not a
+  workaround.
+- **Posting**: one anchored thread per finding (problem, why, fix;
+  non-blocking marked). `glab api -X POST ... --input file.json -H
+  'Content-Type: application/json'`; confirm the returned note has a
+  `position`. Anchor on changed lines only; on rejection retry the
+  nearest changed line; a file outside the diff gets an MR-wide thread.
+  Drop findings FluidBot, another reviewer or our earlier threads already
+  raised.
+- **Blocked post**: record `unposted`, return the full thread text and
+  anchor (path, line, base/start/head SHA). The orchestrator asks the user
+  to allow the post once or post it by hand.
+- **State**:
+  ```json
+  {
+    "reviewed_head": "<sha>",
+    "reviewed_base": "<sha>",
+    "threads": { "<discussion_id>": "open | reported" },
+    "ready": true,
+    "unposted": "<only when a finding could not be posted>"
+  }
+  ```
+- **Return**: per MR, link, title, author, findings with file:line and
+  discussion id, ready yes/no, anything blocked.
 
-One thread per finding, anchored to its line: the problem, why it matters,
-what would fix it. Mark optional suggestions as non-blocking.
+## Verify and readiness
 
-```bash
-glab api -X POST "projects/:id/merge_requests/<iid>/discussions" \
-  -f body="<finding>" \
-  -f "position[position_type]=text" \
-  -f "position[base_sha]=<base_sha>" \
-  -f "position[start_sha]=<start_sha>" \
-  -f "position[head_sha]=<head_sha>" \
-  -f "position[old_path]=<path>" \
-  -f "position[new_path]=<path>" \
-  -F "position[new_line]=<line>"
-```
+- New findings during verify are posted as new threads, tracked `open`.
+- Existing threads: never reply, resolve or reopen. Report disagreement;
+  if the user says yes, reply on that discussion
+  (`.../discussions/<id>/notes`) and give the note link
+  (`<mr_url>#note_<note_id>`).
+- Check the code even when a thread was resolved with no reply. Verify
+  fixes that came from our own suggestion. Pushback holds if it is an
+  editorial choice, an exception declared in the issue, or a linked
+  follow-up issue that exists and is open.
+- Not ready while any of our threads is open, even non-blocking.
+  Unposted non-blocking nits do not block.
+- A skipped push pipeline on the head means CI is unconfirmed; ready
+  needs a passing push pipeline on the final head.
+- An approved MR rebased to identical content is ready again: say
+  "approval reset by rebase, content unchanged".
+- For provider-backed config (Cloudflare, AWS, GitLab), check provider
+  limits and the post-merge apply, not only syntax.
 
-For a removed line use `position[old_line]` instead; for an MR-wide finding
-omit `position`. Record each returned discussion `id` as `open`, plus
-`reviewed_head` and `reviewed_base`, then remove the worktree.
+## Reporting
 
-With no findings, post nothing and tell the user it is ready for approval.
+Lead with the verdict. Findings as a numbered list: file:line, what is
+wrong, why, fix. Then "checked and correct" as a compact list. Then the
+queue: ready, waiting on authors, your call. No em dashes.
 
-## 4. Verify fixes
+Once, recommend the user narrow hooks to block running `aws`,
+`terraform` and `sops` rather than the substring. Never change hook
+config.
 
-MRs are rebased onto trunk, so compare the commit itself, not branch tips:
+## Do not
 
-```bash
-git fetch origin <source_branch> trunk
-git range-diff <reviewed_base>..<reviewed_head> <base_sha>..<head_sha>
-```
-
-For each newly resolved thread, read the author's replies and the current
-code there, then decide **agree** (fixed, or the pushback holds) or
-**disagree** (what is still wrong). Never reopen or reply: the user decides.
-Review anything else the range-diff shows the same way as step 2, and report
-it rather than posting it. Mark the threads `reported` and update
-`reviewed_head` and `reviewed_base`.
-
-## 5. Notify
-
-Once per MR with news, notify the user (PushNotification when available),
-then give the details in chat:
-
-- MR link, title, author, threads resolved vs. still open
-- Per resolved thread: finding, fix, **agree / disagree** and why
-- Anything new found in the latest changes
-- **Ready for approval** when every thread is resolved and you agree with
-  every fix, otherwise what still blocks it
+- Post on the user's own MRs; offer a chat-only review instead.
+- Retry CI jobs, reply to threads or open issues without the user's yes.
+- Re-review an MR whose head moved by a pure rebase.
+- Repeat findings the user already dropped.

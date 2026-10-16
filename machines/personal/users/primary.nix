@@ -24,8 +24,9 @@
         just
         nixd
         nixfmt
-        nodejs
+        nodejs-slim
         opentofu
+        pnpm
         python313
         rustup
         shfmt

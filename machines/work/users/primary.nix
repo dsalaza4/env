@@ -24,7 +24,8 @@
         kubectl
         nixd
         nixfmt
-        nodejs
+        nodejs-slim
+        pnpm
         python313
         rustup
         saml2aws

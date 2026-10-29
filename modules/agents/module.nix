@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -20,7 +21,17 @@ in
     '';
 
     programs = {
-      claude-code.enable = true;
+      claude-code = {
+        enable = true;
+        # nixpkgs pins the cert store to "system", which on macOS only holds admin-trusted certs, not Apple's roots.
+        package = pkgs.claude-code.overrideAttrs (old: {
+          installPhase =
+            builtins.replaceStrings
+              [ "--set-default CLAUDE_CODE_CERT_STORE system" ]
+              [ "--set-default CLAUDE_CODE_CERT_STORE bundled,system" ]
+              old.installPhase;
+        });
+      };
       herdr = {
         enable = true;
         settings = {

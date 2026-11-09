@@ -40,7 +40,10 @@
       ];
     };
     programs = {
-      agents.enable = true;
+      agents = {
+        enable = true;
+        desktop.enable = true;
+      };
       claude-code.skills = ./skills;
       fuzzy.enable = true;
       editor.enable = true;

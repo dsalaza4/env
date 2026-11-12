@@ -32,7 +32,7 @@ just update         # Update all flake inputs
 ## What's configured
 
 - **Shell**: zsh with Oh My Zsh, autosuggestions, syntax highlighting, and Starship prompt
-- **Terminal**: Ghostty with FiraCode Nerd Font, GitHub Dark theme, and custom keybindings
+- **Agents**: Claude Code inside the herdr desktop app
 - **Editor**: Zed set as default for plain text and source code
 - **System**: macOS defaults (Dock, Finder, key repeat), Cloudflare DNS, Touch ID for sudo
 - **Security**: 1Password GUI

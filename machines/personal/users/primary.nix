@@ -22,15 +22,11 @@
         htop
         jq
         just
-        nixd
-        nixfmt
         nodejs-slim
         opentofu
         pnpm
         python313
         rustup
-        shfmt
-        sops
         tree
         unzip
         wget

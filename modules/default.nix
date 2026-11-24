@@ -3,6 +3,7 @@ let
     agents = import ./agents/module.nix;
     fuzzy = import ./fuzzy/module.nix;
     editor = import ./editor/module.nix;
+    keys = import ./keys/module.nix;
     terminal = import ./terminal/module.nix;
   };
   darwin = {

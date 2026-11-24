@@ -38,6 +38,14 @@
       agents.enable = true;
       fuzzy.enable = true;
       editor.enable = true;
+      keys = {
+        enable = true;
+        hosts = {
+          "github.com".key = "main";
+          "gitlab.com".key = "main";
+        };
+        signing.key = "main";
+      };
       terminal.enable = true;
       direnv = {
         enable = true;

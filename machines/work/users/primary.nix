@@ -44,6 +44,21 @@
       claude-code.skills = ./skills;
       fuzzy.enable = true;
       editor.enable = true;
+      keys = {
+        enable = true;
+        hosts = {
+          "github.com".key = "github-work";
+          github-personal = {
+            hostname = "github.com";
+            key = "main";
+          };
+          "gitlab.com".key = "main";
+        };
+        signing = {
+          key = "main";
+          github = "github-work";
+        };
+      };
       terminal.enable = true;
       direnv = {
         enable = true;

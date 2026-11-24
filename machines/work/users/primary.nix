@@ -48,10 +48,6 @@
         enable = true;
         hosts = {
           "github.com".key = "github-work";
-          github-personal = {
-            hostname = "github.com";
-            key = "main";
-          };
           "gitlab.com".key = "main";
         };
         signing = {
